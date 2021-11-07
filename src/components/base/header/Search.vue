@@ -1,16 +1,50 @@
 <template>
   <div id="search">
-         <input value="" class="search-box">
+         <input @keyup.enter="searchSong" v-model="keyword"  class="search-box">
       </div>
 </template>
 
 <script>
+import axios from 'axios'
 export default {
-    name:'search'
+    name:'search',
+    data(){
+        return{
+            keyword:'',
+            songs:[]
+        }
+    },
+    methods:{
+        searchSong(){
+            if(this.$route.path !== '/'){
+                this.$router.push({path:'/'})
+                // console.log('主界面')
+            }
+                
+            
+            this.$destroy('FindMusic')
+                if(this.$route.path !== '/fdmc')
+                        this.$router.push({
+                            // path:'/fdmc',
+                            //注意这里只能用name，用path收不到参数
+                            name:'FindMusic',
+                            params:{
+                                keyword:this.keyword
+                            }                         
+                        },)
+            
+                    
+            // console.log('切换路由中')
+            this.$bus.$emit('sendKeywords',this.keyword)
+            //获取数据
+             
+        }
+    }
+
 }
 </script>
 
-<style>
+<style scoped>
 #search{
     text-align: center;
     flex:2;

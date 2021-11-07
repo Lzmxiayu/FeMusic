@@ -1,5 +1,5 @@
 {
-  "name": "femusic",
+  "name": "FeMusic",
   "version": "1.0.0",
   "description": "A music app",
   "author": "丘尤 <1260937224@qq.com>",
@@ -11,6 +11,7 @@
   },
   "dependencies": {
     "axios": "^0.24.0",
+    "mddir": "^1.1.1",
     "vue": "^2.5.2",
     "vue-router": "^3.0.1"
   },

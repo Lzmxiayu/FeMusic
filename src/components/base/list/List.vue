@@ -1,6 +1,6 @@
 <template>
   <div id="list">
-      <button class="list-choice" @click="ChangeRoute('/fdmc')">发现音乐</button>
+      <button class="list-choice" @click="ChangeRoute('/')">发现音乐</button>
       <button class="list-choice" @click="ChangeRoute('/home')">我的主页</button>
       <button class="list-choice" @click="ChangeRoute('/lemc')" >喜欢的音乐</button>
       <button class="list-choice" @click="ChangeRoute('/pyrt')">最近播放</button>
@@ -13,7 +13,8 @@ export default {
     name:'list',
     methods:{
         ChangeRoute(path){
-            this.$router.push({path:path})
+           if(this.$route.path !== path)
+               this.$router.push({path:path})
         }
 
     }
