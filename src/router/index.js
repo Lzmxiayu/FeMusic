@@ -10,12 +10,19 @@ import ArtistList from '../components/content/search-content/ArtistList'
 import FoundMusic from '../components/base/main/FoundMusic'
 import Singers from '../components/content/found-music/Singers'
 import SongBoard from '../components/base/main/SongBoard'
+import SingerInfo from '../components/base/main/SingerInfo'
+import SingerAlbums from '../components/content/singer/SingerAlbums'
+import SingerDetails from '../components/content/singer/SingerDetails'
+import SingerMv from '../components/content/singer/SingerMv'
+import SimilarSingers from '../components/content/singer/SimilarSingers'
 
 Vue.use(Router)
 
 export default new Router({
   mode:"history",
   routes: [
+
+    //主页
     {
       path:'/',
       component:FoundMusic,
@@ -27,6 +34,7 @@ export default new Router({
         },
       ]
     },
+    //搜索音乐
     {
       path: '/fdmc',
       name: 'FindMusic',
@@ -44,31 +52,63 @@ export default new Router({
         }
       ]
     },
+    //用户主页
     {
       path: '/home',
       name: 'Home',
       component: Home
     },
-    
+    //喜爱的音乐
     {
       path: '/lemc',
       name: 'LoveMusic',
       component: LoveMusic
     },
+    //最近播放
     {
       path: '/pyrt',
       name: 'PlayRecent',
       component: PlayRecent
     },
+    //收藏的音乐
     {
       path: '/clmc',
       name: 'CollectMusic',
       component: CollectMusic
     },
+    //歌曲信息板
     {
       path: '/sgbd',
       name: 'SongBoard',
       component: SongBoard
+    },
+    //歌手页
+    {
+      path: '/sgio',
+      name: 'SingerInfo',
+      component: SingerInfo,
+      children:[
+        {
+          path:'sgal',
+          name:'SingerAlbums',
+          component:SingerAlbums,
+        },
+        {
+          path:'sgdl',
+          name:'SingerDetails',
+          component:SingerDetails,
+        },
+        {
+          path:'sgmv',
+          name:'SingerMv',
+          component:SingerMv,
+        },
+        {
+          path:'sgsr',
+          name:'SimilarSingers',
+          component:SimilarSingers,
+        },
+      ]
     },
     
 

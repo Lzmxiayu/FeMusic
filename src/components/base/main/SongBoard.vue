@@ -105,7 +105,7 @@ export default {
 				)
 				//评论获取
         
-				axios.get(`http://localhost:3000/comment/music?type=0&id=${this.songInfo.id}`).then(
+				axios.get(`/comment/music?type=0&id=${this.songInfo.id}`).then(
 				response => {	
 					this.songInfo.comments=response.data.comments
           console.log(response.data.comments)

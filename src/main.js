@@ -11,7 +11,7 @@ Vue.config.productionTip = false
 // import './assets/bootstrap/bootstrap.min'
 
 
-axios.defaults.baseURL="http://localhost:3000"
+axios.defaults.baseURL="http://112.74.174.104:3000"
 
 /* eslint-disable no-new */
 new Vue({

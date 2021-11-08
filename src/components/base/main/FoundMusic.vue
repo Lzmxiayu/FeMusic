@@ -60,8 +60,9 @@ export default {
     },
     recmdSong(){
         // console.log('sa')
-        
-        axios.get('/user/detail?uid=508487342').then(
+        ///artist/desc/?id=11972054详情页
+
+        axios.get('/artist/detail/?id=11972054').then(
                             
                 response => {
                     console.log(response)

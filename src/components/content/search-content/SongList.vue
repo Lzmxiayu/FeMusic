@@ -8,10 +8,10 @@
               <button class="songName" type="text" v-on:click="playMusic(song.id)">
 						歌名 
  			  </button>
-               <button class="songArtist" type="text" v-on:click="getSinger(song.artists[0].id)">
+               <button class="songArtist" type="text" >
 						歌手
  			  </button>
-                <button class="songAlbum" type="text" v-on:click="getSinger(song.album.name)">
+                <button class="songAlbum" type="text" >
 						专辑
  			  </button>
             
@@ -27,10 +27,13 @@
                            <!-- <p>jin</p> -->
                         <!-- </div> -->
  			  </button>
-               <button class="songArtist" type="text" v-on:click="getSinger(song.artists[0].id)">
+               <button class="songArtist" 
+               type="text" 
+               @click="PushRo('SingerAlbums',song.artists[0].id)"
+               >
 						{{song.artists[0].name}}
  			  </button>
-                <button class="songAlbum" type="text" v-on:click="getSinger(song.album.name)">
+                <button class="songAlbum" type="text" v-on:click="PushRo">
 						{{song.album.name}}
  			  </button>
             
@@ -81,7 +84,7 @@ export default {
                     }
                 )
 				//封面获取
-				// axios.get(`http://localhost:3000/song/detail?ids=${id}`).then(
+				// axios.get(`/song/detail?ids=${id}`).then(
 				// response => {
 				// 	this.musicCover =response.data.songs[0].al.picUrl
 				// },
@@ -90,7 +93,7 @@ export default {
 				// }
 				// )
 				//热评获取
-				// axios.get(`http://localhost:3000/comment/hot?type=0&id=${id}`).then(
+				// axios.get(`/comment/hot?type=0&id=${id}`).then(
 				// response => {	
 				// 	this.hotComments=response.data.hotComments
 				// },
@@ -102,14 +105,22 @@ export default {
 				// this.isPlayingMv=false		
 			},
         // 跳转到歌手页
-        getSinger(id){
-            console.log(id)
+        PushRo(name,id){
+            // console.log(id)
+           this.$router.push(
+               {
+                  name:name,
+                  params:{
+                      sid:id
+                  }
+               }
+           )
         }
     },  
     mounted(){
         this.songs=this.$route.params.songs
 
-        // console.log(this.$songs)
+        // console.log(this.songs)
     }
 }
 </script>

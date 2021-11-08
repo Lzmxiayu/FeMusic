@@ -71,16 +71,9 @@ export default {
     /* padding-top:10px; */
 }
 #music-player img{
-    flex:1;
-    height:80%; 
-    top:10%;   
-    position:relative; 
-    /* padding-left:10px; */
-    left:5px;
+    flex:1;    
     border-radius:10px;
-    margin-right:10px;  
-    /* padding-top:10px; */
-    /* margin-top: 10%; */
+    margin:3px;  
 }
 audio{
     /* width:80%; 

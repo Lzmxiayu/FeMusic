@@ -31,10 +31,10 @@ export default {
             {
              this.keyword=this.$route.params.keyword
              //获取单曲
-         axios.get(`http://localhost:3000/search?keywords=${this.keyword}&limit=50`)
+         axios.get(`/search?keywords=${this.keyword}&limit=50`)
             .then(
                 response=>{
-                    console.log(response.data)
+                    // console.log(response.data)
                     this.result.songs = response.data.result.songs
                     this.$bus.$emit('sendSongs',this.result.songs) 
                    
