@@ -3,7 +3,7 @@
       <div class="singer-lists">
           <div v-for="artist in artists" :key="artist.id" class="singerLink" >
               <img :src="artist.img1v1Url">
-              <p>{{artist.name}}</p>
+              <p @click="PushSinger(artist.id)">{{artist.name}}</p>
           </div>
           
          
@@ -33,6 +33,18 @@ export default {
         )
         // this.artists=this.$route.params.artists
         // console.log(this.$route.params)
+    },
+    methods:{
+        PushSinger(id){
+            this.$router.push(
+                {
+                    name:'SingerAlbums',
+                    params:{
+                        sid:id,
+                    }
+                }
+            )
+        }
     }
 }
 </script>

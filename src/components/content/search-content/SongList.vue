@@ -119,7 +119,7 @@ export default {
     },  
     mounted(){
         this.songs=this.$route.params.songs
-
+        
         // console.log(this.songs)
     }
 }

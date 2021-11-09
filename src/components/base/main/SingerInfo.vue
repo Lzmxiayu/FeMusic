@@ -7,14 +7,14 @@
           </div>
          
           <div class="desc">
-              {{singerIo.name}}
+              <h3>{{singerIo.name}}</h3>
           </div>
       </div>
       <div class='sgio-menu'>
           <p @click="Opens('SingerAlbums',singerIo.id)" >专辑</p>
-      <p @click="Opens('SingerDetails')">歌手详情</p>
-      <p @click="Opens('SingerMv')">MV</p>
-      <p @click="Opens('SimilarSingers')">相似歌手</p>
+      <p @click="Opens('SingerDetails',singerIo.id)">歌手详情</p>
+      <p @click="Opens('SingerMv',singerIo.id)">MV</p>
+      <p @click="Opens('SimilarSingers',singerIo.id)">相似歌手</p>
      
           </div>
          
@@ -42,24 +42,23 @@ export default {
         }
     }
     },
-    mounted(){
-        this.singerIo.id=this.$route.params.sid
-        
-         axios.get(`/artist/detail/?id=${this.singerIo.id}`).then(
+    watch:{
+        singerIo(){
+              axios.get(`/artist/detail/?id=${this.singerIo.id}`).then(
                             
                 response => {
                   this.singerIo.coverUrl=response.data.data.artist.cover
                   this.singerIo.name=response.data.data.artist.name
-                  console.log(response)
+                //   console.log(response)
                 },
                 error => {
                     console.log(error)
                 }
         )
 
-    
+        }
     },
-    methods:{
+     methods:{
          recmdSong(){
         // console.log('sa')
         // /artist/desc/?id=11972054详情页
@@ -77,8 +76,35 @@ export default {
                     }
                 }
             )
+    },
+        getInfo(id){
+            axios.get(`/artist/detail/?id=${id}`).then(
+                            
+                response => {
+                  this.singerIo.coverUrl=response.data.data.artist.cover
+                  this.singerIo.name=response.data.data.artist.name
+                //   console.log(response)
+                },
+                error => {
+                    console.log(error)
+                }
+        )
+
         }
-    }
+    },
+    mounted(){
+
+        //通过路由切换时
+        this.singerIo.id=this.$route.params.sid
+          this.getInfo(this.singerIo.id)
+        //通过相似歌手切换时
+        this.$bus.$on('senSingerId',(id)=>{
+            this.singerIo.id=id
+            this.getInfo(this.singerIo.id)
+        })
+    
+    },
+   
 }
 </script>
 
@@ -95,10 +121,11 @@ export default {
 }
 
 .sgio-header{
+    flex:1;
+    height:40%;
     flex:10;
-    height:100%;
     width:100%;
-    background: goldenrod;
+    /* background: goldenrod; */
     display: flex;
     /* text-align:center; */
 }
@@ -114,15 +141,21 @@ img{
     width:70%;
     top:10%;
     position: relative;
+    border-radius:15px;
     /* height:80%; */
 }
 .desc{
     flex:6;
+    margin-top:2%;
+}
+.desc h3{
+    margin:10px;
 }
 
 .sgio-menu{
     flex:2;
     /* margin-left:5%; */
+    /* height:10%; */
     width:40%;
     padding:0%;
     padding-left:6%;

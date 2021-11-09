@@ -62,10 +62,10 @@ export default {
         // console.log('sa')
         ///artist/desc/?id=11972054详情页
 
-        axios.get('/artist/detail/?id=11972054').then(
+        axios.get('/artist/desc/?id=11972054').then(
                             
                 response => {
-                    console.log(response)
+                    // console.log(response)
                 },
                 error => {
                     console.log(error)

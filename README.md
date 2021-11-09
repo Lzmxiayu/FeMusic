@@ -28,6 +28,10 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 路由转换时传递 问题：本界面继续搜索时参数无法传递 不用
 
 2./fdmc下点击单曲切换到/fdmc/sglt时之前搜索数据丢失  
-解决方法：1.搜索数据保存到FindMusic组件,而非SongList组件  
-         2.使用VueX?  
+解决方法：1.搜索数据保存到FindMusic组件,而非SongList组件  2.使用VueX?  
  采用：Search组件传递搜索词给FindMusic，通过路由传参给各板块  
+
+3.前进后退时,数据丢失,原因：数组挂载在执行组件上，前进后退切换路由销毁组件同时销毁了数据  
+目前尝试解决办法:建立TempData组件备份数据  
+TempData监视route属性,对二级组件传递备份值，如SingerInfo传递备份的id值,  
+注意先后顺序或者通过路由参数判断是路由跳转还是回溯

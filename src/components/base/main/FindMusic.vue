@@ -31,14 +31,12 @@ export default {
             {
              this.keyword=this.$route.params.keyword
              //获取单曲
-         axios.get(`/search?keywords=${this.keyword}&limit=50`)
+            axios.get(`/search?keywords=${this.keyword}&limit=50`)
             .then(
                 response=>{
-                    // console.log(response.data)
                     this.result.songs = response.data.result.songs
                     this.$bus.$emit('sendSongs',this.result.songs) 
-                   
-                    
+                    //切换到结果显示界面 
                      this.$router.push(
                         {
                         name:'singlesong',
@@ -46,11 +44,7 @@ export default {
                             songs:this.result.songs
                             }
                         }
-                        
                         )
-                    
-                    // console.log(this.songs)
-                    
                 },
                 error=>{
                      console.log('Failed')
@@ -58,10 +52,18 @@ export default {
 
             )
           //获取歌手
-          axios.get
-          
-          
+
           }
+        //   console.log(this.keyword)
+          this.$bus.$emit('sendSearchkey',this.keyword)
+           this.$bus.$on('sendearchkey',(keyword)=>{
+                console.log(keyword)
+            })
+          //获取备份数据
+        //   this.$bus.$on('sendSearchkey',(keyword)=>{
+        //       this.keyword=keyword
+        //       console.log(this.keyword)
+        //   })
         }
     },
     watch:{

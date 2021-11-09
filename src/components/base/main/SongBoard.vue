@@ -13,9 +13,11 @@
     <div class="comments">
       <h4>全部评论:</h4> 
       <div v-for="comment in songInfo.comments" class="comment" :key="comment.commentId">
+        <div class="avatar">
         <img :src="comment.user.avatarUrl" >
-        <div>
-        <a href="#">{{comment.user.nickname}}</a>
+        </div>
+        <div class='ct'>
+          <a href="#">{{comment.user.nickname}}</a>
         <br>
         <p>{{comment.content}}</p>
         </div>
@@ -192,21 +194,23 @@ h4{
   display: flex;
   /* font-size:5px; */
 }
+.comment .ct{
+  flex:16;
+}
 .comment a{
   text-decoration: none;
   font-size:14px;
 }
 .comment p{
-  /* text-decoration: none; */
-  /* font-size:12px; */
   margin:0%;
   font-size:14px;
 }
 
-.comment img{
-  width:10%;
+.comment .avatar{
+  flex:2;
+}
+.avatar img{
+  width:80%;
   border-radius:50%;
-  overflow: hidden;
-  margin-right:5%;
 }
 </style>

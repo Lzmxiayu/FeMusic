@@ -28,8 +28,8 @@ export default {
 				axios.get(`/song/detail?ids=${this.id}`).then(
 				response => {
 					this.coverUrl =response.data.songs[0].al.picUrl
-                    console.log(this.id)
-                    console.log(response)
+                    // console.log(this.id)
+                    // console.log(response)
           
 				},
 				error => {
@@ -45,7 +45,7 @@ export default {
         this.songInfo=song
         this.id=song.id
         // console.log('musicplayer')
-        console.log(this.id)
+        // console.log(this.id)
        })
          
     },

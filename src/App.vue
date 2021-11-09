@@ -4,6 +4,7 @@
     <music-sidebar/>
     <music-main/>
     <music-footer/>
+    <temp-data/>
     <!-- <router-view/> -->
   </div>
 </template>
@@ -13,6 +14,7 @@ import MusicHeader from './components/layout/MusicHeader'
 import MusicMain from './components/layout/MusicMain'
 import MusicFooter from './components/layout/MusicFooter'
 import MusicSidebar from './components/layout/MusicSidebar.vue'
+import TempData from './components/content/TempData.vue'
 
 
 
@@ -21,7 +23,7 @@ export default {
   name: 'App',
   components:{
     MusicHeader,MusicMain,MusicFooter,
-    MusicSidebar
+    MusicSidebar,TempData
     
   }
 }
