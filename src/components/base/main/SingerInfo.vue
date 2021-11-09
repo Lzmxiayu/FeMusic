@@ -134,7 +134,7 @@ export default {
     height:100%;
     flex:3;
     text-align: center;
-    background: white;
+    /* background: white; */
 }
 img{
     height:80%;

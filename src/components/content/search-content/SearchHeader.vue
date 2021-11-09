@@ -1,7 +1,7 @@
 <template>
   <div id="search-header">
       <p @click="PushRo('singlesong')">单曲</p>
-      <p @click="PushRo('ArtistList')">歌手 </p>
+      <p @click="PushRo('Artist')">歌手 </p>
       <p >专辑</p>
       <p>视频</p>
       <p>歌单</p>
@@ -15,7 +15,6 @@ export default {
         return{
             result:{
                  songs:''
-
             }
 
         }

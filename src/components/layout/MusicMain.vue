@@ -18,7 +18,8 @@ export default {
 <style scoped>
 #music-main{
     grid-area: content;
-    background: white;
+    /* background: white; */
+     background:#FFF2E2;
     height:80vh;
 }
 </style>

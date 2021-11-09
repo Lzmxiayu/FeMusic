@@ -1,8 +1,8 @@
 <template>
   <div id='found-music'>
       <found-header/>
-      <button @click="login">login</button>
-      <button @click="recmdSong">test</button>
+      <!-- <button @click="login">login</button> -->
+      <!-- <button @click="recmdSong">test</button> -->
       <router-view></router-view>
   <!-- <div class='found-head'>
       标题

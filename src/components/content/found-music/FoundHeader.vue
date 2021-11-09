@@ -3,8 +3,8 @@
       <p @click="PushRo('singlesong')">推荐</p>
       <p>专属定制</p>
       <p @click="PushRo('Singers')">歌手</p>
-      <p>视频</p>
-      <p>歌单</p>
+      <p @click="PushRo('newMvs')">视频</p>
+      <p @click="PushRo('NewAlbums')">歌单</p>
   </div>
 </template>
 
@@ -29,12 +29,12 @@ export default {
        })
     },
     methods:{
-        PushRo(path,data){
+        PushRo(name,data){
             // console.log(data)
             this.$router.push({
                 // path:'/fdmc'+path,
                 //注意这里只能用name，用path收不到参数
-                name:path,
+                name:name,
                 // params:{
                 //    artists: this.result.artists
                 // }

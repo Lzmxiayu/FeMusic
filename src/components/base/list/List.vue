@@ -31,11 +31,13 @@ export default {
 }
 .list-choice{
   height:10%;
-  background: white;
+  background: none;
+
   border:none;
 }
 .list-choice:hover{
-  background: rgb(218, 213, 213,0.4);
+  /* background: rgb(218, 213, 213,0.4); */
+  background: rgb(223, 127, 127,0.15);
   /* 显示小手 */
   cursor:pointer;
 }

@@ -20,7 +20,8 @@ export default {
 <style scoped>
 #music-header{
     grid-area: header;
-    background: red;
+    background: rgba(255, 4, 4, 0.699);
+    /* background: rgb(223, 127, 127); */
     display: flex;
 }
 </style>

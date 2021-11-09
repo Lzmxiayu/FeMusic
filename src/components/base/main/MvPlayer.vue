@@ -1,10 +1,12 @@
 <template>
   <div id="mv-player">
       <div class="mvc">
+          <h2>{{name}}</h2>
           <div class="mv">
               <video 
               class="video-js"
               controls="controls"
+              autoplay
               :src="url">
               </video>
           </div>
@@ -44,11 +46,12 @@ export default {
             url:'',
             comments:[],
             simimvs:[],
+            name:'',
         }
     },
     methods:{
         fetchData(){
-             //获取mv地址
+            //获取mv地址
         axios.get(`/mv/url?id=${this.id}`).then(
             response =>{
                 this.url=response.data.data.url
@@ -59,7 +62,13 @@ export default {
         axios.get(`/comment/mv?id=${this.id}`).then(
             response =>{
                 this.comments=response.data.comments
-                // console.log(respons.data)
+                // console.log(response.data)
+            }
+        )
+        axios.get(`/mv/detail?mvid=${this.id}`).then(
+            response =>{
+                this.name=response.data.data.name
+                // console.log(response)
             }
         )
         //获取相似mv
@@ -67,7 +76,7 @@ export default {
             response =>{
                 this.simimvs=response.data.mvs
                 // console.log('similar')
-                console.log(response.data.mvs)
+                // console.log(response.data.mvs)
             }
         )
 
@@ -92,6 +101,7 @@ export default {
     height:100%;
     display:flex;
     overflow:scroll;
+    background:#FFF2E2;
 
 }
 #mv-player::-webkit-scrollbar{
@@ -111,17 +121,23 @@ export default {
 .mv{
     height:70%;
     /* margin-top:5%; */
-    background: white;
+    /* background: white; */
+}
+.mvc h2{
+    margin:5% 0% 2% 2%;
+
 }
 .mv-comments{
     width:95%;
     /* height:20%; */
     margin-left:2.5%;
+    margin-top:5%;
     display: flex;
     flex-direction: column;
 }
 .video-js{
     /* margin-top:5%; */
+    width:100%;
 }
 .mv-comment{
     display:flex;
@@ -151,10 +167,11 @@ export default {
 }
 
 .video-js{
-    width:90%;
-    height:90%;
-    margin-left:5%;
-    margin-top:3%;
+    width:96%;
+    height:95%;
+    margin-left:2%;
+    /* margin-top:5%; */
+    border-style:hidden;
     
 }
 .recm{

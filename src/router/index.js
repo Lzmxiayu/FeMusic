@@ -9,6 +9,8 @@ import SongList from '../components/content/search-content/SongList'
 import ArtistList from '../components/content/search-content/ArtistList'
 import FoundMusic from '../components/base/main/FoundMusic'
 import Singers from '../components/content/found-music/Singers'
+import NewMvs from '../components/content/found-music/NewMvs'
+import NewAlbums from '../components/content/found-music/NewAlbums'
 import SongBoard from '../components/base/main/SongBoard'
 import SingerInfo from '../components/base/main/SingerInfo'
 import SingerAlbums from '../components/content/singer/SingerAlbums'
@@ -33,6 +35,17 @@ export default new Router({
           name:'Singers',
           component:Singers,
         },
+        {
+          path:'main/newmvs',
+          name:'newMvs',
+          component:NewMvs,
+        },
+        {
+          path:'main/newabms',
+          name:'NewAlbums',
+          component:NewAlbums,
+        },
+
       ]
     },
     //搜索音乐

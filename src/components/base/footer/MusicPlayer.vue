@@ -76,8 +76,8 @@ export default {
     margin:3px;  
 }
 audio{
-    /* width:80%; 
-    margin-top:10%;
+    /* width:80%;  */
+   /* margin-top:10%;
      height:100%; */
      flex:18;
 }
