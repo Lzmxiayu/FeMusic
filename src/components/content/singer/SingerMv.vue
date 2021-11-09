@@ -1,7 +1,7 @@
 <template>
   <div id="singer-mv">
       
-          <div class="sg-con" v-for="mv in mvs " :key="mv.id">
+          <div  v-for="mv in mvs " :key="mv.id" @click="PushMv(mv.id)" class="sg-con">
                 <div  class="sgmv-cover">
                     <img :src="mv.imgurl">
                 </div>
@@ -41,6 +41,18 @@ export default {
             }
         )
 
+    },
+    methods:{
+        PushMv(mid){
+            this.$router.push(
+                {
+                    name:'MvPlayer',
+                    params:{
+                        mid:mid
+                    }
+                }
+            )
+        }
     }
 
 }

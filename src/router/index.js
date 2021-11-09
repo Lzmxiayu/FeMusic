@@ -15,6 +15,7 @@ import SingerAlbums from '../components/content/singer/SingerAlbums'
 import SingerDetails from '../components/content/singer/SingerDetails'
 import SingerMv from '../components/content/singer/SingerMv'
 import SimilarSingers from '../components/content/singer/SimilarSingers'
+import MvPlayer from '../components/base/main/MvPlayer'
 
 Vue.use(Router)
 
@@ -110,7 +111,12 @@ export default new Router({
         },
       ]
     },
-    
+    //mv播放页
+    {
+      path:'/mvpr',
+      name:'MvPlayer',
+      component:MvPlayer,
+    }
 
 
   ]
