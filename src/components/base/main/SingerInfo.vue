@@ -8,6 +8,7 @@
          
           <div class="desc">
               <h3>{{singerIo.name}}</h3>
+              <p>{{singerIo.briefDesc}}</p>
           </div>
       </div>
       <div class='sgio-menu'>
@@ -34,6 +35,7 @@ export default {
             name:'',
             coverUrl:'',
             mvs:[],
+            briefDesc:'',
             introduction:[],
             albums:[],
             hotSongs:[],
@@ -44,17 +46,17 @@ export default {
     },
     watch:{
         singerIo(){
-              axios.get(`/artist/detail/?id=${this.singerIo.id}`).then(
-                            
+              axios.get(`/artist/detail/?id=${this.singerIo.id}`).then(                        
                 response => {
                   this.singerIo.coverUrl=response.data.data.artist.cover
                   this.singerIo.name=response.data.data.artist.name
-                //   console.log(response)
+                  console.log(response)
                 },
                 error => {
                     console.log(error)
-                }
-        )
+                }          
+            )
+               
 
         }
     },
@@ -78,8 +80,7 @@ export default {
             )
     },
         getInfo(id){
-            axios.get(`/artist/detail/?id=${id}`).then(
-                            
+            axios.get(`/artist/detail/?id=${id}`).then(        
                 response => {
                   this.singerIo.coverUrl=response.data.data.artist.cover
                   this.singerIo.name=response.data.data.artist.name
@@ -87,8 +88,15 @@ export default {
                 },
                 error => {
                     console.log(error)
-                }
+                }       
         )
+            axios.get(`/artist/desc?id=${id}`).then(
+                    response =>{
+                // console.log
+                    this.singerIo.briefDesc = response.data.briefDesc
+                    // console.log(response.data.briefDesc)
+                }
+            )
 
         }
     },
@@ -102,6 +110,7 @@ export default {
             this.singerIo.id=id
             this.getInfo(this.singerIo.id)
         })
+      
     
     },
    
@@ -110,8 +119,8 @@ export default {
 
 <style scoped>
 #singer-info{
-    display: flex;
-    flex-direction: column;
+    /* display: flex; */
+    /* flex-direction: column; */
     height:100%;
     width:100%;
     overflow: scroll;
@@ -121,7 +130,7 @@ export default {
 }
 
 .sgio-header{
-    flex:1;
+    /* flex:1; */
     height:40%;
     flex:10;
     width:100%;
@@ -149,13 +158,23 @@ img{
     margin-top:2%;
 }
 .desc h3{
-    margin:10px;
+    /* margin:10px; */
+    margin:0% auto;
+}
+.desc p{
+    font-size:80%; 
+    overflow: scroll;
+    height:78%; 
+    width:90%;
+}
+p::-webkit-scrollbar{
+    display: none;
 }
 
 .sgio-menu{
     flex:2;
     /* margin-left:5%; */
-    /* height:10%; */
+    height:10%;
     width:40%;
     padding:0%;
     padding-left:6%;

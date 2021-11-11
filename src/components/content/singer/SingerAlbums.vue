@@ -153,7 +153,7 @@ export default {
 
 <style scoped>
 #singer-albums{
-    height:40%;
+    /* height:40%; */
     width:100%;
     margin-bottom:5%;
     flex:10;

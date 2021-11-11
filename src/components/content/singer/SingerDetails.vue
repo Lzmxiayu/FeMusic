@@ -25,7 +25,7 @@ export default {
             response =>{
                 // console.log
                 this.details = response.data.introduction
-                console.log(response.data.introduction)
+                // console.log(response.data)
             }
         )
     }
@@ -35,7 +35,7 @@ export default {
 
 <style scoped>
 #singer-details{
-    min-height:40%;
+    /* min-height:40%; */
     width:90%;
     margin-left: 5%;
     /* overflow: scroll; */

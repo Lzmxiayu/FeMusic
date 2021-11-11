@@ -48,6 +48,7 @@ export default {
     name:'song-list',
     data(){
         return {
+            keyword:'',
             songs:[],
             num:'0',
             permitted:true,
@@ -106,7 +107,7 @@ export default {
 			},
         // 跳转到歌手页
         PushRo(name,id){
-            // console.log(id)
+            console.log(id)
            this.$router.push(
                {
                   name:name,
@@ -117,8 +118,22 @@ export default {
            )
         }
     },  
+    watch:{
+        ''(n,o){
+            // console.log(n+'    '+o)
+        }
+    },
     mounted(){
-        this.songs=this.$route.params.songs
+        this.keyword=this.$route.params.keyword
+         //获取单曲
+        axios.get(`/search?keywords=${this.keyword}&limit=50`).then(
+            response => {
+                this.songs = response.data.result.songs        
+                // console.log(response.data.result.songs)
+            },
+            error => {
+                console.log('Failed')
+            })
         
         // console.log(this.songs)
     }

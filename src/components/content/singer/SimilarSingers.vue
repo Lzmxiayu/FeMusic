@@ -52,7 +52,7 @@ export default {
 
 <style scoped>
 #singer-similar{
-    height:40%;
+    /* height:40%; */
     /* overflow: scroll; */
     flex:10;
     /* margin-top:20px; */

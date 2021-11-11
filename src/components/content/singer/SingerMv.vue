@@ -60,7 +60,7 @@ export default {
 
 <style scoped>
 #singer-mv{
-    min-height:40%;
+    /* min-height:40%; */
     width:95%;
     margin-left:5%;
     margin-bottom:5%;

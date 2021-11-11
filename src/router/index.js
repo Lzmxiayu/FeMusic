@@ -7,6 +7,11 @@ import PlayRecent from '../components/base/main/PlayRecent'
 import CollectMusic from '../components/base/main/CollectMusic'
 import SongList from '../components/content/search-content/SongList'
 import ArtistList from '../components/content/search-content/ArtistList'
+import AlbumList from '../components/content/search-content/AlbumList'
+import VideosList from '../components/content/search-content/VideosList'
+import SongSheet from '../components/content/search-content/SongSheet'
+import UserList from '../components/content/search-content/UserList'
+
 import FoundMusic from '../components/base/main/FoundMusic'
 import Singers from '../components/content/found-music/Singers'
 import NewMvs from '../components/content/found-music/NewMvs'
@@ -21,13 +26,24 @@ import MvPlayer from '../components/base/main/MvPlayer'
 
 Vue.use(Router)
 
+const originalPush = Router.prototype.push
+ 
+Router.prototype.push = function push(location) {
+  return originalPush.call(this, location).catch(err => err)
+}
+
 export default new Router({
+  // mode:'hash',
   mode:"history",
   routes: [
-
+    // {
+    //   path:'*',
+    //   redirect:'FoundMusic'
+    // },
     //主页
     {
       path:'/',
+      name:'FoundMusic',
       component:FoundMusic,
       children:[
         {
@@ -63,7 +79,28 @@ export default new Router({
           path:'atlt',
           name:'Artist',
           component:ArtistList,
-        }
+        },
+        {
+          path:'albm',
+          name:'Album',
+          component:AlbumList,
+        },
+        {
+          path:'vdeo',
+          name:'Video',
+          component:VideosList,
+        },
+        {
+          path:'sgst',
+          name:'SongSheet',
+          component:SongSheet,
+        },
+        {
+          path:'urlt',
+          name:'UserList',
+          component:UserList,
+        },
+
       ]
     },
     //用户主页

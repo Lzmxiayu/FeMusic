@@ -1,6 +1,6 @@
 <template>
   <div id="search-header">
-      <p @click="PushRo('singlesong')">推荐</p>
+      <p @click="PushRo('')">推荐</p>
       <p>专属定制</p>
       <p @click="PushRo('Singers')">歌手</p>
       <p @click="PushRo('newMvs')">视频</p>

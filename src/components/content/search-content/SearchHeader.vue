@@ -2,9 +2,10 @@
   <div id="search-header">
       <p @click="PushRo('singlesong')">单曲</p>
       <p @click="PushRo('Artist')">歌手 </p>
-      <p >专辑</p>
-      <p>视频</p>
-      <p>歌单</p>
+      <p @click="PushRo('Album')">专辑</p>
+      <p @click="PushRo('Video')">视频</p>
+      <p @click="PushRo('SongSheet')">歌单</p>
+      <p @click="PushRo('UserList')">用户</p>
   </div>
 </template>
 
@@ -14,24 +15,25 @@ export default {
     data(){
         return{
             result:{
+                key:'',
                  songs:''
             }
 
         }
     },
     mounted(){
-        this.$bus.$on('sendSongs',(songs)=>{   
-            this.result.songs=songs.slice(0,25)
+        this.$bus.$on('sendKey',(key)=>{   
+            this.result.key=key
        })
     },
     methods:{
-        PushRo(path){
+        PushRo(name){
             this.$router.push({
                 // path:'/fdmc'+path,
                 //注意这里只能用name，用path收不到参数
-                name:path,
+                name:name,
                 params:{
-                   songs: this.result.songs
+                   keyword: this.result.key
                 }
             },)
 

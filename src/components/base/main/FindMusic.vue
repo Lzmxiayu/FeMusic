@@ -26,44 +26,20 @@ export default {
      components: { SongList, SearchHeader },
     methods:{
         fetchData(){
-            // 当是从FindMusic进入时,即重新搜索时
-            if(this.$route.path === '/fdmc')
-            {
-             this.keyword=this.$route.params.keyword
-             //获取单曲
-            axios.get(`/search?keywords=${this.keyword}&limit=50`)
-            .then(
-                response=>{
-                    this.result.songs = response.data.result.songs
-                    this.$bus.$emit('sendSongs',this.result.songs) 
-                    //切换到结果显示界面 
-                     this.$router.push(
-                        {
-                        name:'singlesong',
-                        params:{
-                            songs:this.result.songs
-                            }
-                        }
-                        )
-                },
-                error=>{
-                     console.log('Failed')
-                }
+            
+            this.$bus.$on('recvtempkey',(keyword)=>{
+                    this.keyword=keyword
+                    //这里很重要，搞备份时要看
+                    // console.log('新关键词')
+                    // console.log(this.keyword)
 
-            )
-          //获取歌手
+                    this.$bus.$emit('sendKey',this.keyword) 
+                })
+            
+           
+            
 
-          }
-        //   console.log(this.keyword)
-          this.$bus.$emit('sendSearchkey',this.keyword)
-           this.$bus.$on('sendearchkey',(keyword)=>{
-                console.log(keyword)
-            })
-          //获取备份数据
-        //   this.$bus.$on('sendSearchkey',(keyword)=>{
-        //       this.keyword=keyword
-        //       console.log(this.keyword)
-        //   })
+    
         }
     },
     watch:{
@@ -79,10 +55,12 @@ export default {
 <style scoped>
 #find-music{
     height:75vh;
-    width:75vw;
+    /* width:75vw; */
+    width:95%;
     /* overflow: scroll; */
     /* margin-left:2.5vw; */
     margin:2% auto;
+    margin-left:2.5%;
 }
 #find-music::-webkit-scrollbar {
     display: none;

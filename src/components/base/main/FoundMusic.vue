@@ -2,7 +2,7 @@
   <div id='found-music'>
       <found-header/>
       <!-- <button @click="login">login</button> -->
-      <!-- <button @click="recmdSong">test</button> -->
+      <button @click="recmdSong">test</button>
       <router-view></router-view>
   <!-- <div class='found-head'>
       标题
@@ -62,10 +62,10 @@ export default {
         // console.log('sa')
         ///artist/desc/?id=11972054详情页
 
-        axios.get('/artist/desc/?id=11972054').then(
+        axios.get('/search?keywords=海阔天空&type=100').then(
                             
                 response => {
-                    // console.log(response)
+                    console.log(response)
                 },
                 error => {
                     console.log(error)

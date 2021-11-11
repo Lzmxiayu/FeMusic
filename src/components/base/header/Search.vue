@@ -16,26 +16,29 @@ export default {
     },
     methods:{
         searchSong(){
-            if(this.$route.path !== '/'){
-                this.$router.push({path:'/'})
-                // console.log('主界面')
-            }
-                
+          if(this.$route.name === 'singlesong')
+                this.$router.push({path:'/'}) //切换到根目录再回来相当于销毁原FindMusic组件
             
-            this.$destroy('FindMusic')
-                if(this.$route.path !== '/fdmc')
-                        this.$router.push({
-                            // path:'/fdmc',
-                            //注意这里只能用name，用path收不到参数
-                            name:'FindMusic',
-                            params:{
-                                keyword:this.keyword
-                            }                         
-                        },)
-            
+            this.$bus.$emit('sendtempkey',this.keyword)
+
+            //注意这里用延时解决数据不更新问题
+          setTimeout(()=>{
+               this.$router.push({
+                    // path:'/fdmc',
+                    //注意这里只能用name，用path收不到参数
+                    name:'singlesong',
+                    params:{
+                        keyword:this.keyword
+                    }                         
+                },)
+
+          },2)
+       
+               
+
                     
             // console.log('切换路由中')
-            this.$bus.$emit('sendKeywords',this.keyword)
+            // this.$bus.$emit('sendKeywords',this.keyword)
             //获取数据
              
         }
