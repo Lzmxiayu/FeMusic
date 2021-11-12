@@ -18,6 +18,7 @@ import NewMvs from '../components/content/found-music/NewMvs'
 import NewAlbums from '../components/content/found-music/NewAlbums'
 import SongBoard from '../components/base/main/SongBoard'
 import SingerInfo from '../components/base/main/SingerInfo'
+import AlbumDetail from '../components/base/main/AlbumDetail'
 import SingerAlbums from '../components/content/singer/SingerAlbums'
 import SingerDetails from '../components/content/singer/SingerDetails'
 import SingerMv from '../components/content/singer/SingerMv'
@@ -160,6 +161,12 @@ export default new Router({
           component:SimilarSingers,
         },
       ]
+    },
+    //专辑详情
+    {
+      path:'/amdl',
+      name:'AlbumDetail',
+      component:AlbumDetail,
     },
     //mv播放页
     {

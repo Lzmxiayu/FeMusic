@@ -61,7 +61,10 @@ export default {
     recmdSong(){
         // console.log('sa')
         ///artist/desc/?id=11972054详情页
-
+        //前进后退
+        // window.history.back()
+        // window.history.forward()
+        
         axios.get('/search?keywords=海阔天空&type=100').then(
                             
                 response => {

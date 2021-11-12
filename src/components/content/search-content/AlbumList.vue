@@ -2,7 +2,7 @@
   <div id="album-list">
     <div v-for="album in albums" 
         :key="album.id"
-        @click="PushSinger(album.id)"
+        @click="PushAlbum(album.id)"
         class="album">
         <div class="a-ava">
           <img :src="album.blurPicUrl">
@@ -25,11 +25,11 @@ export default {
     }
   },
   methods:{
-        PushSinger(sid){
+        PushAlbum(aid){
           this.$router.push({
-            name:'SingerAlbums',
+            name:'AlbumDetail',
             params:{
-              sid:sid
+              aid:aid
             }
           })
         }

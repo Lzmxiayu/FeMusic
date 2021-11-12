@@ -7,7 +7,7 @@
           </div>
          
           <div class="desc">
-              <h3>{{singerIo.name}}</h3>
+              <h2>{{singerIo.name}}</h2>
               <p>{{singerIo.briefDesc}}</p>
           </div>
       </div>
@@ -157,7 +157,7 @@ img{
     flex:6;
     margin-top:2%;
 }
-.desc h3{
+.desc h2{
     /* margin:10px; */
     margin:0% auto;
 }
