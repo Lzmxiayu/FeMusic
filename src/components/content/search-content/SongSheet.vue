@@ -2,7 +2,7 @@
   <div id="song-sheet">
     <div v-for="sgsheet in sgsheets" 
         :key="sgsheet.id"
-        @click="PushSinger(sgsheet.id)"
+        @click="PushSongSheet(sgsheet.id)"
         class="sgsheet">
         <div class="st-ava">
           <img :src="sgsheet.coverImgUrl">
@@ -25,9 +25,9 @@ export default {
     }
   },
   methods:{
-        PushSinger(sid){
+        PushSongSheet(sid){
           this.$router.push({
-            name:'SongSheet',
+            name:'SongSheetDetail',
             params:{
               sid:sid
             }
@@ -35,7 +35,8 @@ export default {
         }
   },
   mounted(){
-        this.keyword=this.$route.params.keyword
+        // this.keyword=this.$route.params.keyword
+         this.keyword=this.$store.state.keyword
          //获取歌手
         axios.get(`/search?keywords=${this.keyword}&type=1000&limit=50`).then(
             response => {

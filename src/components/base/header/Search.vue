@@ -21,6 +21,8 @@ export default {
             
             this.$bus.$emit('sendtempkey',this.keyword)
 
+            this.$store.state.keyword=this.keyword
+
             //注意这里用延时解决数据不更新问题
           setTimeout(()=>{
                this.$router.push({

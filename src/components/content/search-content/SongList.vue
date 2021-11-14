@@ -107,7 +107,8 @@ export default {
 			},
         // 跳转到歌手页
         PushRo(name,id){
-            console.log(id)
+            // console.log(id)
+             this.$store.state.singer.push(id)
            this.$router.push(
                {
                   name:name,
@@ -124,7 +125,8 @@ export default {
         }
     },
     mounted(){
-        this.keyword=this.$route.params.keyword
+        // this.keyword=this.$route.params.keyword
+        this.keyword=this.$store.state.keyword
          //获取单曲
         axios.get(`/search?keywords=${this.keyword}&limit=50`).then(
             response => {

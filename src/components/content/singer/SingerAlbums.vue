@@ -5,7 +5,7 @@
               <img src="../../../assets/top50.png">
           </div>
           <div class="al-content">
-              <div v-for="song in this.hotSongs.slice(0,10)" :key="song.id" class="al-songs">
+              <div v-for="song in this.hotSongs" :key="song.id" class="al-songs">
                    <button  class='al-songOrder'>
                        <!-- {{song.index}} -->
               </button>
@@ -31,13 +31,13 @@
               <div v-for="song in al.songs" :key="song.id" class="al-songs">
                    <button  class='al-songOrder'>
                        {{song.index}}
-              </button>
-              <button @click="playMusic(song.id)" class="al-songName" type="text" >
+                    </button>
+                     <button @click="playMusic(song.id)" class="al-songName" type="text" >
                     	{{(song.name.length>20)?song.name.slice(0,20)+'...':song.name}}
                         <!-- <div v-if="permitted"> -->
                            <!-- <p>jin</p> -->
                         <!-- </div> -->
- 			  </button>
+ 			         </button>
                
                 <button class="al-songAlbum" type="text" >
 						
@@ -61,7 +61,8 @@ export default {
         }
     },
     mounted(){
-        this.sid=this.$route.params.sid
+        // this.sid=this.$route.params.sid
+        this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
         // console.log(this.sid)
         var albums=new Array();
         
@@ -163,7 +164,7 @@ export default {
 }
 .con{
     width:100%;
-    height:100%;
+    /* height:auto; */
     margin:10px;
     display:flex;
 }
@@ -179,8 +180,12 @@ export default {
 }
 .con .al-content{
     flex:4;
+     height:40%;
     /* background: sandybrown; */
 }
+/* .al-content{
+   
+} */
 .al-songs{
     width:90%;
     height:8%;

@@ -3,6 +3,7 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import store from './store/store'
 import axios from 'axios'
 // import $ from 'jquery'
 Vue.config.productionTip = false
@@ -17,6 +18,7 @@ axios.defaults.baseURL="http://112.74.174.104:3000"
 new Vue({
   el: '#app',
   router,
+  store,
   components: { App },
   template: '<App/>',
   beforeCreate(){

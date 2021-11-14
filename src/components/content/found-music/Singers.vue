@@ -36,6 +36,7 @@ export default {
     },
     methods:{
         PushSinger(id){
+             this.$store.state.singer.push(id)
             this.$router.push(
                 {
                     name:'SingerAlbums',

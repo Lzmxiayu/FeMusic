@@ -35,7 +35,8 @@ export default {
         }
   },
   mounted(){
-        this.keyword=this.$route.params.keyword
+        // this.keyword=this.$route.params.keyword
+         this.keyword=this.$store.state.keyword
          //获取歌手
         axios.get(`/search?keywords=${this.keyword}&type=1014&limit=50`).then(
             response => {

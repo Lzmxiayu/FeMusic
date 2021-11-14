@@ -1,7 +1,8 @@
 <template>
     <div id="user-list">
         <div v-for="user in users"
-        :key="user.id"
+        :key="user.userId"
+        @click="PushUser(user.userId)"
         class="user">
             <div class="user-ava">
                 <img :src="user.avatarUrl">
@@ -24,12 +25,26 @@ export default{
             users:[],
         }
     },
+    methods:{
+        PushUser(uid){
+        //   console.log(uid)
+         this.$store.state.user.push(uid)
+        //   console.log(this.$store.state.user)
+          this.$router.push({
+            name:'UserDetail',
+            params:{
+              uid:uid
+            }
+          })
+        }
+    },
     mounted(){
-        this.keyword=this.$route.params.keyword
+        // this.keyword=this.$route.params.keyword
+         this.keyword=this.$store.state.keyword
         axios.get(`/search?keywords=${this.keyword}&type=1002&limit=50`).then(
             response => {
                 this.users = response.data.result.userprofiles 
-                // console.log(response.data.result.userprofiles)
+                // console.log(this.users)
             },
             error =>{
                 console.log('Failed!')
@@ -45,8 +60,8 @@ export default{
     height:100%;
     margin-left:2%;
     overflow:scroll;
-     display: flex;
-  flex-direction: column;
+    display: flex;
+    flex-direction: column;
 }
 #user-list::-webkit-scrollbar{
     display:none;

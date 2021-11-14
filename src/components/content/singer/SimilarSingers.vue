@@ -21,11 +21,13 @@ export default {
     name:'singer-similar',
     data(){
         return{
+            sid:'',
             simisg:[],
         }
     },
     mounted(){
-        axios.get(`/simi/artist?id=${this.$route.params.sid}`).then(
+        this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+        axios.get(`/simi/artist?id=${this.sid}`).then(
             response => {
                 console.log(response.data)
                 this.simisg =response.data.artists
@@ -34,6 +36,7 @@ export default {
     },
     methods:{
         PushSg(id){
+            this.$store.state.singer.push(id)
             // this.$router.push({path:'/'})
             this.$bus.$emit('senSingerId',id)
             this.$router.push(

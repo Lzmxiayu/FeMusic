@@ -26,6 +26,7 @@ export default {
   },
   methods:{
         PushAlbum(aid){
+          this.$store.state.album.push(aid)
           this.$router.push({
             name:'AlbumDetail',
             params:{
@@ -35,8 +36,9 @@ export default {
         }
   },
   mounted(){
-        this.keyword=this.$route.params.keyword
-         //获取歌手
+        // this.keyword=this.$route.params.keyword
+         this.keyword=this.$store.state.keyword
+         //获取专辑
         axios.get(`/search?keywords=${this.keyword}&type=10&limit=50`).then(
             response => {
                 this.albums = response.data.result.albums        

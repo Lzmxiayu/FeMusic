@@ -8,7 +8,7 @@
            <h2>{{this.info.name}}</h2>
           </div>
       </div>
-      <div class="al-songs">
+      <div class="am-songs">
           <div class="as-header">
               <p class="alsongOrder">序号</p>
               <p class="alsongName">歌名</p>
@@ -66,7 +66,8 @@ export default {
         }
     },
     mounted(){
-        this.id=this.$route.params.aid
+        // this.id=this.$route.params.aid
+       this.id=this.$store.state.album[this.$store.state.album.length-1]
         // console.log(this.id)
         axios.get(`/album?id=${this.id}`).then(
             response => {
@@ -114,11 +115,9 @@ export default {
     /* width:100%; */
 
 }
-.al-songs{
+.am-songs{
     width:90%;
     height:auto;
-    /* display:flex; */
-    /* flex-direction: column; */
     margin-left:6%;
 }
 

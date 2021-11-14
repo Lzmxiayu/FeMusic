@@ -35,6 +35,8 @@ For a detailed explanation on how things work, check out the [guide](http://vuej
 目前尝试解决办法:建立TempData组件备份数据  
 TempData监视route属性,对二级组件传递备份值，如SingerInfo传递备份的id值,  
 注意先后顺序或者通过路由参数判断是路由跳转还是回溯
+vueX共享了变量，目前注意前进后退索引变化
+后退后再跳转则要将此节点后的记录删除
 
 已做版块:
 搜索结果

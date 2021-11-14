@@ -17,11 +17,13 @@ export default {
     name:'singer-details',
     data(){
         return{
+            sid:'',
             details:[],
         }
     },
     mounted(){
-        axios.get(`/artist/desc?id=${this.$route.params.sid}`).then(
+         this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+        axios.get(`/artist/desc?id=${this.sid}`).then(
             response =>{
                 // console.log
                 this.details = response.data.introduction

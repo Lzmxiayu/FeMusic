@@ -2,22 +2,9 @@
   <div id='found-music'>
       <found-header/>
       <!-- <button @click="login">login</button> -->
-      <button @click="recmdSong">test</button>
+      <!-- <button @click="recmdSong">test</button> -->
       <router-view></router-view>
-  <!-- <div class='found-head'>
-      标题
-      <button @click="login">Login</button>
-            <button @click="recmdSong">获取每日推荐歌曲</button>
-
-      </div> 
-      <div class='found-content'>
-      </div> 
-      <div class='found-head'>
-          标题
-      </div> 
-      <div class='found-content'>
-      </div> 
- -->
+ 
   </div>
 </template>
 
@@ -64,8 +51,9 @@ export default {
         //前进后退
         // window.history.back()
         // window.history.forward()
-        
-        axios.get('/search?keywords=海阔天空&type=100').then(
+        // console.log(this.$store.state.count)
+        // this.$store.state.count=546
+        axios.get('/top/album').then(
                             
                 response => {
                     console.log(response)

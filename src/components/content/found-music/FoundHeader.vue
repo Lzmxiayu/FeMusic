@@ -1,10 +1,13 @@
 <template>
   <div id="search-header">
-      <p @click="PushRo('')">推荐</p>
+      <p @click="PushRo('')">个性推荐</p>
       <p>专属定制</p>
-      <p @click="PushRo('Singers')">歌手</p>
-      <p @click="PushRo('newMvs')">视频</p>
       <p @click="PushRo('NewAlbums')">歌单</p>
+      <p>排行榜</p>
+      <p @click="PushRo('Singers')">歌手</p>
+      <p @click="PushRo('NewMusic')">最新音乐</p>
+      <p @click="PushRo('newMvs')">视频</p>
+      
   </div>
 </template>
 

@@ -19,11 +19,13 @@ export default {
     name:'singer-mv',
     data(){
         return{
+            sid:'',
             mvs:[],
         }
     },
     mounted(){
-        axios.get(`/artist/mv?id=${this.$route.params.sid}`).then(
+        this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+        axios.get(`/artist/mv?id=${this.sid}`).then(
             response => {
                 this.mvs=response.data.mvs
                 // console.log(response.data.mvs)

@@ -16,9 +16,14 @@ import FoundMusic from '../components/base/main/FoundMusic'
 import Singers from '../components/content/found-music/Singers'
 import NewMvs from '../components/content/found-music/NewMvs'
 import NewAlbums from '../components/content/found-music/NewAlbums'
+import NewMusic from '../components/content/found-music/NewMusic'
+
 import SongBoard from '../components/base/main/SongBoard'
 import SingerInfo from '../components/base/main/SingerInfo'
 import AlbumDetail from '../components/base/main/AlbumDetail'
+import SongSheetDetail from '../components/base/main/SongSheetDetail'
+import UserDetail from '../components/base/main/UserDetail'
+
 import SingerAlbums from '../components/content/singer/SingerAlbums'
 import SingerDetails from '../components/content/singer/SingerDetails'
 import SingerMv from '../components/content/singer/SingerMv'
@@ -36,6 +41,7 @@ Router.prototype.push = function push(location) {
 export default new Router({
   // mode:'hash',
   mode:"history",
+  linkActiveClass:"active",
   routes: [
     // {
     //   path:'*',
@@ -61,6 +67,11 @@ export default new Router({
           path:'main/newabms',
           name:'NewAlbums',
           component:NewAlbums,
+        },
+        {
+          path:'main/nwmc',
+          name:'NewMusic',
+          component:NewMusic,
         },
 
       ]
@@ -167,6 +178,18 @@ export default new Router({
       path:'/amdl',
       name:'AlbumDetail',
       component:AlbumDetail,
+    },
+    //歌单详请
+    {
+      path:'SongSheetDetail',
+      name:'SongSheetDetail',
+      component:SongSheetDetail
+    },
+    //用户详情
+    {
+      path:'/urdl',
+      name:'UserDetail',
+      component:UserDetail,
     },
     //mv播放页
     {

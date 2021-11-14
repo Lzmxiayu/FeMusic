@@ -26,6 +26,9 @@ export default {
   },
   methods:{
         PushSinger(sid){
+          this.$store.state.singer.push(sid)
+          // console.log(this.$store.state.singer)
+          // console.log(this.$store.state.singer[this.$store.state.singer.length-1])
           this.$router.push({
             name:'SingerAlbums',
             params:{
@@ -35,7 +38,9 @@ export default {
         }
   },
   mounted(){
-        this.keyword=this.$route.params.keyword
+        // this.keyword=this.$route.params.keyword
+         this.keyword=this.$store.state.keyword
+         
          //获取歌手
         axios.get(`/search?keywords=${this.keyword}&type=100&limit=50`).then(
             response => {

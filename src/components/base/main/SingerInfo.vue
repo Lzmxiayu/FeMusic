@@ -45,29 +45,22 @@ export default {
     }
     },
     watch:{
-        singerIo(){
-              axios.get(`/artist/detail/?id=${this.singerIo.id}`).then(                        
-                response => {
-                  this.singerIo.coverUrl=response.data.data.artist.cover
-                  this.singerIo.name=response.data.data.artist.name
-                  console.log(response)
-                },
-                error => {
-                    console.log(error)
-                }          
-            )
+        // singerIo(){
+        //       axios.get(`/artist/detail/?id=${this.singerIo.id}`).then(                        
+        //         response => {
+        //           this.singerIo.coverUrl=response.data.data.artist.cover
+        //           this.singerIo.name=response.data.data.artist.name
+        //           console.log(response)
+        //         },
+        //         error => {
+        //             console.log(error)
+        //         }          
+        //     )
                
 
-        }
+        // }
     },
      methods:{
-         recmdSong(){
-        // console.log('sa')
-        // /artist/desc/?id=11972054详情页
-        // /artist/album
-        // /artist/mv
-        // /artists
-    },
         Opens(name,id){
             // console.log(id)
             this.$router.push(
@@ -103,15 +96,17 @@ export default {
     mounted(){
 
         //通过路由切换时
-        this.singerIo.id=this.$route.params.sid
-          this.getInfo(this.singerIo.id)
-        //通过相似歌手切换时
+        // this.singerIo.id=this.$route.params.sid
+         this.singerIo.id=this.$store.state.singer[this.$store.state.singer.length-1]
+       
+          //通过相似歌手切换时
         this.$bus.$on('senSingerId',(id)=>{
-            this.singerIo.id=id
+             this.singerIo.id=this.$store.state.singer[this.$store.state.singer.length-1]
+            // this.singerIo.id=id
             this.getInfo(this.singerIo.id)
         })
-      
-    
+         this.getInfo(this.singerIo.id)
+
     },
    
 }
@@ -139,17 +134,16 @@ export default {
     /* text-align:center; */
 }
 .sgio-header .imgp{
-    /* width:40%; */
+    width:40%;
     height:100%;
     flex:3;
     text-align: center;
     /* background: white; */
 }
 img{
-    height:80%;
-    width:70%;
-    top:10%;
-    position: relative;
+    /* height:80%; */
+    width:60%;
+    margin-top:10%;
     border-radius:15px;
     /* height:80%; */
 }

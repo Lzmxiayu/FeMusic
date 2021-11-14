@@ -42,14 +42,14 @@ export default {
     },
     methods:{
         PushNewAlbum(id){
-            // this.$router.push(
-            //     {
-            //         name:'MvPlayer',
-            //         params:{
-            //             mid:id,
-            //         }
-            //     }
-            // )
+            this.$router.push(
+                {
+                    name:'SongSheetDetail',
+                    params:{
+                        sid:id,
+                    }
+                }
+            )
         }
     }
 }
