@@ -60,6 +60,7 @@ export default {
   overflow: scroll;
   display: grid;
   grid-template-columns: 32% 32% 32%;
+  /* grid-template-rows: 30% 30% 30%; */
   grid-row-gap: 3%;
 }
 #videos-list::-webkit-scrollbar{
@@ -67,11 +68,13 @@ export default {
 }
 .video{
   width:90%;
+  height:100%;
   text-align: center;
   /* height:100%; */
 }
 .video img{
   width:100%;
+  height:80%;
   border-radius: 5px;
 }
 .video h4{

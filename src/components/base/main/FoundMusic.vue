@@ -1,8 +1,8 @@
 <template>
   <div id='found-music'>
       <found-header/>
-      <!-- <button @click="login">login</button> -->
-      <!-- <button @click="recmdSong">test</button> -->
+      <button @click="login">login</button>
+      <button @click="recmdSong">test</button>
       <router-view></router-view>
  
   </div>
@@ -38,7 +38,7 @@ export default {
             axios.post('/login/cellphone?phone=15360247358&password=1260937224lzm').then(
                             
                 response => {
-                    // console.log(response)
+                    console.log(response)
                 },
                 error => {
 
@@ -53,7 +53,10 @@ export default {
         // window.history.forward()
         // console.log(this.$store.state.count)
         // this.$store.state.count=546
-        axios.get('/top/album').then(
+        
+        ///personalized
+        // /recommend/songs
+        axios.get('/login/qr/check?key=c83b4c8d-b8ad-4464-b991-74477d2c708d').then(
                             
                 response => {
                     console.log(response)
@@ -74,7 +77,7 @@ export default {
     /* width:100%; */
     /* overflow: scroll; */
     /* margin-left:2.5vw; */
-    margin:0% 2% 0% 2%;
+    margin:0% 2% 0% 4%;
     display: flex;
     flex-direction: column;
 }

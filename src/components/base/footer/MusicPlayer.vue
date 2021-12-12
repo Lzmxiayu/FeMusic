@@ -1,7 +1,9 @@
 <template>
   <div id="music-player">
       <!-- <button @click="OpenSongBoard" style="width:50px;">详细信息</button> -->
-      <img :src="coverUrl" @click="OpenSongBoard" style="width:50px;">
+      <div class="m-img">
+             <img v-lazy="coverUrl" @click="OpenSongBoard" >
+      </div>
        <audio
        autoplay
        :src="songInfo.url"
@@ -68,17 +70,29 @@ export default {
 #music-player{
     display: flex;
     height:100%;    
+    width:100%;
     /* padding-top:10px; */
 }
-#music-player img{
-    flex:1;    
+.m-img{
+    height:100%;
+    width:8%;
+    /* padding-left:0.5%; */
+    /* padding-right:0.5%; */
+    /* display: 2; */
+}
+.m-img img{
+    /* flex:1;     */
     border-radius:10px;
-    margin:3px;  
+    /* margin:3px;   */
+    height:80%;
+    /* width:80%; */
+    margin-top: 6%;
+    margin-left:16%;
 }
 audio{
     /* width:80%;  */
    /* margin-top:10%;
      height:100%; */
-     flex:18;
+     /* flex:20; */
 }
 </style>

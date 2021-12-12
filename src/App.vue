@@ -15,7 +15,7 @@ import MusicMain from './components/layout/MusicMain'
 import MusicFooter from './components/layout/MusicFooter'
 import MusicSidebar from './components/layout/MusicSidebar.vue'
 import TempData from './components/content/TempData.vue'
-
+import axios from 'axios'
 
 
 
@@ -25,6 +25,13 @@ export default {
     MusicHeader,MusicMain,MusicFooter,
     MusicSidebar,TempData
     
+  },
+  mounted(){
+    axios.get('/toplist').then(
+      res =>{
+        console.log(res)
+      }
+    )
   }
 }
 </script>

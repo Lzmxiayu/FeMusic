@@ -17,6 +17,8 @@ import Singers from '../components/content/found-music/Singers'
 import NewMvs from '../components/content/found-music/NewMvs'
 import NewAlbums from '../components/content/found-music/NewAlbums'
 import NewMusic from '../components/content/found-music/NewMusic'
+import NewSongs from '../components/content/found-music/new-music/NewSongs'
+import NewAl from '../components/content/found-music/new-music/NewAl'
 
 import SongBoard from '../components/base/main/SongBoard'
 import SingerInfo from '../components/base/main/SingerInfo'
@@ -72,6 +74,19 @@ export default new Router({
           path:'main/nwmc',
           name:'NewMusic',
           component:NewMusic,
+          children:[
+            {
+              path:'nwsgs',
+              name:'NewSongs',
+              component:NewSongs,
+            },
+            {
+              path:'nalms',
+              name:'NewAl',
+              component:NewAl,
+            }
+
+          ]
         },
 
       ]
@@ -181,7 +196,7 @@ export default new Router({
     },
     //歌单详请
     {
-      path:'SongSheetDetail',
+      path:'/SongSheetDetail',
       name:'SongSheetDetail',
       component:SongSheetDetail
     },

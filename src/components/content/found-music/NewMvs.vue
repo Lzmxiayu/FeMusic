@@ -5,7 +5,8 @@
           <div v-for="newMv in newMvs" :key="newMv.id" 
                 @click="Pushnewmv(newMv.id)" 
                 class="newmvLink" >
-              <img :src="newMv.cover">
+              <!-- <img :src="newMv.cover"> -->
+              <img v-lazy="newMv.cover">
               <p >{{newMv.name}}</p>
           </div>
           

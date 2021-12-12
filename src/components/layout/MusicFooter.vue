@@ -18,6 +18,7 @@ export default {
 #music-footer{
     grid-area: footer;
     background: rgb(223, 127, 127);
+    height:10vh;
     padding:0%;
 }
 

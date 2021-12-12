@@ -2,7 +2,8 @@
   <div id='singers'>
       <div class="singer-lists">
           <div v-for="artist in artists" :key="artist.id" class="singerLink" >
-              <img :src="artist.img1v1Url">
+              <!-- <img :src="artist.img1v1Url"> -->
+              <img v-lazy="artist.img1v1Url">
               <p @click="PushSinger(artist.id)">{{artist.name}}</p>
           </div>
           
