@@ -1,8 +1,8 @@
 <template>
   <div id='found-music'>
       <found-header/>
-      <button @click="login">login</button>
-      <button @click="recmdSong">test</button>
+      <!-- <button @click="login">login</button> -->
+      <!-- <button @click="recmdSong">test</button> -->
       <router-view></router-view>
  
   </div>
@@ -35,7 +35,7 @@ export default {
     // },
     methods:{
         login(){
-            axios.post('/login/cellphone?phone=15360247358&password=1260937224lzm').then(
+            axios.post('/login/cellphone').then(
                             
                 response => {
                     console.log(response)
