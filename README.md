@@ -22,5 +22,6 @@ npm run build
 npm run build --report
 ```
 
-项目预览见文件夹“Femusic效果预览”
+项目预览见文件夹Femusic效果预览
 
+使用Tauri打包的windows客户端安装包在同名文件夹中
