@@ -81,13 +81,13 @@ export default {
               obj.time = time ? this.formatLyricTime(time[0].slice(1, time[0].length - 1)) : 0
               obj.uid = Math.random().toString().slice(-6)
               if (obj.lyric === '') {
-                console.log('这一行没有歌词')
+                // console.log('这一行没有歌词')
               } else {
                 this.songInfo.lyric.push(obj)
               }
             })
             // this.songInfo.lyric = lineArr
-          console.log(this.songInfo.lyric)
+          // console.log(this.songInfo.lyric)
 				},
 				error => {
 					// alert('请求歌曲失败')

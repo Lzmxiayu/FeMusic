@@ -1,6 +1,7 @@
 <template>
   <div id="search">
          <input @keyup.enter="searchSong" v-model="keyword"  class="search-box">
+
       </div>
 </template>
 
@@ -52,16 +53,17 @@ export default {
 <style scoped>
 #search{
     text-align: center;
+    font-size: 25% ;
     flex:2;
 }
 #search .search-box{
-    transform: translate(0,70%); 
-    height:30%;
-    width:30%;
+    transform: translate(0,45%); 
+    height:50%;
+    width:40%;
 
     border-radius: 10px;
     border-color: black;
     background-color:rgba(146, 108, 108,0.6);
-    opacity:0.8;
+    opacity:0.7;
 }
 </style>

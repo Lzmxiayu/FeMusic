@@ -9,7 +9,7 @@
         </div>
         <div v-if="load" class="Loading">
             <img src="../../../../assets/loading.gif" >
-            <h2>Loading...</h2>
+            <h3>Loading...</h3>
         </div>
         <div v-if="!load">
         <div class="ns-content" v-if="ifwk">
@@ -18,8 +18,8 @@
             </div>
             <div class="ns-main">
                 <div v-for="wd in weekdata" :key="wd.id" class="ns-unit">
-                    <img v-lazy="wd.blurPicUrl" >
-                    <p>{{wd.name}}</p>
+                    <img v-lazy="wd.blurPicUrl" @click="PushAlbum(wd.id)">
+                    <p>{{wd.name.length>15?(wd.name.slice(0,15)+'...'):wd.name}}</p>
                     <p class="nsArtist">{{wd.artist.name}}</p>
                 </div>
             </div>
@@ -32,7 +32,7 @@
                 <div v-for="wd in monthdata" :key="wd.id" class="ns-unit">
                     <!-- <img :src="wd.blurPicUrl" > -->
                     <img v-lazy="wd.blurPicUrl" >
-                    <p>{{wd.name}}</p>
+                    <p>{{wd.name.length>15?(wd.name.slice(0,15)+'...'):wd.name}}</p>
                     <p class="nsArtist">{{wd.artist.name}}</p>
                 </div>
             </div>
@@ -62,7 +62,7 @@ export default {
                 this.weekdata=response.data.weekData;
                 this.monthdata=response.data.monthData;
                 this.load=false
-                console.log(response.data)
+                // console.log(response.data)
             }
         )
         },
@@ -87,8 +87,15 @@ export default {
 				}
 				)
         },
-        PushAlbum(song){
-
+        PushAlbum(alid){
+            // console.log
+             this.$store.state.album.push(alid)
+          this.$router.push({
+            name:'AlbumDetail',
+            params:{
+              aid:alid
+            }
+          })
         }
 
 
@@ -140,16 +147,17 @@ export default {
     /* flex:2; */
     display: flex;
     flex-direction: column;
+    text-align: center;
 }
 .ns-unit img{
     height:70%;
     width:90%;
+    margin-left: 5%;
     border-radius: 5px;
 }
 .ns-unit p{
     padding:0% auto;
     margin:2% ;
-
 }
 
 .nsArtist{

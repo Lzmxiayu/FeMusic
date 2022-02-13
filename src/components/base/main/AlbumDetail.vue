@@ -43,11 +43,11 @@ export default {
         getSongInfo(id){
             axios.get(`/song/detail?ids=347230`).then(
                 response =>{
-                    console.log('song')
-                    console.log(response)
+                    // console.log('song')
+                    // console.log(response)
                 },
                 error =>{
-                    console.log('Failed')
+                    // console.log('Failed')
                 }
             )
         },
@@ -55,9 +55,7 @@ export default {
             //歌曲获取
 				axios.get(`/song/url?id=${id}`).then(
 				response => {
-			
                      this.$bus.$emit('sendSong',response.data.data[0])	
-				
 				},
 				error => {
 					alert('请求歌曲失败')

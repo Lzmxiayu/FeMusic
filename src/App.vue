@@ -29,7 +29,7 @@ export default {
   mounted(){
     axios.get('/toplist').then(
       res =>{
-        console.log(res)
+        // console.log(res)
       }
     )
   }

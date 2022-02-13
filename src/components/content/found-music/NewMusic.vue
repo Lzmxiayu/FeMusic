@@ -39,6 +39,11 @@ export default {
             currentIndex:0
         }
     },
+    created(){
+        this.$router.push({
+            name:'NewSongs'
+        })
+    },
     methods:{
         titleclick(index,name){
             this.currentIndex=index
@@ -54,6 +59,8 @@ export default {
 #new-music{
     width:100%;
     height:100%;
+    /* padding:10%,10%,10%,10%; */
+    text-align: center;
     overflow: scroll;
 }
 #new-music::-webkit-scrollbar{
@@ -61,7 +68,9 @@ export default {
 }
 .nwmc-header{
     height:10%;
-    width: 100%;
+    width: 90%;
+    margin-left: 5%;
+    /* margin:10 */
     text-align: center;
     /* margin:0%; */
     /* padding:0%; */
@@ -97,6 +106,8 @@ export default {
 }
 
 .nwmc-content{
+    width: 90%;
+    margin-left: 5%;
     background: white;
 }
 </style>

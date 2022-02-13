@@ -34,7 +34,7 @@ export default {
     },
     methods:{
         PushAlbum(aid){
-            console.log
+            // console.log
              this.$store.state.album.push(aid)
           this.$router.push({
             name:'AlbumDetail',
@@ -91,15 +91,15 @@ export default {
     width:30%;
     height:100%;
     /* padding:5%; */
-    background: white;
+    /* background: white; */
     position: relative;
 }
 .ud-ava img{
     /* width:70%; */
-    height:100%;
-    /* margin-left:10%; */
-    margin: auto;
-    /* margin-top:10%; */
+    height:80%;
+    margin-left:10%;
+    /* margin: auto; */
+    margin-top:10%;
     border-radius: 50%;
 
     /* height: 100%;

@@ -1,10 +1,10 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import FindMusic from '../components/base/main/FindMusic'
-import Home from '../components/base/main/Home'
-import LoveMusic from '../components/base/main/LoveMusic'
-import PlayRecent from '../components/base/main/PlayRecent'
-import CollectMusic from '../components/base/main/CollectMusic'
+// import Home from '../components/base/main/Home'
+// import LoveMusic from '../components/base/main/LoveMusic'
+// import PlayRecent from '../components/base/main/PlayRecent'
+// import CollectMusic from '../components/base/main/CollectMusic'
 import SongList from '../components/content/search-content/SongList'
 import ArtistList from '../components/content/search-content/ArtistList'
 import AlbumList from '../components/content/search-content/AlbumList'
@@ -52,45 +52,54 @@ export default new Router({
     //主页
     {
       path:'/',
-      name:'FoundMusic',
-      component:FoundMusic,
+      name:'home',
+      component:NewMusic,
       children:[
-        {
-          path:'main/singers',
-          name:'Singers',
-          component:Singers,
-        },
-        {
-          path:'main/newmvs',
-          name:'newMvs',
-          component:NewMvs,
-        },
-        {
-          path:'main/newabms',
-          name:'NewAlbums',
-          component:NewAlbums,
-        },
-        {
-          path:'main/nwmc',
-          name:'NewMusic',
-          component:NewMusic,
-          children:[
-            {
-              path:'nwsgs',
-              name:'NewSongs',
-              component:NewSongs,
-            },
-            {
-              path:'nalms',
-              name:'NewAl',
-              component:NewAl,
-            }
-
-          ]
-        },
-
       ]
     },
+    {
+      path:'/singers',
+      name:'Singers',
+      component:Singers,
+    },
+    {
+      path:'/newmvs',
+      name:'newMvs',
+      component:NewMvs,
+    },
+    {
+      path:'/newabms',
+      name:'NewAlbums',
+      component:NewAlbums,
+    },
+    {
+      path:'/nwmc',
+      name:'NewMusic',
+      component:NewMusic,
+      children:[
+        {
+          path:'nwsgs',
+          name:'NewSongs',
+          component:NewSongs,
+        },
+        {
+          path:'nalms',
+          name:'NewAl',
+          component:NewAl,
+        },
+
+    {
+      path:'/main',
+      name:'Main',
+      component:FoundMusic,
+      children:[
+       
+          ]
+        },
+      ]
+    },
+   
+
     //搜索音乐
     {
       path: '/fdmc',
@@ -131,29 +140,29 @@ export default new Router({
       ]
     },
     //用户主页
-    {
-      path: '/home',
-      name: 'Home',
-      component: Home
-    },
-    //喜爱的音乐
-    {
-      path: '/lemc',
-      name: 'LoveMusic',
-      component: LoveMusic
-    },
-    //最近播放
-    {
-      path: '/pyrt',
-      name: 'PlayRecent',
-      component: PlayRecent
-    },
-    //收藏的音乐
-    {
-      path: '/clmc',
-      name: 'CollectMusic',
-      component: CollectMusic
-    },
+    // {
+    //   path: '/home',
+    //   name: 'Home',
+    //   component: Home
+    // },
+    // //喜爱的音乐
+    // {
+    //   path: '/lemc',
+    //   name: 'LoveMusic',
+    //   component: LoveMusic
+    // },
+    // //最近播放
+    // {
+    //   path: '/pyrt',
+    //   name: 'PlayRecent',
+    //   component: PlayRecent
+    // },
+    // //收藏的音乐
+    // {
+    //   path: '/clmc',
+    //   name: 'CollectMusic',
+    //   component: CollectMusic
+    // },
     //歌曲信息板
     {
       path: '/sgbd',

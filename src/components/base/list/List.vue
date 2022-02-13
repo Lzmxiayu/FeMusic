@@ -1,10 +1,10 @@
 <template>
   <div id="list">
-      <button class="list-choice" @click="ChangeRoute('/')">发现音乐</button>
-      <button class="list-choice" @click="ChangeRoute('/home')">我的主页</button>
-      <button class="list-choice" @click="ChangeRoute('/lemc')" >喜欢的音乐</button>
-      <button class="list-choice" @click="ChangeRoute('/pyrt')">最近播放</button>
-       <button class="list-choice" @click="ChangeRoute('/clmc')">收藏歌单</button>
+      <button class="list-choice" @click="ChangeRoute('NewSongs')">最新音乐</button>
+      <button class="list-choice" @click="ChangeRoute('newMvs')">最新MV</button>
+      <button class="list-choice" @click="ChangeRoute('Singers')" >歌手</button>
+      <button class="list-choice" @click="ChangeRoute('NewAlbums')">最新专辑</button>
+       <!-- <button class="list-choice" @click="ChangeRoute('')">收藏歌单</button> -->
   </div>
 </template>
 
@@ -12,9 +12,9 @@
 export default {
     name:'list',
     methods:{
-        ChangeRoute(path){
-           if(this.$route.path !== path)
-               this.$router.push({path:path})
+        ChangeRoute(nam){
+           if(this.$route.name !== nam)
+               this.$router.push({name:nam})
         }
 
     }

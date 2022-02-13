@@ -89,6 +89,7 @@ export default {
     mounted(){
         this.id=this.$route.params.mid
         this.fetchData()
+        this.$bus.$emit('PauseSong')
         
     }
 
@@ -97,8 +98,9 @@ export default {
 
 <style scoped>
 #mv-player{
-    width:100%;
+    width:94%;
     height:100%;
+    margin-left: 3%;
     display:flex;
     overflow:scroll;
     background:#FFF2E2;
@@ -156,6 +158,7 @@ export default {
 }
 .recm h2{
     margin-left:6%;
+    margin-top:10%;
 }
 .mv-comment a{
   text-decoration: none;

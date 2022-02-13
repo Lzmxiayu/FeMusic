@@ -2,13 +2,13 @@
   <div id='videos-list'>
      <div v-for="video in videos" 
         :key="video.vid"
-        @click="PushSinger(video.vid)"
+        @click="PushMvBoard(video.vid)"
         class="video">
         <div class="a-ava">
-          <img :src="video.coverUrl">
+          <img v-lazy="video.coverUrl">
         </div>
         <div class="a-name">
-          <h4>{{video.title.slice(0,20)}}</h4>
+          <h6>{{video.title.slice(0,20)}}</h6>
         </div>
     </div>
   </div>
@@ -25,7 +25,7 @@ export default {
     }
   },
   methods:{
-        PushSinger(mid){
+        PushMvBoard(mid){
           this.$router.push({
             name:'MvPlayer',
             params:{
@@ -41,7 +41,7 @@ export default {
         axios.get(`/search?keywords=${this.keyword}&type=1014&limit=50`).then(
             response => {
                 this.videos = response.data.result.videos        
-                console.log(response.data.result.videos)
+                // console.log(response.data.result.videos)
             },
             error => {
                 console.log('Failed')

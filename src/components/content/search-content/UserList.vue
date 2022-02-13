@@ -5,7 +5,7 @@
         @click="PushUser(user.userId)"
         class="user">
             <div class="user-ava">
-                <img :src="user.avatarUrl">
+                <img v-lazy="user.avatarUrl">
                 </div>
                 <div class="user-name">
                     <h4>{{user.nickname}}</h4>

@@ -5,7 +5,7 @@
         @click="PushAlbum(album.id)"
         class="album">
         <div class="a-ava">
-          <img :src="album.blurPicUrl">
+          <img v-lazy="album.blurPicUrl">
         </div>
         <div class="a-name">
           <h4>{{album.name}}</h4>
@@ -42,7 +42,7 @@ export default {
         axios.get(`/search?keywords=${this.keyword}&type=10&limit=50`).then(
             response => {
                 this.albums = response.data.result.albums        
-                console.log(response.data.result.albums)
+                // console.log(response.data.result.albums)
             },
             error => {
                 console.log('Failed')

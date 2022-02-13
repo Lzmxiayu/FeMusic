@@ -3,14 +3,13 @@
       <div class="newmv-lists">
         
           <div v-for="newMv in newMvs" :key="newMv.id" 
-                @click="Pushnewmv(newMv.id)" 
+                @click="Pushnewmv(newMv.id)"    
                 class="newmvLink" >
-              <!-- <img :src="newMv.cover"> -->
               <img v-lazy="newMv.cover">
-              <p >{{newMv.name}}</p>
+              <p >{{newMv.name.length>15?(newMv.name.slice(0,15)+'...'):newMv.name}}</p>
           </div>
-          
-         
+      <div class="space">
+      </div>  
       </div>
   </div>
 </template>
@@ -27,16 +26,12 @@ export default {
     mounted(){
         axios.get('/mv/first?limit=40').then(
             response => {
-                // console.log(response.data.data)
                 this.newMvs=response.data.data
-                // console.log(this.artists)
             },
             error => {
 
             }
         )
-        // this.artists=this.$route.params.artists
-        // console.log(this.$route.params)
     },
     methods:{
         Pushnewmv(id){
@@ -55,7 +50,9 @@ export default {
 
 <style scoped>
 #newmvs{
-    height:auto;
+    padding:2%;
+    padding-bottom: 2%;
+    height:98%;
     width:100%;
     overflow: scroll;
 
@@ -66,16 +63,17 @@ export default {
 }
 .newmv-lists{
     width:100%;
-    height:100%;
+    height:90%;
     display: grid;
     grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 33% 33% 33% ;
+    grid-template-rows: 34% 34% 34% ;
     row-gap:25px;
 
 }
 .newmv-lists .newmvLink{
     width:100%;
     height:100%;
+    margin-bottom: 2%;
     /* margin:10% 5% 10% 5%; */
     display: flex;
     flex-direction: column;
@@ -92,5 +90,8 @@ export default {
     flex:1; 
     font-size:90%;
     margin:0% auto;
+}
+.space{
+    height:2%;
 }
 </style>

@@ -3,6 +3,7 @@
       <logo/>
       <search/>
       <info/>
+
   </div>
 </template>
 
@@ -21,7 +22,6 @@ export default {
 #music-header{
     grid-area: header;
     background: rgba(255, 4, 4, 0.699);
-    /* background: rgb(223, 127, 127); */
     display: flex;
     height:10vh;
     

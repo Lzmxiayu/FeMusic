@@ -1,10 +1,9 @@
 <template>
   <div id='singers'>
       <div class="singer-lists">
-          <div v-for="artist in artists" :key="artist.id" class="singerLink" >
-              <!-- <img :src="artist.img1v1Url"> -->
+          <div v-for="artist in artists" :key="artist.id" class="singerLink" @click="PushSinger(artist.id)">
               <img v-lazy="artist.img1v1Url">
-              <p @click="PushSinger(artist.id)">{{artist.name}}</p>
+              <p >{{artist.name}}</p>
           </div>
           
          
@@ -32,8 +31,7 @@ export default {
 
             }
         )
-        // this.artists=this.$route.params.artists
-        // console.log(this.$route.params)
+
     },
     methods:{
         PushSinger(id){
@@ -53,7 +51,9 @@ export default {
 
 <style scoped>
 #singers{
-    height:100%;
+    padding:2%;
+    padding-bottom: 2%;
+    height:98%;
     width:100%;
     overflow: scroll;
 
@@ -69,7 +69,7 @@ export default {
     padding:0% 2% 0% 2%;
     grid-template-columns: 20% 20% 20% 20% 20%;
     grid-template-rows: 33% 33% 33% ;
-    row-gap:25px;
+    row-gap:15px;
 
 }
 .singer-lists .singerLink{
@@ -81,14 +81,16 @@ export default {
     text-align: center;
 }
 .singerLink img{
-    width:95%;
-    height:95%;
+    width:85%;
+    height:84%;
     margin:0% auto;
-    flex:19;
+    flex:15;
     border-radius: 15px;
+
 }
 .singerLink p{
-    flex:1; 
+    flex:3; 
     margin:0% auto;
+    /* font-size:80%; */
 }
 </style>

@@ -7,7 +7,7 @@
                 class="newalbumLink" >
                 <!-- <div class="newalbum"> -->
                      <img :src="newalbum.picUrl">
-                     <h4>{{newalbum.name}}</h4>
+                     <h5 class="al-name">{{newalbum.name}}</h5>
                 <!-- </div> -->
              
           </div>
@@ -29,7 +29,7 @@ export default {
     mounted(){
         axios.get('/album/newest?limit=40').then(
             response => {
-                console.log(response.data.albums)
+                // console.log(response.data.albums)
                 this.newalbums=response.data.albums
                 // console.log(this.artists)
             },
@@ -42,14 +42,13 @@ export default {
     },
     methods:{
         PushNewAlbum(id){
-            this.$router.push(
-                {
-                    name:'SongSheetDetail',
-                    params:{
-                        sid:id,
-                    }
-                }
-            )
+          this.$store.state.album.push(id)
+          this.$router.push({
+            name:'AlbumDetail',
+            params:{
+              aid:id
+            }
+          })
         }
     }
 }
@@ -86,16 +85,14 @@ export default {
 }
 .newalbumLink img{
     width:10%;
-    /* height:80%; */
-    /* margin-left:1%; */
-    /* margin-top:1%; */
-    /* padding-top:0.5%; */
     border-radius: 3px;
 }
-.newalbumLink h4{
-    /* flex:8;  */
-    /* font-size:90%; */
+.newalbumLink .al-name{
+
     margin-left:2%;
-    /* margin:0% auto; */
+    margin-top:2%;
+    text-align: center;
+
 }
+
 </style>

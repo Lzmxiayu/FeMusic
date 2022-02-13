@@ -12,12 +12,11 @@
           </div>
       </div>
       <div class='sgio-menu'>
-          <p @click="Opens('SingerAlbums',singerIo.id)" >专辑</p>
-      <p @click="Opens('SingerDetails',singerIo.id)">歌手详情</p>
-      <p @click="Opens('SingerMv',singerIo.id)">MV</p>
-      <p @click="Opens('SimilarSingers',singerIo.id)">相似歌手</p>
-     
-          </div>
+        <p @click="Opens('SingerAlbums',singerIo.id)" >专辑</p>
+        <p @click="Opens('SingerDetails',singerIo.id)">歌手详情</p>
+        <p @click="Opens('SingerMv',singerIo.id)">MV</p>
+        <p @click="Opens('SimilarSingers',singerIo.id)">相似歌手</p>     
+      </div>
          
       <router-view></router-view>
 
@@ -166,24 +165,18 @@ p::-webkit-scrollbar{
 }
 
 .sgio-menu{
-    flex:2;
-    /* margin-left:5%; */
     height:10%;
-    width:40%;
+    width:100%;
     padding:0%;
     padding-left:6%;
     padding-right:54%;
-    /* background: indianred; */
     display: flex;
     border-bottom: solid 1px;
 }
 .sgio-menu p{
-    /* flex:1; */
-    /* width:10%; */
-    /* width:20px; */
-    margin-bottom:0%;
-    font-size:100%;
-    margin-right:10%;
+   margin-right:5%;
+   margin-top:5%;
+   margin-bottom: 0;
 }
 .sgio-menu p:hover{
     cursor:pointer;

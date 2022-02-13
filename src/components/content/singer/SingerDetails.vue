@@ -37,9 +37,9 @@ export default {
 
 <style scoped>
 #singer-details{
-    /* min-height:40%; */
     width:90%;
     margin-left: 5%;
+    margin-top: 2%;
     /* overflow: scroll; */
     flex:10;
     /* padding-bottom: 2%; */

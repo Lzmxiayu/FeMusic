@@ -5,7 +5,7 @@
         @click="PushSinger(singer.id)"
         class="artist">
         <div class="s-ava">
-          <img :src="singer.img1v1Url">
+          <img v-lazy="singer.img1v1Url">
         </div>
         <div class="s-name">
           <h4>{{singer.name}}</h4>
@@ -45,7 +45,7 @@ export default {
         axios.get(`/search?keywords=${this.keyword}&type=100&limit=50`).then(
             response => {
                 this.singers = response.data.result.artists        
-                console.log(response.data.result.artists)
+                // console.log(response.data.result.artists)
             },
             error => {
                 console.log('Failed')

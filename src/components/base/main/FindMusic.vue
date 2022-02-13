@@ -57,7 +57,7 @@ export default {
     height:75vh;
     /* width:75vw; */
     width:95%;
-    /* overflow: scroll; */
+    overflow: scroll;
     /* margin-left:2.5vw; */
     margin:2% auto;
     margin-left:2.5%;

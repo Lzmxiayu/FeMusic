@@ -18,8 +18,8 @@
           </div>
            
           <div v-for="song in songs" :key="song.id" class="songs">
-              <button class='songOrder'>
-                  <!-- {{nu}} -->
+              <button class='songOrder' >
+                  <el-button v-if="song.mvid" @click="PushMvBoard(`${song.mvid}`)">mv</el-button>
               </button>
               <button class="songName" type="text" v-on:click="playMusic(song.id)">
                     	{{song.name}}
@@ -34,7 +34,7 @@
 						{{song.artists[0].name}}
  			  </button>
                 <button class="songAlbum" type="text" v-on:click="PushRo">
-						{{song.album.name}}
+						{{song.album.name.length>15?(song.album.name.slice(0,15)+'...'):song.album.name}}
  			  </button>
             
           </div>
@@ -63,9 +63,7 @@ export default {
 				//歌曲获取
 				axios.get(`/song/url?id=${id}`).then(
 				response => {
-					// this.songUrl = response.data.data[0].url	
-					// console.log('歌曲数据：')
-					// console.log(response.data)	
+
                      this.$bus.$emit('sendSong',response.data.data[0])	
 					// this.isPlaying=true
 					//注意这句放在其他地方会因url未返回而传递空的url
@@ -78,32 +76,12 @@ export default {
                 //判断是否可用
                 axios.get('/check/music?id=33894312').then(
                     response => {
-                        console.log(response.data.message)
+                        // console.log(response.data.message)
                     },
                     error => {
                         console.log('Failed')
                     }
-                )
-				//封面获取
-				// axios.get(`/song/detail?ids=${id}`).then(
-				// response => {
-				// 	this.musicCover =response.data.songs[0].al.picUrl
-				// },
-				// error => {
-				// 	// alert('请求歌曲失败')
-				// }
-				// )
-				//热评获取
-				// axios.get(`/comment/hot?type=0&id=${id}`).then(
-				// response => {	
-				// 	this.hotComments=response.data.hotComments
-				// },
-				// error => {
-				// 	// alert('请求歌曲失败')
-				// }
-				// )
-				
-				// this.isPlayingMv=false		
+                )	
 			},
         // 跳转到歌手页
         PushRo(name,id){
@@ -117,6 +95,15 @@ export default {
                   }
                }
            )
+        },
+        //跳转到MV面板
+         PushMvBoard(mid){
+          this.$router.push({
+            name:'MvPlayer',
+            params:{
+              mid:mid
+            }
+          })
         }
     },  
     watch:{
@@ -170,11 +157,18 @@ export default {
     width:100%;
     margin:5px;
     height:30px;
+    font-size: 70% ;
     display:flex;
 }
 .songOrder{
     flex:1;
     border:none;
+}
+.songOrder .el-button{
+    border-color: rgb(238, 73, 73);
+    color:none;
+    height:80%;
+    padding:5% 10% 5% 10%;
 }
 .songName{
     border:none;

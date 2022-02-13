@@ -1,6 +1,8 @@
 <template>
   <div id='found-music'>
-      <found-header/>
+      <!-- <found-header/> -->
+      <div >
+      </div>
       <!-- <button @click="login">login</button> -->
       <!-- <button @click="recmdSong">test</button> -->
       <router-view></router-view>
@@ -72,12 +74,11 @@ export default {
 
 <style scoped>
 #found-music{
-    /* height:80vh; */
-    height:100%;
-    /* width:100%; */
+    height:80vh;
+    width:100%;
     /* overflow: scroll; */
     /* margin-left:2.5vw; */
-    margin:0% 2% 0% 4%;
+    padding:2% 2% 2% 2%;
     display: flex;
     flex-direction: column;
 }

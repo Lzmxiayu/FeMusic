@@ -13,20 +13,17 @@
                     <p class='nsOrder'>
                        {{song.index}}
                     </p>
-                    <div class="nsImg"> 
-                        <img :src="song.album.picUrl">
+                    <div class="demo-image__lazy">
+                        <el-image :src="song.album.picUrl" lazy></el-image>
                     </div>
                     <p class="nsName" type="text" v-on:click="playMusic(song.id)">
                                 {{song.name}}
-                                <!-- <div v-if="permitted"> -->
-                                <!-- <p>jin</p> -->
-                                <!-- </div> -->
                     </p>
                     <p class="nsArtist">
                                 {{song.artists[0].name}}
                     </p>
                     <p class="nsAlbum"  v-on:click="PushAlbum(song)">
-                                {{song.album.name}}
+                                {{song.album.name.length>15?song.album.name.slice(0,15)+'...':song.album.name}}
                     </p>
                     <p class="nsTime">
                     </p>
@@ -45,6 +42,7 @@ export default {
     data(){
         return {
             songdata:[],
+            count:0
         }
     },
     methods:{
@@ -56,7 +54,10 @@ export default {
                 {
                     this.songdata[i].index= (++i)<10?'0'+i:i;
                 }
-                console.log(response.data.data[0])
+                // console.log(response.data.data[0])
+            },
+            err=>{
+                console.log(err)
             }
         )
         },
@@ -113,10 +114,10 @@ export default {
 .nsOrder{
     flex:1;
 }
-.nsImg{
+.demo-image__lazy{
     flex:2;
 }
-.nsImg img{
+.demo-image__lazy .el-image{
     width:90%;
     border-radius: 10px;
 }
