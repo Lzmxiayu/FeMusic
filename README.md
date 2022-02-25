@@ -1,7 +1,7 @@
 # Femusic
 
-接口来自开源项目NeteaseCloudMusicApi
-[后端API](https://github.com/Binaryify/NeteaseCloudMusicApi)
+接口来自开源项目
+[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
 项目实现了音乐播放和MV播放等功能，也可以查看最新的音乐讯息。
 
