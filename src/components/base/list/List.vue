@@ -1,10 +1,10 @@
 <template>
   <div id="list">
-      <button class="list-choice" @click="ChangeRoute('NewSongs')">最新音乐</button>
+      <button class="list-choice" @click="ChangeRoute('NewSongs')"><p>最新音乐</p></button>
       <button class="list-choice" @click="ChangeRoute('newMvs')">最新MV</button>
       <button class="list-choice" @click="ChangeRoute('Singers')" >歌手</button>
       <button class="list-choice" @click="ChangeRoute('NewAlbums')">最新专辑</button>
-       <!-- <button class="list-choice" @click="ChangeRoute('')">收藏歌单</button> -->
+      <button class="list-choice" @click="ChangeRoute('SongCollect')">收藏歌曲</button>
   </div>
 </template>
 
@@ -24,20 +24,20 @@ export default {
 <style scoped>
 #list{
     height:100%;
-    text-align: center;
     display: flex;
     flex-direction: column;
     /* overflow:scroll; */
 }
 .list-choice{
   height:10%;
+  margin-left:10%;
   background: none;
-
   border:none;
+  text-align:left;
+  font-size: 15px;
 }
 .list-choice:hover{
-  /* background: rgb(218, 213, 213,0.4); */
-  background: rgb(223, 127, 127,0.15);
+  color:rgb(109, 109, 220);
   /* 显示小手 */
   cursor:pointer;
 }

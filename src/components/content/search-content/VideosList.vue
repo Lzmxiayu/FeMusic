@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { search } from '../../../api/search'
 export default {
     name:'videos-list',
     data(){
@@ -35,13 +35,11 @@ export default {
         }
   },
   mounted(){
-        // this.keyword=this.$route.params.keyword
          this.keyword=this.$store.state.keyword
          //获取歌手
-        axios.get(`/search?keywords=${this.keyword}&type=1014&limit=50`).then(
+        search(this.keyword,1014,50).then(
             response => {
                 this.videos = response.data.result.videos        
-                // console.log(response.data.result.videos)
             },
             error => {
                 console.log('Failed')

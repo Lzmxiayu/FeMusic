@@ -15,7 +15,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { search } from '../../../api/search'
+
 export default {
   name:'artist-list',
   data(){
@@ -42,7 +43,7 @@ export default {
          this.keyword=this.$store.state.keyword
          
          //获取歌手
-        axios.get(`/search?keywords=${this.keyword}&type=100&limit=50`).then(
+        search(this.keyword,100,50).then(
             response => {
                 this.singers = response.data.result.artists        
                 // console.log(response.data.result.artists)

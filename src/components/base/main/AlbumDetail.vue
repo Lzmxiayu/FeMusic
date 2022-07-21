@@ -29,7 +29,9 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {_getSongUrl,_getSongDetail} from '../../../api/song'
+import {_getAlbum} from '../../../api/album'
+
 export default {
     name:'album-detail',
     data(){
@@ -41,7 +43,7 @@ export default {
     },
     methods:{
         getSongInfo(id){
-            axios.get(`/song/detail?ids=347230`).then(
+            _getSongDetail(ids).then(
                 response =>{
                     // console.log('song')
                     // console.log(response)
@@ -53,21 +55,21 @@ export default {
         },
         SendMusic(id){
             //歌曲获取
-				axios.get(`/song/url?id=${id}`).then(
-				response => {
-                     this.$bus.$emit('sendSong',response.data.data[0])	
+            _getSongUrl(id).then(
+                response => {
+                    this.$store.dispatch('sendToPlay',response.data.data[0])
 				},
 				error => {
 					alert('请求歌曲失败')
 				}
-				)
+            )
         }
     },
     mounted(){
         // this.id=this.$route.params.aid
        this.id=this.$store.state.album[this.$store.state.album.length-1]
         // console.log(this.id)
-        axios.get(`/album?id=${this.id}`).then(
+        _getAlbum(this.id).then(
             response => {
                 this.info=response.data.album
                 //

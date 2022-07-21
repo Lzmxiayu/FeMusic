@@ -1,11 +1,8 @@
 <template>
-  <div id="app">
+  <div id="app" :class="$store.state.theme"  @click="changeTheme">
     <music-header/>
-    <music-sidebar/>
-    <music-main/>
+    <Content/>
     <music-footer/>
-    <temp-data/>
-    <!-- <router-view/> -->
   </div>
 </template>
 
@@ -14,44 +11,59 @@ import MusicHeader from './components/layout/MusicHeader'
 import MusicMain from './components/layout/MusicMain'
 import MusicFooter from './components/layout/MusicFooter'
 import MusicSidebar from './components/layout/MusicSidebar.vue'
-import TempData from './components/content/TempData.vue'
-import axios from 'axios'
-
-
+import Content from './components/layout/Content.vue'
+import './styles/blacktheme.css'
+import './styles/normaltheme.css'
 
 export default {
   name: 'App',
+  data(){
+    return {
+      sty:''
+    }
+  },
   components:{
-    MusicHeader,MusicMain,MusicFooter,
-    MusicSidebar,TempData
-    
+    MusicHeader,
+    MusicMain,
+    MusicFooter,
+    MusicSidebar,
+    Content
+  },
+  watch:{
+    '$store.state'(){
+      console.log('更新了')
+      localStorage.setItem('music',JSON.stringify(this.$store.state))
+        
+    }
+  },
+  methods:{
+    changeTheme(){
+      // this.sty = (this.sty==='normaltheme')?'blacktheme':'normaltheme'
+    }
   },
   mounted(){
-    axios.get('/toplist').then(
-      res =>{
-        // console.log(res)
-      }
-    )
+    // const item = JSON.parse(localStorage.getItem('music'))
+    // item!==null && this.$store.replaceState(item)
+  },
+  beforeDestroy(){
+    //组件销毁前保存状态
+    localStorage.setItem('music',JSON.stringify(this.$store.state))
+    console.log('完成了')
   }
 }
 </script>
 
 <style>
-#app {
+/* #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  color: #2c3e50;
+
   height:100vh;
   width:100vw;  
-  display:grid;
-  grid-template-areas: 
-  "header header header"
-  "sidebar content content "
-  "footer footer footer";
-  grid-template-rows: 1fr 8fr 1fr;
-  grid-auto-columns: 1fr 4fr 1fr;
-  /* margin-top: 60px; */
-}
+  display:flex;
+  flex-direction: column;
+  background: url('./assets/雪山.jpg');
+} */
+
 </style>

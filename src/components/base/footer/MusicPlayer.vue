@@ -3,109 +3,102 @@
       <!-- <button @click="OpenSongBoard" style="width:50px;">详细信息</button> -->
       <div class="mpHead">
           <div class="m-img">
-             <img v-lazy="coverUrl" @click="OpenSongBoard()" >
+             <img v-lazy="$store.state.playingSong.coverUrl[$store.state.playingSong.index]" @click="OpenSongBoard()" >
             </div>
       </div>
+
        <audio
-       autoplay
-       :src="(songInfo[this.index]!==undefined)?songInfo[this.index].url:''" 
-       class="myvideo"
-       
+        src=""
+        class="myvideo"       
       >
-       <!-- controls  -->
       </audio>
     <div class="mpControl">
         <div class="m-con">
-            <el-button  type="text" icon="el-icon-caret-left" @click="ChangeSong(-1)" class="prev-song"></el-button>
-            <el-button type="text" icon="el-icon-video-pause" v-if="isPlay" @click="ChangePlayStatus()" class="pause-song"></el-button>
-            <el-button type="text" icon="el-icon-video-play" v-if="!isPlay" @click="ChangePlayStatus()" class="play-song"></el-button>
-            <el-button type="text" icon="el-icon-caret-right" @click="ChangeSong(1)" class="next-song"></el-button>
+            <pre-song />
+            <play-pause/>
+            <next-song />
+        
+        </div>
+        <div class="progress-container" @click="changePlayProgress($event)">
+           <div class="progress" 
+            :style="{'width':`${$store.state.progress}`}"
+            >
+            </div>
+            <!-- `${$store.state.musicplayer.currentTime/$store.state.musicplayer.duration}` -->
+            <!-- ${$store.state.progress.currentTime/$store.state.progress.duration +'%'} -->
         </div>
     </div>
     <div class="mpList">
+        <MusicPlayListButton/>
     </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import MusicPlayListButton from '../../common/button/PlayingList.vue'
+import PlayPause from '../../common/button/PlayPause.vue'
+import PreSong from '../../common/button/PreSong.vue'
+import NextSong from '../../common/button/NextSong.vue'
+import {_getSongDetail} from '../../../api/song'
+
 export default {
     name:'music-player',
+    components:{
+        MusicPlayListButton,
+        PlayPause,
+        PreSong,
+        NextSong
+    },
     data(){
         return{
-            songInfo:[],
-            coverUrl:'',
-            id:[],
-            index:-1,
-            isPlay:false,
-            hasSong:false
+            value:0,
+            currentTime:0,
+            duration:1000,
+            progressContainer:null,
         }
+    },
+    computed:{
     },
     watch:{
-        index(){
-            //封面获取
-				axios.get(`/song/detail?ids=${this.id[this.index]}`).then(
-                    response => {
-                        this.coverUrl =response.data.songs[0].al.picUrl          
-                    },
-                    error => {
-                        // alert('请求歌曲失败')
-                    }
-				)
-        }
-    },
-
-    mounted(){
-       this.$bus.$on('sendSong',(song)=>{
-            this.songInfo.push(song)
-            this.id.push(song.id)
-            this.hasSong=true
-            this.isPlay=true
-            this.index++
-       })
-       this.$bus.$on('PauseSong',()=>{
-           if(this.isPlay)
-            this.ChangePlayStatus();
-       })
-
-         
     },
     methods:{
         OpenSongBoard(){
-            // this.$bus.$emit('sendSongInfo',this.songInfo)
-            if(this.hasSong)
+            let playingSong = this.$store.state.playingSong
+            
+            if(playingSong.hasSong)
                 this.$router.push({
                     name:'SongBoard',
                     params:{
-                        songInfo:this.songInfo[this.index]
+                        songInfo:playingSong.songInfo[playingSong.index]
                     }
-                    } )
+                } )
         },
-        ChangePlayStatus(){
-            if(this.hasSong){
-                this.isPlay = !this.isPlay
-                const audio = document.getElementsByClassName('myvideo');
-                if(this.isPlay) audio[0].play()
-                else audio[0].pause()
-            }
-            // return;
-            
-        },
-        ChangeSong(flag){
-            if(flag == -1 && this.index != 0)
-                this.index -= 1
-            else if(flag ==1 && this.index != this.songInfo.length-1)
-                this.index += 1
+        changePlayProgress(e){
+            const progressWidth = this.progressContainer.clientWidth
+            const position = parseInt((e.offsetX/progressWidth)*100)
+            this.value= position +'%'
+ 
+            //获取当前播放歌曲总时长 以秒为单位
+            const duration = this.$store.state.musicplayer.duration
+            this.$store.state.musicplayer.currentTime = (position/100) * duration
         }
+    },
+    mounted(){
+        const audio = document.querySelector('.myvideo')
+        this.$store.commit('sendMusicPlayer',audio)
 
-}
+        this.progressContainer = document.querySelector('.progress-container')
+
+    },
+
 }
 </script>
 
 <style scoped>
 #music-player{
     display: flex;
-    height:100%;    
+    /* align-items: ce; */
+    height:8vh;    
     width:100%;
 }
 .mpHead{
@@ -125,73 +118,33 @@ export default {
 
 .mpControl{
     flex:8;
-    height:10vh;
-    text-align: center;
+    height:8vh;
 }
 .m-con{
-    height:100%;
-    width:25%;
-    text-align: center;
+    height:70%;
+    width:40%;
     margin-left:30%;
     display:flex;
-
-}
-.prev-song{
-    flex:1;
-    font-size:250%;
-    color:black;
-    /* background-color:none; */
-    display: flex;
-    align-items: center;
     justify-content: center;
-    margin-left:0%;
-
-} 
-.prev-song:hover{
-    color:rgb(214, 78, 78);
-    cursor:pointer;
-}
-.next-song{
-    font-size:250%;   
-    color:black;
-    flex:1; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left:0%;
-}
-.next-song:hover{
-    color:rgb(214, 78, 78);
-    cursor:pointer;
-}
-.play-song{
-    font-size:250%;
-    flex:1;
-    color:black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    margin-left:0%;
-}
-.play-song:hover{
-    color:rgb(139, 139, 139);
-    cursor:pointer;
-}
-.pause-song{
-    font-size:250%;
-    display: flex;
-    color:black;
-    align-items: center;
-    justify-content: center;
-    margin-left:0%;
-}
-.pause-song:hover{
-    color:rgb(139, 139, 139);
-    cursor:pointer;
-
 }
 
+
+.progress-container{
+    margin-left: 10%;
+    width:80%;
+    height:12%;
+    border-radius: 10px;
+    background-color:rgb(221, 220, 220);
+
+}
+.progress{
+    height:100%;
+    border-radius: 10px;
+    background-color:red;
+}
 .mpList{
     flex:3;
+    display: flex;
+    align-items: center;
 }
 </style>

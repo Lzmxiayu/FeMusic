@@ -24,7 +24,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {_getDetailOfArtist,_getDescOfArtist} from '../../../api/artist'
 export default {
     name:'singer-info',
     data(){
@@ -44,20 +44,7 @@ export default {
     }
     },
     watch:{
-        // singerIo(){
-        //       axios.get(`/artist/detail/?id=${this.singerIo.id}`).then(                        
-        //         response => {
-        //           this.singerIo.coverUrl=response.data.data.artist.cover
-        //           this.singerIo.name=response.data.data.artist.name
-        //           console.log(response)
-        //         },
-        //         error => {
-        //             console.log(error)
-        //         }          
-        //     )
-               
 
-        // }
     },
      methods:{
         Opens(name,id){
@@ -72,21 +59,18 @@ export default {
             )
     },
         getInfo(id){
-            axios.get(`/artist/detail/?id=${id}`).then(        
+            _getDetailOfArtist(id).then(        
                 response => {
                   this.singerIo.coverUrl=response.data.data.artist.cover
                   this.singerIo.name=response.data.data.artist.name
-                //   console.log(response)
                 },
                 error => {
                     console.log(error)
                 }       
         )
-            axios.get(`/artist/desc?id=${id}`).then(
+            _getDescOfArtist(id).then(
                     response =>{
-                // console.log
                     this.singerIo.briefDesc = response.data.briefDesc
-                    // console.log(response.data.briefDesc)
                 }
             )
 

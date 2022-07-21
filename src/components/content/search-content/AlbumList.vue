@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { search } from '../../../api/search'
 export default {
   name:'album-list',
   data(){
@@ -39,7 +39,7 @@ export default {
         // this.keyword=this.$route.params.keyword
          this.keyword=this.$store.state.keyword
          //获取专辑
-        axios.get(`/search?keywords=${this.keyword}&type=10&limit=50`).then(
+        search(this.keyword,10,50).then(
             response => {
                 this.albums = response.data.result.albums        
                 // console.log(response.data.result.albums)

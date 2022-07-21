@@ -5,8 +5,9 @@
                 <div  class="sgmv-cover">
                     <img :src="mv.imgurl">
                 </div>
+                <!-- <img :src="mv.imgurl"> -->
                 <div class="sgmv-name">
-                {{mv.name}}
+                {{mv.name>15?(mv.name.slice(0,15)+'...'):mv.name}}
                 </div>
           </div>
       
@@ -14,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {_getMvOfArtist} from '../../../api/artist'
 export default {
     name:'singer-mv',
     data(){
@@ -25,18 +26,9 @@ export default {
     },
     mounted(){
         this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
-        axios.get(`/artist/mv?id=${this.sid}`).then(
+        _getMvOfArtist(this.sid).then(
             response => {
                 this.mvs=response.data.mvs
-                // console.log(response.data.mvs)
-            },
-            error => {
-                console.log('Failed')
-            }
-        )
-        axios.get(`/mv/url?id=14423239`).then(
-            response => {
-                // console.log(response)
             },
             error => {
                 console.log('Failed')
@@ -62,41 +54,38 @@ export default {
 
 <style scoped>
 #singer-mv{
-    /* min-height:40%; */
     width:95%;
     margin-left:5%;
     margin-bottom:5%;
-    /* overflow: scroll; */
-    flex:10;
-
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    /* flex:10; */
+    display: flex;
+    flex-wrap: wrap;
 }
 #singer-mv::-webkit-scrollbar{
     display: none;
 }
 .sg-con{
-     height:80%;
-    width:90%;
+    width:17vw;
+    display: flex;
+    flex-direction: column;
     text-align: center;
-     margin:4%;
-     margin-top:10%;
+    margin:2%;
 }
 .sg-con:hover{
     cursor: pointer;
 }
 .sgmv-cover{
-    height:90%;
-    width:100%;
+    flex:3;
+    height:80%;
+    width:15vw;
 }
-.sgmv-cover img{
-    width:100%;
-    height:90%;
-    border-radius: 3px;
+img{
+    width:17vw;
+    height:20vh;
+    border-radius: 8px;
 }
 .sgmv-name{
-    width:90%;
+    flex:1;
     margin:0% auto;
-    /* margin-top:5px; */
 }
 </style>

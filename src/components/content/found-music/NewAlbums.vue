@@ -18,7 +18,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {_getNewestAlbum} from '../../../api/album'
 export default {
     name:'new-albums',
     data(){
@@ -27,7 +27,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('/album/newest?limit=40').then(
+        _getNewestAlbum(40).then(
             response => {
                 // console.log(response.data.albums)
                 this.newalbums=response.data.albums

@@ -1,50 +1,36 @@
 <template>
   <div id="search">
-         <input @keyup.enter="searchSong" v-model="keyword"  class="search-box">
-
+         <input @keyup.enter="search" v-model="keyword"  class="search-box">
       </div>
 </template>
 
 <script>
-import axios from 'axios'
 export default {
     name:'search',
     data(){
         return{
             keyword:'',
-            songs:[]
+            songs:[],
+            t:null,
         }
     },
     methods:{
-        searchSong(){
-          if(this.$route.name === 'singlesong')
-                this.$router.push({path:'/'}) //切换到根目录再回来相当于销毁原FindMusic组件
-            
-            this.$bus.$emit('sendtempkey',this.keyword)
+        searchDebounce(func,delay=100){
+                if(this.t) clearTimeout(this.t);
+                this.t = setTimeout(()=>{
+                    this.search.call(this); //this绑定事件对象
+                },delay);  
+            },
+        search(){
+            this.$store.dispatch('changKeywords',this.keyword)
 
-            this.$store.state.keyword=this.keyword
+            if(this.$route.name !== 'singlesong')
+                this.$router.push({name:'singlesong'})
 
-            //注意这里用延时解决数据不更新问题
-          setTimeout(()=>{
-               this.$router.push({
-                    // path:'/fdmc',
-                    //注意这里只能用name，用path收不到参数
-                    name:'singlesong',
-                    params:{
-                        keyword:this.keyword
-                    }                         
-                },)
-
-          },2)
-       
-               
-
-                    
-            // console.log('切换路由中')
-            // this.$bus.$emit('sendKeywords',this.keyword)
-            //获取数据
-             
         }
+    },
+    mounted(){
+
     }
 
 }

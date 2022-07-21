@@ -28,7 +28,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {_getSongDetail,_getSongLyric,_getSongComment} from '../../../api/song'
 export default {
     name:'song-board',
     data(){
@@ -59,62 +59,54 @@ export default {
           }
     },
     mounted(){
-      // this.$bus.$on('sendSongInfo',)
       this.songInfo.id=this.$route.params.songInfo.id
-      // console.log(this.songInfo.id)
       
       //歌词获取
-				axios.get(`/lyric?id=${this.songInfo.id}`).then(
-				response => {
-					// this.songInfo.lyric =response.data.lrc.lyric
-          const regNewLine = /\n/
-          const lineArr = response.data.lrc.lyric.split(regNewLine)
-          const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
+				_getSongLyric(this.songInfo.id).then(
+          response => {
+            // this.songInfo.lyric =response.data.lrc.lyric
+            const regNewLine = /\n/
+            const lineArr = response.data.lrc.lyric.split(regNewLine)
+            const regTime = /\[\d{2}:\d{2}.\d{2,3}\]/
 
-          
-          lineArr.forEach(item => {
-            if (item === '') return
-              const obj = {}
-              const time = item.match(regTime)
+            
+            lineArr.forEach(item => {
+              if (item === '') return
+                const obj = {}
+                const time = item.match(regTime)
 
-              obj.lyric = item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
-              obj.time = time ? this.formatLyricTime(time[0].slice(1, time[0].length - 1)) : 0
-              obj.uid = Math.random().toString().slice(-6)
-              if (obj.lyric === '') {
-                // console.log('这一行没有歌词')
-              } else {
-                this.songInfo.lyric.push(obj)
-              }
-            })
-            // this.songInfo.lyric = lineArr
-          // console.log(this.songInfo.lyric)
-				},
-				error => {
-					// alert('请求歌曲失败')
-				}
+                obj.lyric = item.split(']')[1].trim() === '' ? '' : item.split(']')[1].trim()
+                obj.time = time ? this.formatLyricTime(time[0].slice(1, time[0].length - 1)) : 0
+                obj.uid = Math.random().toString().slice(-6)
+                if (obj.lyric === '') {
+                  // console.log('这一行没有歌词')
+                } else {
+                  this.songInfo.lyric.push(obj)
+                }
+              })
+
+          },
+          error => {
+            // alert('请求歌曲失败')
+          }
 				)
 
       //封面获取
-				axios.get(`/song/detail?ids=${this.songInfo.id}`).then(
-				response => {
-					this.songInfo.coverUrl =response.data.songs[0].al.picUrl
-          // console.log('cover')
-          // console.log(this.songInfo.coverUrl)
-				},
-				error => {
-					// alert('请求歌曲失败')
-				}
+				_getSongDetail(this.songInfo.id).then(
+          response => {
+            this.songInfo.coverUrl =response.data.songs[0].al.picUrl
+          },
+          error => {
+            // alert('请求歌曲失败')
+          }
 				)
 				//评论获取
-        
-				axios.get(`/comment/music?type=0&id=${this.songInfo.id}&limit=100`).then(
-				response => {	
-					this.songInfo.comments=response.data.comments
-          // console.log(response.data.comments)
-				},
-				error => {
-					// alert('请求歌曲失败')
-				}
+				_getSongComment(0,this.songInfo.id,100).then(
+          response => {	
+            this.songInfo.comments=response.data.comments
+          },
+          error => {
+          }
 				)
 
     }
@@ -126,11 +118,7 @@ export default {
 #song-board{
     height:100%;
     width:100%;
-    /* padding:1% ; */
     overflow: scroll;
-    /* text-align: center; */
-    /* margin-left:2.5vw; */
-    /* margin:2% auto; */
 }
 #song-board::-webkit-scrollbar {
     display: none;
@@ -143,7 +131,6 @@ export default {
 }
 .song-info .song-cover{
   flex:6;
-  background: rgb(231, 226, 226);
   text-align: center;
 }
 .song-cover img{
@@ -153,12 +140,11 @@ export default {
   top:50%;
   left:10%; 
   margin-top:-25%;
-  /* margin:0 auto; */
+  border-radius: 100%;
 }
 
 .song-info .song-lyric{
   flex:4;
-  background: rgb(219, 214, 206);
   opacity:0.8;
   overflow: scroll;
   text-align: center;
@@ -169,7 +155,6 @@ export default {
 }
 .one{
   margin:10px;
-  color:white;
 }
 
 .comments{
@@ -177,8 +162,6 @@ export default {
     margin-left:2.5%;
     padding-top:2.5%;
     padding-bottom:2.5%;
-    background: papayawhip;
-    /* text-align: center; */
 }
 h4{
   margin-left:15%;
@@ -186,8 +169,7 @@ h4{
 .comment{
   width:70%;
   margin-left:15%;
-  background: white;
-  opacity:0.8;
+
   border-radius: 10px;
   margin-bottom:10px;
   padding: 1%;

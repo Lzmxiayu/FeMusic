@@ -1,23 +1,24 @@
 <template>
   <div id="music-main">
     <router-view></router-view>
+    <playing-list/>
   </div>
 </template>
 
 <script>
 import FindMusic from '../base/main/FindMusic.vue'
-// import Home from '../base/main/Home.vue'
+import PlayingList from '../content/playinglist/PlayingSongList'
 export default {
     name:'music-main',
-    components: { FindMusic },
+    components: { FindMusic,PlayingList },
 }
 </script>
 
 <style scoped>
 #music-main{
     grid-area: content;
-    /* background: white; */
-     background:#FFF2E2;
-    height:80vh;
+    flex:8;
+    position:relative;
 }
+
 </style>

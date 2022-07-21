@@ -16,7 +16,7 @@
 </template>
 
 <script>
-import axios  from 'axios'
+import { search } from '../../../api/search'
 export default{
     name:'user-list',
     data(){
@@ -41,7 +41,7 @@ export default{
     mounted(){
         // this.keyword=this.$route.params.keyword
          this.keyword=this.$store.state.keyword
-        axios.get(`/search?keywords=${this.keyword}&type=1002&limit=50`).then(
+        search(this.keyword,1002,50).then(
             response => {
                 this.users = response.data.result.userprofiles 
                 // console.log(this.users)

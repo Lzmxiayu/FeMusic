@@ -19,6 +19,7 @@ import NewAlbums from '../components/content/found-music/NewAlbums'
 import NewMusic from '../components/content/found-music/NewMusic'
 import NewSongs from '../components/content/found-music/new-music/NewSongs'
 import NewAl from '../components/content/found-music/new-music/NewAl'
+import SongCollect from '../components/content/found-music/SongCollect'
 
 import SongBoard from '../components/base/main/SongBoard'
 import SingerInfo from '../components/base/main/SingerInfo'
@@ -71,6 +72,11 @@ export default new Router({
       path:'/newabms',
       name:'NewAlbums',
       component:NewAlbums,
+    },
+    {
+      path:'/songcollect',
+      name:'SongCollect',
+      component:SongCollect,
     },
     {
       path:'/nwmc',

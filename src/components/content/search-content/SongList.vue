@@ -2,11 +2,11 @@
   <div id="song-list">
       <div class="slist">
            <div  class="head" >
-              <button class='songOrder'>
-                  MV
+              <button class='songOrderT'>
+                  
               </button>
-              <button class="songName" type="text" v-on:click="playMusic(song.id)">
-						歌名 
+              <button class="songName" type="text">
+						标题 
  			  </button>
                <button class="songArtist" type="text" >
 						歌手
@@ -14,18 +14,23 @@
                 <button class="songAlbum" type="text" >
 						专辑
  			  </button>
+               <button class="songTime" type="text" >
+						时长
+ 			  </button>
             
           </div>
            
           <div v-for="song in songs" :key="song.id" class="songs">
               <button class='songOrder' >
-                  <el-button v-if="song.mvid" @click="PushMvBoard(`${song.mvid}`)">mv</el-button>
+                {{song.index}}
+                
               </button>
+                <div class="songLike">
+                                  <love-music-button :song="song"></love-music-button>
+                </div>            
               <button class="songName" type="text" v-on:click="playMusic(song.id)">
                     	{{song.name}}
-                        <!-- <div v-if="permitted"> -->
-                           <!-- <p>jin</p> -->
-                        <!-- </div> -->
+                        <button v-if="song.mvid" @click.stop="PushMvBoard(`${song.mvid}`)">mv</button>
  			  </button>
                <button class="songArtist" 
                type="text" 
@@ -36,6 +41,9 @@
                 <button class="songAlbum" type="text" v-on:click="PushRo">
 						{{song.album.name.length>15?(song.album.name.slice(0,15)+'...'):song.album.name}}
  			  </button>
+              <button class="songTime">
+                {{song.duration}}
+              </button>
             
           </div>
       </div>
@@ -43,12 +51,16 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { search,searchKeywords } from '../../../api/search'
+import {_getSongUrl,_checkSongRoot} from '../../../api/song'
+import LoveMusicButton from '../../common/button/LoveMusic.vue'
 export default {
     name:'song-list',
+    components:{
+        LoveMusicButton
+    },
     data(){
         return {
-            keyword:'',
             songs:[],
             num:'0',
             permitted:true,
@@ -56,32 +68,27 @@ export default {
         }
 
     },
+    watch:{
+        //监听搜索词，搜索词改变重新搜索
+        '$store.state.keyword'(){
+            this.searchSongs(this.$store.state.keyword)
+        }
+    },
     methods:{
         // 播放音乐
         playMusic(id)
 			{
+                console.log(id)
 				//歌曲获取
-				axios.get(`/song/url?id=${id}`).then(
-				response => {
-
-                     this.$bus.$emit('sendSong',response.data.data[0])	
-					// this.isPlaying=true
-					//注意这句放在其他地方会因url未返回而传递空的url
-					// this.$bus.$emit('playMusicStatus',{songUrl:this.songUrl,isPlaying:this.isPlaying})
-				},
-				error => {
-					// alert('请求歌曲失败')
-				}
-				)
-                //判断是否可用
-                axios.get('/check/music?id=33894312').then(
+                _getSongUrl(id).then(
                     response => {
-                        // console.log(response.data.message)
+                        this.$store.dispatch('sendToPlay',response.data.data[0])
                     },
                     error => {
-                        console.log('Failed')
+                        alert('请求歌曲失败')
                     }
-                )	
+				)
+               
 			},
         // 跳转到歌手页
         PushRo(name,id){
@@ -104,27 +111,30 @@ export default {
               mid:mid
             }
           })
-        }
-    },  
-    watch:{
-        ''(n,o){
-            // console.log(n+'    '+o)
-        }
-    },
-    mounted(){
-        // this.keyword=this.$route.params.keyword
-        this.keyword=this.$store.state.keyword
-         //获取单曲
-        axios.get(`/search?keywords=${this.keyword}&limit=50`).then(
-            response => {
-                this.songs = response.data.result.songs        
-                // console.log(response.data.result.songs)
-            },
-            error => {
-                console.log('Failed')
-            })
+        },
+        //搜索关键词歌曲
+        searchSongs(keyword){
+              searchKeywords(keyword,50).then(
+                response => {
+                    const collectmusic = JSON.parse(localStorage.getItem('musicCollect'))
+    
+                    const ids = ( collectmusic === null )?[]:collectmusic.map(song=>song.id)
+
+                    this.songs  = response.data.result.songs.map((item,index)=>{
+                        item.index = index+1
+                        item.hasBeenCollected = ids.includes(item.id)
+                        item.duration = this.$store.commit('correctSongTime',item.duration)
+                        return item
+                    })   
+                },
+                error => {
+                    console.log('Failed')
+                })
+        }    
         
-        // console.log(this.songs)
+    },  
+    created(){
+        this.searchSongs(this.$store.state.keyword)
     }
 }
 </script>
@@ -151,6 +161,7 @@ export default {
     margin:5px;
     height:30px;
     display:flex;
+    font-size: 80% ;
     /* background-color: white; */
 }
 .songs{
@@ -159,42 +170,45 @@ export default {
     height:30px;
     font-size: 70% ;
     display:flex;
+    align-items: center;
 }
+
+.songOrderT{
+    flex:2;
+    border:none;
+}
+
 .songOrder{
+    display: flex;
     flex:1;
     border:none;
 }
-.songOrder .el-button{
-    border-color: rgb(238, 73, 73);
-    color:none;
-    height:80%;
-    padding:5% 10% 5% 10%;
+
+.songLike{
+    flex:1;
 }
 .songName{
     border:none;
     flex:8;
-    /* display: flex; */
-    
-            /* margin: auto; */
-
-    /* background: white; */
+   text-align: left;
 }
 .songName:hover{
     color:rgb(238, 73, 73);
-    cursor: pointer;
+    /* cursor: pointer; */
 }
-/* .songName .p{
-    top: 0;
-            left: 0;
-            bottom: 0;
-            right: 0;
-} */
-/* .songName:hover{
-    opacity:0.8;
-} */
+
+.songName button{
+    border-color: red;
+    border-radius:5px;
+    color:red;
+    padding:0% 2px 0% 2px;
+    opacity: 0.7;
+}
+
 .songArtist{
     border:none;
     flex:3;
+     text-align: left;
     /* background: white; */
 }
 .songArtist:hover{
@@ -203,12 +217,18 @@ export default {
 }
 .songAlbum
 {
+     text-align: left;
      border:none;
     flex:3;
 }
-
-/* .songs:hover{
-    cursor:pointer;
-    background:rgb(226, 224, 224);
-} */
+.songTime{
+    flex:2;
+}
+.bi-heart{
+    flex:1;
+}
+button{
+    background:none;
+    border: none;
+}
 </style>

@@ -17,9 +17,7 @@ export default {
 <style scoped>
 #music-sidebar{
     grid-area: sidebar;
-    background:wheat;
-    /* border:grey;   */
-   
+    flex:1;
 }
 
 </style>

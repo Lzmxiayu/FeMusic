@@ -10,7 +10,6 @@
 <script>
 import SearchHeader from '../../content/search-content/SearchHeader.vue'
 import SongList from '../../content/search-content/SongList.vue'
-import axios from 'axios'
 export default {
     name:'find-music',
     data(){
@@ -35,11 +34,7 @@ export default {
 
                     this.$bus.$emit('sendKey',this.keyword) 
                 })
-            
-           
-            
 
-    
         }
     },
     watch:{
@@ -59,8 +54,8 @@ export default {
     width:95%;
     overflow: scroll;
     /* margin-left:2.5vw; */
-    margin:2% auto;
-    margin-left:2.5%;
+    margin:1.5% auto;
+    /* margin-left:1%; */
 }
 #find-music::-webkit-scrollbar {
     display: none;

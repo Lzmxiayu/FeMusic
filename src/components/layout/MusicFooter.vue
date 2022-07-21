@@ -9,16 +9,15 @@ import MusicPlayer from '../base/footer/MusicPlayer.vue'
 export default {
   components: { MusicPlayer },
     name:'music-footer',
-    
-    
+ 
 }
 </script>
 
 <style scoped>
 #music-footer{
     grid-area: footer;
-    background: rgb(223, 127, 127);
-    height:10vh;
+    flex:1;
+    height:8vh;
     padding:0%;
 }
 

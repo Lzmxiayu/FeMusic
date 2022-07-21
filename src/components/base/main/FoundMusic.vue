@@ -23,18 +23,6 @@ export default {
     components:{
         FoundHeader,
     },
-    // mounted(){
-    //      axios.get('/toplist/artist').then(
-    //         response => {
-    //             // console.log(response.data.list)
-    //             this.artists=response.data.list.artists
-    //             this.$bus.$emit('sendArtists',this.artists)
-    //         },
-    //         error => {
-
-    //         }
-    //     )
-    // },
     methods:{
         login(){
             axios.post('/login/cellphone').then(
@@ -56,17 +44,7 @@ export default {
         // console.log(this.$store.state.count)
         // this.$store.state.count=546
         
-        ///personalized
-        // /recommend/songs
-        axios.get('/login/qr/check?key=c83b4c8d-b8ad-4464-b991-74477d2c708d').then(
-                            
-                response => {
-                    console.log(response)
-                },
-                error => {
-                    console.log(error)
-                }
-        )
+
     }
 }
 }

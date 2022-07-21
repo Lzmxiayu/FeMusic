@@ -108,6 +108,6 @@ export default {
 .nwmc-content{
     width: 90%;
     margin-left: 5%;
-    background: white;
+    /* background: white; */
 }
 </style>

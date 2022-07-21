@@ -1,6 +1,6 @@
 <template>
   <div id="logo">
-      <h1 class="app-title">Femusic</h1>
+      <!-- <h1 class="app-title">Femusic</h1> -->
   </div>
 </template>
 
@@ -18,7 +18,7 @@ export default {
    width: 100%;
 }
 .app-title{
-    color:white;
+    color:black;
      position: absolute;
             left: 25%;
             top: 10%;

@@ -32,7 +32,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { _getPlaylistDetail } from '../../../api/playlist'
+import {_getSongUrl} from '../../../api/song'
 export default {
     name:'sgst-detail',
     data(){
@@ -44,30 +45,15 @@ export default {
     },
     methods:{
         getSongInfo(id){
-            // for(let p=0;p<this.playlist.length;p++)
-            // {
-            
-            // axios.get(`/song/detail/dynamic?ids=${this.id}`).then(
-            //     response =>{
-                 
-            //         // this.playlist[p]=response.data.songs[0]
-            //         // this.playlist[p].index=p+1
-            //         //  console.log(response)
-            //     },
-            //     error =>{
-            //         console.log('Failed')
-            //     }
-            // )
+        
             
 
         },
         SendMusic(id){
             //歌曲获取
-				axios.get(`/song/url?id=${id}`).then(
+				_getSongUrl(id).then(
 				response => {
-			
-                     this.$bus.$emit('sendSong',response.data.data[0])	
-				
+                    this.$store.dispatch('sendToPlay',response.data.data[0])
 				},
 				error => {
 					alert('请求歌曲失败')
@@ -77,9 +63,8 @@ export default {
     },
     mounted(){
         this.id=this.$route.params.sid
-    //    this.id=this.$store.state.album[this.$store.state.album.length-1]
-        // console.log(this.id)
-        axios.get(`/playlist/detail?id=${this.id}`).then(
+
+        _getPlaylistDetail(this.id).then(
             response => {
                 this.info=response.data.playlist
                 //这里tracks不完整，可以用所有trackIds请求一遍/song/detail

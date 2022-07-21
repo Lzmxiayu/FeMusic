@@ -5,7 +5,7 @@
       <p @click="PushRo('Album')">专辑</p>
       <p @click="PushRo('Video')">视频</p>
       <p @click="PushRo('SongSheet')">歌单</p>
-      <p @click="PushRo('UserList')">用户</p>
+      <!-- <p @click="PushRo('UserList')">用户</p> -->
   </div>
 </template>
 

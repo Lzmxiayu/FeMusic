@@ -1,11 +1,11 @@
 <template>
     <div id="nes-als">
         <div class="ns-header">
-            <p @click="ChangeArea('ALL')">全部</p>
-            <p @click="ChangeArea('ZH')">华语</p>
-            <p @click="ChangeArea('EA')">欧美</p>
-            <p @click="ChangeArea('KR')">韩国</p>
-            <p @click="ChangeArea('JP')">日本</p>
+            <p @click="ChangeArea($event,'ALL')" class="area selected">全部</p>
+            <p @click="ChangeArea($event,'ZH')" class="area">华语</p>
+            <p @click="ChangeArea($event,'EA')" class="area">欧美</p>
+            <p @click="ChangeArea($event,'KR')" class="area">韩国</p>
+            <p @click="ChangeArea($event,'JP')" class="area">日本</p>
         </div>
         <div v-if="load" class="Loading">
             <img src="../../../../assets/loading.gif" >
@@ -43,7 +43,8 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {_getSongUrl} from '../../../../api/song'
+import {_getTopAlbum} from '../../../../api/album'
 export default {
     name:'new-songs',
     data(){
@@ -51,13 +52,14 @@ export default {
             weekdata:[],
             monthdata:[],
             ifwk:true,
-            load:true
+            load:true,
+            lastSelected:null
         }
     },
     methods:{
         fetchData(area){
             // &year=2019&month=6
-            axios.get(`/top/album?area=${area}`).then(
+            _getTopAlbum(area).then(
             response =>{
                 this.weekdata=response.data.weekData;
                 this.monthdata=response.data.monthData;
@@ -66,7 +68,13 @@ export default {
             }
         )
         },
-        ChangeArea(area){
+        ChangeArea(e,area){
+            //改变选中状态
+            this.lastSelected.classList.remove('selected')
+            e.target.classList.add('selected')
+            this.lastSelected = e.target
+
+
             if(area == 'ALL')
                 this.ifwk=true
             else
@@ -76,11 +84,9 @@ export default {
         },
         playMusic(id){
             //歌曲获取
-				axios.get(`/song/url?id=${id}`).then(
+				_getSongUrl(id).then(
 				response => {
-					
-                     this.$bus.$emit('sendSong',response.data.data[0])	
-					
+                    this.$store.dispatch('sendToPlay',response.data.data[0])
 				},
 				error => {
 					// alert('请求歌曲失败')
@@ -102,6 +108,7 @@ export default {
     },
     mounted(){
         this.fetchData(0)
+        this.lastSelected = document.querySelector('.selected')
     }
 
 }
@@ -111,15 +118,21 @@ export default {
 #nes-als{
     width:100%;
     /* height:100%; */
-     background:#FFF2E2;
+     /* background:#FFF2E2; */
 }
 
 .ns-header{
     display: flex;
 }
-.ns-header p{
+.area{
     margin-right:2%;
+    opacity:0.7;
 }
+.area:hover{
+    cursor: pointer;
+    opacity:1;
+}
+
 .Loading{
     width: 100%;
     height:100%;
@@ -166,6 +179,11 @@ export default {
     margin:2% ;
     font-size:10%;
     color: rgb(128, 128, 128);
+}
+
+.selected{
+   font-weight: bold;
+   opacity: 1;
 }
 
 </style>

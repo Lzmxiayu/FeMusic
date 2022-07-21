@@ -1,7 +1,7 @@
 <template>
   <div id="mv-player">
       <div class="mvc">
-          <h2>{{name}}</h2>
+          <h3>{{name}}</h3>
           <div class="mv">
               <video 
               class="video-js"
@@ -25,7 +25,7 @@
           </div>
       </div>
       <div class="recm">
-          <h2>推荐MV</h2>
+          <h3 class="rechead">推荐MV</h3>
           <div v-for="sm in simimvs" :key="sm.id" 
               @click="ChangeMv(sm.id)"
                 class="recv-mvs">
@@ -37,7 +37,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { _getMvUrl,_getMvDetail,_getMvComment,_getSimiMv } from '../../../api/video'
 export default {
     name:'mv-player',
     data(){
@@ -51,28 +51,28 @@ export default {
     },
     methods:{
         fetchData(){
-            //获取mv地址
-        axios.get(`/mv/url?id=${this.id}`).then(
+        //获取mv地址
+        _getMvUrl(this.id).then(
             response =>{
                 this.url=response.data.data.url
                 // console.log(response.data.data.url)
             }
         )
         //获取mv评论
-        axios.get(`/comment/mv?id=${this.id}`).then(
+        _getMvComment(this.id).then(
             response =>{
                 this.comments=response.data.comments
                 // console.log(response.data)
             }
         )
-        axios.get(`/mv/detail?mvid=${this.id}`).then(
+       _getMvDetail(this.id).then(
             response =>{
                 this.name=response.data.data.name
                 // console.log(response)
             }
         )
         //获取相似mv
-         axios.get(`/simi/mv?mvid=${this.id}`).then(
+        _getSimiMv(this.id).then(
             response =>{
                 this.simimvs=response.data.mvs
                 // console.log('similar')
@@ -89,7 +89,7 @@ export default {
     mounted(){
         this.id=this.$route.params.mid
         this.fetchData()
-        this.$bus.$emit('PauseSong')
+        this.$store.commit('pauseSong')
         
     }
 
@@ -103,27 +103,23 @@ export default {
     margin-left: 3%;
     display:flex;
     overflow:scroll;
-    background:#FFF2E2;
-
 }
 #mv-player::-webkit-scrollbar{
     display: none;
 }
 .mvc{
-    flex:2;
-    /* background: coral; */
+    flex:3;
     height:auto;
-    /* overflow: scroll; */
-    /* display:flex;
-    flex-direction: column; */
 }
 .mvc::-webkit-scrollbar{
     display:none;
 }
+
+.mvc h3{
+    margin-left:2%;
+}
 .mv{
-    height:70%;
-    /* margin-top:5%; */
-    /* background: white; */
+
 }
 .mvc h2{
     margin:5% 0% 2% 2%;
@@ -138,13 +134,13 @@ export default {
     flex-direction: column;
 }
 .video-js{
-    /* margin-top:5%; */
     width:100%;
+    /* margin-left: 0% auto; */
 }
 .mv-comment{
     display:flex;
     margin-bottom:5%;
-    border-bottom: solid 1px;
+    /* border-bottom: solid 1px; */
 }
 .mv-avatar{
     flex:2;
@@ -166,21 +162,21 @@ export default {
 }
 .mv-comment p{
   margin:1%;
-  /* font-size:14px; */
 }
 
 .video-js{
     width:96%;
     height:95%;
     margin-left:2%;
-    /* margin-top:5%; */
     border-style:hidden;
     
 }
 .recm{
     flex:1;
     height:auto;
-    /* background:darkcyan; */
+}
+.rechead{
+    margin-left:10%;
 }
 .recv-mvs{
     display:flex;

@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { _getTopListArtist } from '../../../api/artist'
 export default {
     name:'singers',
     data(){
@@ -21,7 +21,7 @@ export default {
         }
     },
     mounted(){
-        axios.get('/toplist/artist').then(
+        _getTopListArtist().then(
             response => {
                 // console.log(response.data.list)
                 this.artists=response.data.list.artists.slice(0,50)
@@ -65,17 +65,11 @@ export default {
 .singer-lists{
     width:100%;
     height:100%;
-    display: grid;
-    padding:0% 2% 0% 2%;
-    grid-template-columns: 20% 20% 20% 20% 20%;
-    grid-template-rows: 33% 33% 33% ;
-    row-gap:15px;
-
+    display: flex;
+    flex-wrap:wrap;
 }
 .singer-lists .singerLink{
-    width:15vw;
-    height:100%;
-    /* margin:10% 5% 10% 5%; */
+    width:17vw;
     display: flex;
     flex-direction: column;
     text-align: center;

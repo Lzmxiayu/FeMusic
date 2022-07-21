@@ -8,14 +8,13 @@
               <img v-lazy="newMv.cover">
               <p >{{newMv.name.length>15?(newMv.name.slice(0,15)+'...'):newMv.name}}</p>
           </div>
-      <div class="space">
-      </div>  
+
       </div>
   </div>
 </template>
 
 <script>
-import axios from 'axios'
+import { _getNewMvs } from '../../../api/video'
 export default {
     name:'newmvs',
     data(){
@@ -24,9 +23,9 @@ export default {
         }
     },
     mounted(){
-        axios.get('/mv/first?limit=40').then(
+        _getNewMvs(40).then(
             response => {
-                this.newMvs=response.data.data
+                this.newMvs=response.data.data.slice(1)
             },
             error => {
 
@@ -50,48 +49,35 @@ export default {
 
 <style scoped>
 #newmvs{
-    padding:2%;
-    padding-bottom: 2%;
+    padding-top:1%;
     height:98%;
     width:100%;
     overflow: scroll;
-
 }
 
 #newmvs::-webkit-scrollbar{
     display: none;
 }
 .newmv-lists{
-    width:100%;
-    height:90%;
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
-    grid-template-rows: 34% 34% 34% ;
-    row-gap:25px;
-
+    width:90%;
+    margin-left: 5%;
+    display: flex;
+    flex-wrap:wrap;
 }
 .newmv-lists .newmvLink{
-    width:100%;
-    height:100%;
+    width:33%;
     margin-bottom: 2%;
-    /* margin:10% 5% 10% 5%; */
     display: flex;
     flex-direction: column;
-    text-align: center;
 }
 .newmvLink img{
-    width:90%;
-    height:90%;
+    width:22vw;
     margin:0% auto;
-    flex:19;
     border-radius: 3px;
 }
 .newmvLink p{
-    flex:1; 
     font-size:90%;
-    margin:0% auto;
+    margin:2% auto;
 }
-.space{
-    height:2%;
-}
+
 </style>
