@@ -15,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { search } from '../../../api/search'
 export default {
   name:'album-list',
   data(){
@@ -23,6 +23,13 @@ export default {
       keyword:'',
       albums:[],
     }
+  },
+  watch:{
+      //监听搜索词，搜索词改变重新搜索
+      '$store.state.keyword'(){
+         this.keyword=this.$store.state.keyword
+         this.fetchData()
+      }
   },
   methods:{
         PushAlbum(aid){
@@ -33,20 +40,22 @@ export default {
               aid:aid
             }
           })
+        },
+        fetchData(){
+          //获取专辑
+            search(this.keyword,10,50).then(
+              response => {
+                  this.albums = response.data.result.albums        
+                  // console.log(response.data.result.albums)
+              },
+              error => {
+                  console.log('Failed')
+            })
         }
   },
   mounted(){
-        // this.keyword=this.$route.params.keyword
          this.keyword=this.$store.state.keyword
-         //获取专辑
-        axios.get(`/search?keywords=${this.keyword}&type=10&limit=50`).then(
-            response => {
-                this.albums = response.data.result.albums        
-                // console.log(response.data.result.albums)
-            },
-            error => {
-                console.log('Failed')
-            })
+         this.fetchData()
   }
 }
 </script>

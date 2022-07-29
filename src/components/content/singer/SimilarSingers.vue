@@ -3,8 +3,7 @@
       
         <div v-for="sg in simisg" :key="sg.id" @click="PushSg(sg.id)" class="simi-con">
           <div class="sr-cover">
-              <!-- img1v1Url -->
-             <img  :src="sg.img1v1Url">
+             <img  v-lazy="sg.img1v1Url">
           </div>
             <div class="simi-name">
                 {{sg.name}}
@@ -16,7 +15,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { _getSimilarArtists } from '../../../api/artist'
 export default {
     name:'singer-similar',
     data(){
@@ -25,11 +24,20 @@ export default {
             simisg:[],
         }
     },
+    watch:{
+        '$store.state.singer.length'(){
+           this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+            _getSimilarArtists(this.sid).then(
+                response => {
+                    this.simisg =response.data.artists
+                }
+            )
+        }
+    },
     mounted(){
         this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
-        axios.get(`/simi/artist?id=${this.sid}`).then(
+        _getSimilarArtists(this.sid).then(
             response => {
-                console.log(response.data)
                 this.simisg =response.data.artists
             }
         )
@@ -37,16 +45,6 @@ export default {
     methods:{
         PushSg(id){
             this.$store.state.singer.push(id)
-            // this.$router.push({path:'/'})
-            this.$bus.$emit('senSingerId',id)
-            this.$router.push(
-                {
-                    name:'SingerAlbums',
-                    params:{
-                        sid:id
-                    }
-                }
-            )
         }
     }
 
@@ -55,15 +53,9 @@ export default {
 
 <style scoped>
 #singer-similar{
-    /* height:40%; */
-    /* overflow: scroll; */
-    flex:10;
-    /* margin-top:20px; */
-    margin-bottom: 5%;
-    margin-left:5%;
-      display:grid;
+    width:100%;
+    display:grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
-    /* grid-row-gap:10px; */
 }
 #singer-similar::-webkit-scrollbar{
     display: none;
@@ -72,11 +64,9 @@ export default {
     height:100%;
     width:90%;
     text-align: center;
-     margin:4%;
-     margin-top:10%;
-    /* margin:5px; */
-    /* margin-left:5%; */
-  
+    margin:4%;
+    margin-top:10%;
+
 }
 .simi-con:hover{
     cursor: pointer;
@@ -84,10 +74,10 @@ export default {
  .sr-cover{
     height:80%;
     width:90%;
-    /* margin:4%; */
 } 
 .sr-cover img{
     width:100%;
+    border-radius:8px;
 }
 .simi-name{
     margin:0% auto;

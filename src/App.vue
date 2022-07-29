@@ -1,57 +1,48 @@
 <template>
-  <div id="app">
+  <div id="app" :class="$store.state.theme">
     <music-header/>
-    <music-sidebar/>
-    <music-main/>
+    <Content/>
     <music-footer/>
-    <temp-data/>
-    <!-- <router-view/> -->
-  </div>
+  </div> 
 </template>
 
 <script>
 import MusicHeader from './components/layout/MusicHeader'
-import MusicMain from './components/layout/MusicMain'
+import Content from './components/layout/Content.vue'
 import MusicFooter from './components/layout/MusicFooter'
-import MusicSidebar from './components/layout/MusicSidebar.vue'
-import TempData from './components/content/TempData.vue'
-import axios from 'axios'
-
-
+import './styles/blacktheme.css'
+import './styles/normaltheme.css'
 
 export default {
   name: 'App',
   components:{
-    MusicHeader,MusicMain,MusicFooter,
-    MusicSidebar,TempData
-    
+    MusicHeader,
+    Content,
+    MusicFooter
   },
-  mounted(){
-    axios.get('/toplist').then(
-      res =>{
-        // console.log(res)
-      }
-    )
-  }
 }
 </script>
 
 <style>
+body{
+    margin:0% 0% 0% 0%;
+}
+body:-webkit-scrollbar{
+    display: none;
+}
+#app:-webkit-scrollbar{
+    display: none;
+}
 #app {
-  font-family: 'Avenir', Helvetica, Arial, sans-serif;
+  /* font-family: 'Avenir', Helvetica, Arial, sans-serif; */
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  /* text-align: center; */
-  color: #2c3e50;
-  height:100vh;
-  width:100vw;  
-  display:grid;
-  grid-template-areas: 
-  "header header header"
-  "sidebar content content "
-  "footer footer footer";
-  grid-template-rows: 1fr 8fr 1fr;
-  grid-auto-columns: 1fr 4fr 1fr;
-  /* margin-top: 60px; */
-}
+
+  /* height:100vh;
+  width:100vw;   */
+  /* display:flex; */
+  /* flex-direction: column; */
+  /* background: url('./assets/雪山.jpg'); */
+} 
+
 </style>

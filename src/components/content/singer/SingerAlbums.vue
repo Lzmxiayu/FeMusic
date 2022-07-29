@@ -5,43 +5,49 @@
               <img src="../../../assets/top50.png">
           </div>
           <div class="al-content">
-              <div v-for="song in this.hotSongs" :key="song.id" class="al-songs">
-                   <button  class='al-songOrder'>
-                       <!-- {{song.index}} -->
+              <div v-for="song in this.showSongs" :key="song.id" class="al-song">
+                <button  class='al-songOrder'>
+                    {{song.index}}
               </button>
-              <button @click="playMusic(song.id)" class="al-songName" type="text" >
+              <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+              </svg>
+              <button @click="playMusic(song)" class="al-songName" type="text" >
                     	{{(song.name.length>20)?song.name.slice(0,20)+'...':song.name}}
-                        <!-- <div v-if="permitted"> -->
-                           <!-- <p>jin</p> -->
-                        <!-- </div> -->
  			  </button>
-                <button class="al-songAlbum" type="text" >
-						
+                <button class="al-songTime" type="text" >
+						{{song.dt}}
  			  </button>
               </div>
+              <div class="moreSong" @click="showMore">
+                   
+                <p>{{tip}}</p>
+                </div>
+
           </div>
       </div>
       <div v-for="al in this.alSongs" :key="al.id" class="con">
           <div class="al-cover">
-              <!-- {{al.album}} -->
-              <!-- {{al.blurPicUrl}} -->
-              <img :src="al.blurPicUrl">
+              <img v-lazy="al.blurPicUrl">
           </div>
           <div class="al-content">
-              <div v-for="song in al.songs" :key="song.id" class="al-songs">
+              <div v-for="song in al.songs" :key="song.id" class="al-song">
                    <button  class='al-songOrder'>
-                       {{song.index}}
+                       {{song.index[0]=='0'?song.index.slice(1):song.index}}
                     </button>
-                     <button @click="playMusic(song.id)" class="al-songName" type="text" >
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                </svg> -->
+                     <button @click="playMusic(song)" class="al-songName" type="text" >
                     	{{(song.name.length>20)?song.name.slice(0,20)+'...':song.name}}
-                        <!-- <div v-if="permitted"> -->
-                           <!-- <p>jin</p> -->
-                        <!-- </div> -->
  			         </button>
                
-                <button class="al-songAlbum" type="text" >
-						
+                <button class="al-songTime" type="text" >
+						{{song.dt}}
  			  </button>
+              </div>
+              <div v-if="al.length>10" class="moreSong">
+                <p>查看更多....</p>
               </div>
           </div>
       </div>
@@ -49,103 +55,126 @@
 </template>
 
 <script>
-import axios from 'axios'
+import {_getSongUrl,_getSongDetail} from '.././../../api/song'
+import {_getAlbum,_getAlbumOfArtist} from '.././../../api/album'
+import { _getArtists } from '../../../api/artist'
 export default {
     name:'singer-albums',
     data(){
         return {
             sid:'',
             hotSongs:[],
+            tip:'显示全部',
+            showSongs:[],
             alSongs:[],
             albumSongs:[],
+            details:[]
         }
     },
-    mounted(){
-        // this.sid=this.$route.params.sid
-        this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
-        // console.log(this.sid)
-        var albums=new Array();
-        
+    watch:{
+        '$store.state.singer.length'(){
+            this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+            this.getSimilar()
+            this.getAlbumOfArtist()
+        }
 
-        axios.get(`/artists?id=${this.sid}`).then(            
+    },
+    mounted(){
+        this.sid=this.$store.state.singer[this.$store.state.singer.length-1]     
+        this.getSimilar()
+        this.getAlbumOfArtist()
+    },
+    methods:{
+        //播放音乐
+        playMusic(song){
+            _getSongUrl(song.id).then(
+				response => {
+                    this.$store.dispatch('sendToPlay',{
+                        ...response.data.data[0],
+                        duration:song.dt,
+                        name:song.name,
+                        artist:song.ar[0]
+                    })
+				},
+				error => {
+					alert('请求歌曲失败')
+				}
+			)
+        },
+        //热门音乐展开或收起
+        showMore(){
+            this.showSongs = this.showSongs.length<=10?this.hotSongs:this.hotSongs.slice(0,10)
+            this.tip = this.tip === '显示全部'?'收起':'显示全部'
+        },
+        //获取热门歌曲
+        getSimilar(){
+            _getArtists(this.sid).then(            
                 response => {
-                this.hotSongs=response.data.hotSongs
-                //   console.log('hotSong:')
-                //   console.log(this.hotSongs)
+                    console.log(response)
+                    return response.data.hotSongs.map((item,index)=>{
+                        //设置歌曲索引
+                        item.index = index+1
+                        //获取歌曲时长
+                        _getSongDetail(item.id).then(
+                            res=>{
+                                const seconds = res.data.songs[0].dt/1000
+                                const second = parseInt(seconds%60)
+                                item.dt = parseInt(seconds/60) + ':' + (second<10?'0'+second:second)
+                            }
+                        )
+
+                        return item
+                    })
+                   
                 },
                 error => {
                     console.log(error)
                 }
-        )
-
-        axios.get(`/artist/album?id=${this.sid}`).then(            
+            ).then(res=>{
+                this.hotSongs = res
+                this.showSongs = this.hotSongs.slice(0,10)
+            })
+        },
+        //获取热门专辑
+        getAlbumOfArtist(){
+             _getAlbumOfArtist(this.sid).then(            
                 response => {
-                let hotAlbums=response.data.hotAlbums
-                var songs=[]
-                for(let i=0;i<hotAlbums.length;i++)
-                    {
-                        let songs=[]
-                        axios.get(`/album?id=${hotAlbums[i].id}`).then(
-                            response => {
-                                
-                              for(let j=0;j<response.data.songs.slice(0,10).length;)
-                              {
-                                 let song={
-                                    index:'',
-                                    id:'',
-                                    name:'',
-                                };
-                                    song.id = response.data.songs[j].id;
-                                    song.name= response.data.songs[j].name;
-                                    song.index= (++j==10)?10:('0'+j);
-                                    songs.push(song)
-                                     //mv的id也在同一级，即mv 
-                              }
-                            },
-                            error => {
-                                console.log(error)
-                            }
-                        )
-                    
-                        hotAlbums[i].songs=songs
-                        this.alSongs.push(hotAlbums[i]) 
-
-                    }
+                    let hotAlbums=response.data.hotAlbums
+                    var songs=[]
+                    for(let i=0;i<hotAlbums.length;i++)
+                        {
+                            this.alSongs.push(hotAlbums[i]) 
+                            _getAlbum(hotAlbums[i].id).then(
+                                response => {
+                                    return response.data.songs.map((item,index)=>{
+                                        //设置歌曲索引
+                                        item.index = index+1
+                                        //获取歌曲时长
+                                        _getSongDetail(item.id).then(
+                                            res=>{
+                                                const seconds = res.data.songs[0].dt/1000
+                                                const second = parseInt(seconds%60)
+                                                item.dt = parseInt(seconds/60) + ':' + (second<10?'0'+second:second)
+                                            }
+                                        )
+                                       
+                                        return item
+                                    })
+                                     
+                                },
+                                error => {
+                                    console.log(error)
+                                }
+                            ).then(res=>{
+                                hotAlbums[i].songs = res
+                            })
+                        }
                 
                 },
                 error => {
                     console.log(error)
                 }
-        )
-      
-        
-        // console.log(this.alSongs)
-        axios.get(`/album?id=128749721`).then(            
-                response => {
-                // this.hotAlbums=response.data.hotAlbums
-                //   console.log('album songs:')
-                //   console.log(response.data)
-                },
-                error => {
-                    console.log(error)
-                }
-        )
-
-
-    },
-    methods:{
-        playMusic(id){
-            // console.log(id)
-            axios.get(`/song/url?id=${id}`).then(
-				response => {
-                     this.$bus.$emit('sendSong',response.data.data[0])	
-				},
-				error => {
-					alert('请求歌曲失败')
-				}
-				)
-
-
+            )
         }
     }
 
@@ -154,23 +183,18 @@ export default {
 
 <style scoped>
 #singer-albums{
-    /* height:40%; */
     width:100%;
-    margin-bottom:5%;
-    flex:10;
 }
 #singer-albums::-webkit-scrollbar{
     display:none;
 }
 .con{
     width:100%;
-    /* height:auto; */
     margin:10px;
     display:flex;
 }
 .con .al-cover{
     flex:2;
-    /* background: yellow; */
     height:100%;
     width:100%;
 }
@@ -181,18 +205,14 @@ export default {
 .con .al-content{
     flex:4;
      height:40%;
-    /* background: sandybrown; */
 }
-/* .al-content{
-   
-} */
-.al-songs{
+
+.al-song{
     width:90%;
     height:8%;
     margin:3px;
-    /* margin-left:20%; */
-    /* height:30px; */
     display:flex;
+    align-items: center;
 }
 
 .al-songOrder{
@@ -202,20 +222,31 @@ export default {
 .al-songName{
     border:none;
     flex:8;
-    /* display: flex; */
-    
-            /* margin: auto; */
-
-    /* background: white; */
 }
 .al-songName:hover{
     color:rgb(238, 73, 73);
-    cursor: pointer;
+    /* cursor: pointer; */
 }
-.al-songAlbum
+.al-songTime
 {
      border:none;
-    flex:3;
+    flex:2;
+}
+
+.moreSong{
+    width:90%;
+    height:8%;
+    margin:3px;
+    display:flex;
+    justify-content: right;
+    font-size:7px;
+}
+button{
+    background: none;
+}
+
+.bi-heart:hover{
+    cursor:pointer;  
 }
 
 </style>

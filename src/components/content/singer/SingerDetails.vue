@@ -12,7 +12,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { _getDescOfArtist } from '../../../api/artist'
 export default {
     name:'singer-details',
     data(){
@@ -21,13 +21,21 @@ export default {
             details:[],
         }
     },
+    watch:{
+        '$store.state.singer.length'(){
+            this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+            _getDescOfArtist(this.sid).then(
+                    response =>{
+                        this.details = response.data.introduction
+                    }
+                )
+        }
+    },
     mounted(){
          this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
-        axios.get(`/artist/desc?id=${this.sid}`).then(
+       _getDescOfArtist(this.sid).then(
             response =>{
-                // console.log
                 this.details = response.data.introduction
-                // console.log(response.data)
             }
         )
     }
@@ -39,11 +47,6 @@ export default {
 #singer-details{
     width:90%;
     margin-left: 5%;
-    margin-top: 2%;
-    /* overflow: scroll; */
-    flex:10;
-    /* padding-bottom: 2%; */
-      margin-bottom: 5%;
 }
 #singer-details::-webkit-scrollbar{
     display: none;

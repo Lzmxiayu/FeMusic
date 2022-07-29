@@ -22,7 +22,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import { _getUserDeatil,_getUserPlaylist } from '../../../api/user'
 export default {
     name:"user-detail",
     data(){
@@ -47,7 +47,7 @@ export default {
     mounted(){
         this.id=this.$store.state.user[this.$store.state.user.length-1]
         //获取用户详情
-        axios.get(`/user/detail?uid=${this.id}`).then(
+        _getUserDeatil(this.id).then(
             response => {
                 //userId,avatarUrl,nickname,signature,eventCount,follows,followeds,province,city
                 this.user = response.data.profile
@@ -57,7 +57,7 @@ export default {
 
         )
         //获取用户歌单
-         axios.get(`/user/playlist?uid=${this.id}`).then(
+         _getUserPlaylist(this.id).then(
             response => {
                 //id,name,coverImgUrl,trackCount(歌曲数)
                 this.playlist=response.data.playlist

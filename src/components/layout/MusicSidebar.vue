@@ -5,7 +5,7 @@
 </template>
 
 <script>
-import List from '../base/list/List.vue'
+import List from '../base/sidebar/List.vue'
 export default {
     name:'music-sidebar',
     components:{
@@ -17,9 +17,6 @@ export default {
 <style scoped>
 #music-sidebar{
     grid-area: sidebar;
-    background:wheat;
-    /* border:grey;   */
-   
+    flex:1;
 }
-
 </style>
