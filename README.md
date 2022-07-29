@@ -4,7 +4,10 @@
 [NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 后端运行在本地3000端口
 
-项目实现了音乐播放和MV播放等功能，也可以查看最新的音乐讯息。
+项目采用Vue+Vuex+Vue-Router+Axios开发，
+实现了最新音乐，榜单，歌手页，MV页，收藏音乐页，歌手信息，歌单信息，歌曲播放页等界面，
+支持夜间模式，歌曲封面，歌词滚动效果，播放列表切换歌曲，滚动条实时进度调整等，
+通过localstorage实现状态持久化，防止刷新后数据丢失，使用懒加载缓解同时加载大量图片卡顿问题
 
 
 ## Build Setup
