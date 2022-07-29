@@ -2,7 +2,7 @@
   <div id="album-detail">
       <div class="al-header">
           <div class="am-ava">
-               <img :src="this.info.blurPicUrl">
+               <img v-lazy="this.info.blurPicUrl">
           </div>
           <div class="am-desc">
            <h2>{{this.info.name}}</h2>
@@ -74,7 +74,7 @@ export default {
                 this.info=response.data.album
                 //
                 this.songs=response.data.songs
-                console.log(response.data.songs)
+                // console.log(response.data.songs)
             }
         )
         this.getSongInfo(5)

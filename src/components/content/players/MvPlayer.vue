@@ -14,7 +14,7 @@
                <h4>全部评论:</h4> 
             <div v-for="comment in comments" class="mv-comment" :key="comment.commentId">
                 <div class="mv-avatar">
-                  <img :src="comment.user.avatarUrl" >
+                  <img v-lazy="comment.user.avatarUrl" >
                 </div>
                 <div class='mv-ct'>
                     <a href="#">{{comment.user.nickname}}</a>
@@ -29,7 +29,6 @@
           <div v-for="sm in simimvs" :key="sm.id" 
               @click="ChangeMv(sm.id)"
                 class="recv-mvs">
-              <img :src="sm.cover">
               <p>{{sm.name}}</p>
           </div>
       </div>

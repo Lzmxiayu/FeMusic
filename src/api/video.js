@@ -1,5 +1,32 @@
 import {request} from './request'
 
+function _getAllMv(searchword){
+    return request({
+        url:'mv/all',
+        params:{
+            ...searchword
+        }
+    })
+}
+
+function _getNewestMv(){
+    return request({
+        url:'/mv/first?limit=7',
+    })
+}
+
+function _getCM(){
+    return request({
+        url:'/mv/exclusive/rcmd?limit=10',
+    })
+}
+
+function _getTopMv(){
+    return request({
+        url:'/top/mv',
+    })
+}
+
 function _getMvUrl(id){
     return request({
         url:'/mv/url',
@@ -47,4 +74,4 @@ function _getNewMvs(limit){
 
 
 
-export {_getMvUrl,_getMvDetail,_getMvComment,_getSimiMv,_getNewMvs}
+export {_getMvUrl,_getMvDetail,_getMvComment,_getSimiMv,_getNewMvs,_getNewestMv,_getCM,_getTopMv,_getAllMv}

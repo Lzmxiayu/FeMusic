@@ -8,7 +8,7 @@
             <p @click="ChangeArea($event,'JP')" class="area">日本</p>
         </div>
         <div v-if="load" class="Loading">
-            <img src="../../../../assets/loading.gif" >
+            <img src="../../../assets/loading.gif" >
             <h3>Loading...</h3>
         </div>
         <div v-if="!load">
@@ -43,17 +43,17 @@
 </template>
 
 <script>
-import {_getSongUrl} from '../../../../api/song'
-import {_getTopAlbum} from '../../../../api/album'
+import {_getSongUrl} from '../../../api/song'
+import {_getTopAlbum} from '../../../api/album'
+
 export default {
-    name:'new-songs',
+    name:'new-als',
     data(){
         return {
             weekdata:[],
             monthdata:[],
             ifwk:true,
             load:true,
-            lastSelected:null
         }
     },
     methods:{
@@ -64,21 +64,23 @@ export default {
                 this.weekdata=response.data.weekData;
                 this.monthdata=response.data.monthData;
                 this.load=false
-                // console.log(response.data)
             }
         )
         },
         ChangeArea(e,area){
             //改变选中状态
-            this.lastSelected.classList.remove('selected')
+            Array.from(e.target.parentNode.children).forEach(item=>{
+                if(item.classList.contains('selected')){
+                    item.classList.remove('selected')   
+                }
+            })
             e.target.classList.add('selected')
-            this.lastSelected = e.target
-
 
             if(area == 'ALL')
                 this.ifwk=true
             else
                 this.ifwk=false
+
             this.load=true
             this.fetchData(area)
         },
@@ -89,7 +91,7 @@ export default {
                     this.$store.dispatch('sendToPlay',response.data.data[0])
 				},
 				error => {
-					// alert('请求歌曲失败')
+					alert('请求歌曲失败')
 				}
 				)
         },
@@ -117,8 +119,6 @@ export default {
 <style scoped>
 #nes-als{
     width:100%;
-    /* height:100%; */
-     /* background:#FFF2E2; */
 }
 
 .ns-header{

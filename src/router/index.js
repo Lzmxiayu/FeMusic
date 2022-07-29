@@ -1,37 +1,21 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-import FindMusic from '../components/base/main/FindMusic'
-// import Home from '../components/base/main/Home'
-// import LoveMusic from '../components/base/main/LoveMusic'
-// import PlayRecent from '../components/base/main/PlayRecent'
-// import CollectMusic from '../components/base/main/CollectMusic'
-import SongList from '../components/content/search-content/SongList'
-import ArtistList from '../components/content/search-content/ArtistList'
-import AlbumList from '../components/content/search-content/AlbumList'
-import VideosList from '../components/content/search-content/VideosList'
-import SongSheet from '../components/content/search-content/SongSheet'
-import UserList from '../components/content/search-content/UserList'
 
-import FoundMusic from '../components/base/main/FoundMusic'
-import Singers from '../components/content/found-music/Singers'
-import NewMvs from '../components/content/found-music/NewMvs'
-import NewAlbums from '../components/content/found-music/NewAlbums'
-import NewMusic from '../components/content/found-music/NewMusic'
-import NewSongs from '../components/content/found-music/new-music/NewSongs'
-import NewAl from '../components/content/found-music/new-music/NewAl'
-import SongCollect from '../components/content/found-music/SongCollect'
+import SearchMusic from '../components/base/main/SearchMusic'
 
-import SongBoard from '../components/base/main/SongBoard'
-import SingerInfo from '../components/base/main/SingerInfo'
+import Singers from '../components/base/main/Singers'
+import TopList from '../components/base/main/TopList'
+import MV from '../components/base/main/MV'
+import NewAlbums from '../components/base/main/NewAlbums'
+import NewMusic from '../components/content/new-music/NewMusic'
+import SongCollect from '../components/base/main/SongCollect'
+
+import AllMv from '../components/content/mv/AllMv'
+import SingerInfo from '../components/content/singer/SingerInfo'
 import AlbumDetail from '../components/base/main/AlbumDetail'
-import SongSheetDetail from '../components/base/main/SongSheetDetail'
-import UserDetail from '../components/base/main/UserDetail'
+import SongSheetDetail from '../components/content/songSheet/SongSheetDetail'
 
-import SingerAlbums from '../components/content/singer/SingerAlbums'
-import SingerDetails from '../components/content/singer/SingerDetails'
-import SingerMv from '../components/content/singer/SingerMv'
-import SimilarSingers from '../components/content/singer/SimilarSingers'
-import MvPlayer from '../components/base/main/MvPlayer'
+import MvPlayer from '../components/content/players/MvPlayer'
 
 Vue.use(Router)
 
@@ -46,162 +30,73 @@ export default new Router({
   mode:"history",
   linkActiveClass:"active",
   routes: [
-    // {
-    //   path:'*',
-    //   redirect:'FoundMusic'
-    // },
     //主页
     {
       path:'/',
       name:'home',
-      component:NewMusic,
+      component:SongCollect,
       children:[
       ]
     },
+     //搜索音乐
+    {
+      path: '/fdmc',
+      name: 'SearchMusic',
+      component: SearchMusic,   
+    },
+    //最新音乐
+    {
+      path:'/nwmc',
+      name:'NewMusic',
+      component:NewMusic,
+    },
+    //榜单
+    {
+      path:'/tplt',
+      name:'TopList',
+      component:TopList,
+    },
+    //歌单详请
+    {
+      path:'/ssdl',
+      name:'SongSheetDetail',
+      component:SongSheetDetail
+    },
+    //歌手列表
     {
       path:'/singers',
       name:'Singers',
       component:Singers,
     },
-    {
-      path:'/newmvs',
-      name:'newMvs',
-      component:NewMvs,
-    },
-    {
-      path:'/newabms',
-      name:'NewAlbums',
-      component:NewAlbums,
-    },
-    {
-      path:'/songcollect',
-      name:'SongCollect',
-      component:SongCollect,
-    },
-    {
-      path:'/nwmc',
-      name:'NewMusic',
-      component:NewMusic,
-      children:[
-        {
-          path:'nwsgs',
-          name:'NewSongs',
-          component:NewSongs,
-        },
-        {
-          path:'nalms',
-          name:'NewAl',
-          component:NewAl,
-        },
-
-    {
-      path:'/main',
-      name:'Main',
-      component:FoundMusic,
-      children:[
-       
-          ]
-        },
-      ]
-    },
-   
-
-    //搜索音乐
-    {
-      path: '/fdmc',
-      name: 'FindMusic',
-      component: FindMusic,
-      children:[
-        {
-          path:'sglt',
-          name:'singlesong',
-          component:SongList,
-        },
-        {
-          path:'atlt',
-          name:'Artist',
-          component:ArtistList,
-        },
-        {
-          path:'albm',
-          name:'Album',
-          component:AlbumList,
-        },
-        {
-          path:'vdeo',
-          name:'Video',
-          component:VideosList,
-        },
-        {
-          path:'sgst',
-          name:'SongSheet',
-          component:SongSheet,
-        },
-        {
-          path:'urlt',
-          name:'UserList',
-          component:UserList,
-        },
-
-      ]
-    },
-    //用户主页
-    // {
-    //   path: '/home',
-    //   name: 'Home',
-    //   component: Home
-    // },
-    // //喜爱的音乐
-    // {
-    //   path: '/lemc',
-    //   name: 'LoveMusic',
-    //   component: LoveMusic
-    // },
-    // //最近播放
-    // {
-    //   path: '/pyrt',
-    //   name: 'PlayRecent',
-    //   component: PlayRecent
-    // },
-    // //收藏的音乐
-    // {
-    //   path: '/clmc',
-    //   name: 'CollectMusic',
-    //   component: CollectMusic
-    // },
-    //歌曲信息板
-    {
-      path: '/sgbd',
-      name: 'SongBoard',
-      component: SongBoard
-    },
-    //歌手页
+    //歌手详情
     {
       path: '/sgio',
       name: 'SingerInfo',
       component: SingerInfo,
-      children:[
-        {
-          path:'sgal',
-          name:'SingerAlbums',
-          component:SingerAlbums,
-        },
-        {
-          path:'sgdl',
-          name:'SingerDetails',
-          component:SingerDetails,
-        },
-        {
-          path:'sgmv',
-          name:'SingerMv',
-          component:SingerMv,
-        },
-        {
-          path:'sgsr',
-          name:'SimilarSingers',
-          component:SimilarSingers,
-        },
-      ]
+    },
+    //MV页
+    {
+      path:'/mv',
+      name:'MV',
+      component:MV,
+    },
+    //全部MV页
+    {
+      path:'/allmv',
+      name:'AllMV',
+      component:AllMv,
+    },
+    //mv播放页
+    {
+      path:'/mvpr',
+      name:'MvPlayer',
+      component:MvPlayer,
+    },
+    //最新专辑
+    {
+      path:'/newabms',
+      name:'NewAlbums',
+      component:NewAlbums,  
     },
     //专辑详情
     {
@@ -209,25 +104,11 @@ export default new Router({
       name:'AlbumDetail',
       component:AlbumDetail,
     },
-    //歌单详请
+    //收藏歌曲页
     {
-      path:'/SongSheetDetail',
-      name:'SongSheetDetail',
-      component:SongSheetDetail
+      path:'/songcollect',
+      name:'SongCollect',
+      component:SongCollect,
     },
-    //用户详情
-    {
-      path:'/urdl',
-      name:'UserDetail',
-      component:UserDetail,
-    },
-    //mv播放页
-    {
-      path:'/mvpr',
-      name:'MvPlayer',
-      component:MvPlayer,
-    }
-
-
   ]
 })

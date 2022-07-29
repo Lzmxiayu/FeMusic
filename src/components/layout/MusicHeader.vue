@@ -3,7 +3,6 @@
       <logo/>
       <search/>
       <setting/>
-
   </div>
 </template>
 
@@ -14,13 +13,11 @@ import Search from '../base/header/Search.vue'
 export default {
     name:'music-header',
     components: { Logo, Search, Setting},
-
 }
 </script>
 
 <style scoped>
 #music-header{
-    grid-area: header;
     display: flex;
     height:8vh;
 }

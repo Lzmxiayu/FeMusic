@@ -25,32 +25,37 @@ export default {
       singers:[],
     }
   },
+  watch:{
+      //监听搜索词，搜索词改变重新搜索
+      '$store.state.keyword'(){
+         this.keyword=this.$store.state.keyword
+         
+        this.fetchData()
+      }
+  },
   methods:{
         PushSinger(sid){
           this.$store.state.singer.push(sid)
-          // console.log(this.$store.state.singer)
-          // console.log(this.$store.state.singer[this.$store.state.singer.length-1])
+      
           this.$router.push({
-            name:'SingerAlbums',
-            params:{
-              sid:sid
-            }
+            name:'SingerInfo',
           })
+        },
+        fetchData(){
+          //获取歌手
+          search(this.keyword,100,50).then(
+            response => {
+                this.singers = response.data.result.artists        
+            },
+            error => {
+            }
+          )
         }
   },
   mounted(){
-        // this.keyword=this.$route.params.keyword
          this.keyword=this.$store.state.keyword
          
-         //获取歌手
-        search(this.keyword,100,50).then(
-            response => {
-                this.singers = response.data.result.artists        
-                // console.log(response.data.result.artists)
-            },
-            error => {
-                console.log('Failed')
-            })
+        this.fetchData()
   }
 }
 </script>

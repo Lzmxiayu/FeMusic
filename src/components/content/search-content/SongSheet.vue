@@ -5,7 +5,7 @@
         @click="PushSongSheet(sgsheet.id)"
         class="sgsheet">
         <div class="st-ava">
-          <img :src="sgsheet.coverImgUrl">
+          <img v-lazy="sgsheet.coverImgUrl">
         </div>
         <div class="st-name">
           <h4>{{sgsheet.name}}</h4>
@@ -24,28 +24,34 @@ export default {
       sgsheets:[],
     }
   },
+  watch:{
+      //监听搜索词，搜索词改变重新搜索
+      '$store.state.keyword'(){
+         this.keyword=this.$store.state.keyword
+         this.fetchData()
+      }
+  },
   methods:{
         PushSongSheet(sid){
+          this.$store.state.songsheet.push(sid)
           this.$router.push({
             name:'SongSheetDetail',
-            params:{
-              sid:sid
-            }
           })
+        },
+        fetchData(){
+           //获取歌手
+          search(this.keyword,1000,50).then(
+              response => {
+                  this.sgsheets = response.data.result.playlists        
+              },
+              error => {
+                  console.log('Failed')
+              })
         }
   },
   mounted(){
-        // this.keyword=this.$route.params.keyword
-         this.keyword=this.$store.state.keyword
-         //获取歌手
-        search(this.keyword,1000,50).then(
-            response => {
-                this.sgsheets = response.data.result.playlists        
-                console.log(response.data.result.playlists)
-            },
-            error => {
-                console.log('Failed')
-            })
+      this.keyword=this.$store.state.keyword
+      this.fetchData()
   }
 }
 </script>

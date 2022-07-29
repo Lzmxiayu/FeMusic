@@ -18,6 +18,15 @@ function _getArtists(id){
     })
 }
 
+function _getArtiBywords(searchword){
+    return request({
+        url:'/artist/list',
+        params:{
+            ...searchword
+        }
+    })
+}
+
 function _getSimilarArtists(id){
     return request({
         url:'/simi/artist',
@@ -68,4 +77,4 @@ function _getTopListArtist(){
 
 
 export {_getArtist,_getArtists,_getSimilarArtists,_getMvOfArtist,
-    _getDetailOfArtist,_getDescOfArtist,_getTopListArtist}
+    _getDetailOfArtist,_getDescOfArtist,_getTopListArtist,_getArtiBywords}

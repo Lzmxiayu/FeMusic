@@ -1,31 +1,29 @@
 <template>
   <div id="music-player">
-      <!-- <button @click="OpenSongBoard" style="width:50px;">详细信息</button> -->
-      <div class="mpHead">
-          <div class="m-img">
-             <img v-lazy="$store.state.playingSong.coverUrl[$store.state.playingSong.index]" @click="OpenSongBoard()" >
+      <div class="mpHead" >
+            <div class="m-img" v-if="$store.state.playingSong.songInfo.length!==0">
+             <img v-lazy="coverUrl || ''" 
+             @click="OpenSongBoard()" >
+            </div>
+            <div class="m-Name" v-if="$store.state.playingSong.songInfo.length!==0">
+                <p>{{$store.state.playingSong.songInfo[$store.state.playingSong.index].name}}</p>     
+                <p>{{$store.state.playingSong.songInfo[$store.state.playingSong.index].artist.name}}</p>
             </div>
       </div>
 
-       <audio
-        src=""
-        class="myvideo"       
-      >
-      </audio>
+      
     <div class="mpControl">
+
         <div class="m-con">
             <pre-song />
             <play-pause/>
-            <next-song />
-        
+            <next-song />        
         </div>
         <div class="progress-container" @click="changePlayProgress($event)">
            <div class="progress" 
             :style="{'width':`${$store.state.progress}`}"
             >
             </div>
-            <!-- `${$store.state.musicplayer.currentTime/$store.state.musicplayer.duration}` -->
-            <!-- ${$store.state.progress.currentTime/$store.state.progress.duration +'%'} -->
         </div>
     </div>
     <div class="mpList">
@@ -39,6 +37,7 @@ import MusicPlayListButton from '../../common/button/PlayingList.vue'
 import PlayPause from '../../common/button/PlayPause.vue'
 import PreSong from '../../common/button/PreSong.vue'
 import NextSong from '../../common/button/NextSong.vue'
+
 import {_getSongDetail} from '../../../api/song'
 
 export default {
@@ -47,48 +46,36 @@ export default {
         MusicPlayListButton,
         PlayPause,
         PreSong,
-        NextSong
+        NextSong,
     },
     data(){
         return{
-            value:0,
-            currentTime:0,
-            duration:1000,
             progressContainer:null,
         }
     },
     computed:{
-    },
-    watch:{
+        coverUrl(){
+            return this.$store.state.playingSong.coverUrl[this.$store.state.playingSong.index] 
+        }  
     },
     methods:{
         OpenSongBoard(){
             let playingSong = this.$store.state.playingSong
-            
-            if(playingSong.hasSong)
-                this.$router.push({
-                    name:'SongBoard',
-                    params:{
-                        songInfo:playingSong.songInfo[playingSong.index]
-                    }
-                } )
+            this.$store.state.openSongBoard = !this.$store.state.openSongBoard
+            console.log(this.$store.state.openSongBoard)
+
         },
         changePlayProgress(e){
             const progressWidth = this.progressContainer.clientWidth
             const position = parseInt((e.offsetX/progressWidth)*100)
-            this.value= position +'%'
- 
+
             //获取当前播放歌曲总时长 以秒为单位
             const duration = this.$store.state.musicplayer.duration
             this.$store.state.musicplayer.currentTime = (position/100) * duration
         }
     },
     mounted(){
-        const audio = document.querySelector('.myvideo')
-        this.$store.commit('sendMusicPlayer',audio)
-
         this.progressContainer = document.querySelector('.progress-container')
-
     },
 
 }
@@ -97,35 +84,53 @@ export default {
 <style scoped>
 #music-player{
     display: flex;
-    /* align-items: ce; */
-    height:8vh;    
+    height:7vh;    
     width:100%;
 }
 .mpHead{
     flex:3;
+    display: flex;
+    align-items: center;
+    padding-left: 2%;
+    height: 100%;
 }
 .m-img{
-    width:100%;
+    width:30%;
     height:100%;
     padding-top:2%;
-    padding-left:10%;
 }
 .m-img img{
+    width:50px;
+    height:50px;
+    /* width:100%; */
     border-radius:10px;
-    height:90%;
-    width:auto;
 }
-
+.m-Name{
+    flex:1;
+    padding:2%;
+    font-size: 5px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.m-Name p{
+    margin:0% 0% 0% 0%;
+}
 .mpControl{
     flex:8;
     height:8vh;
 }
 .m-con{
     height:70%;
-    width:40%;
-    margin-left:30%;
+    width:80%;
+    margin-left:10%;
     display:flex;
     justify-content: center;
+    /* align-items: center; */
+    font-size: 25x;
+}
+.m-con .likeSong{
+    font-size:25px;
 }
 
 

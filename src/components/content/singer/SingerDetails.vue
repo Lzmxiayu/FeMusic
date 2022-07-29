@@ -21,6 +21,16 @@ export default {
             details:[],
         }
     },
+    watch:{
+        '$store.state.singer.length'(){
+            this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+            _getDescOfArtist(this.sid).then(
+                    response =>{
+                        this.details = response.data.introduction
+                    }
+                )
+        }
+    },
     mounted(){
          this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
        _getDescOfArtist(this.sid).then(
@@ -37,9 +47,6 @@ export default {
 #singer-details{
     width:90%;
     margin-left: 5%;
-    margin-top: 2%;
-    flex:10;
-    margin-bottom: 5%;
 }
 #singer-details::-webkit-scrollbar{
     display: none;

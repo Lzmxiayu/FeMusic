@@ -1,7 +1,8 @@
 <template>
-  <div id="playinglist" v-if="$store.state.openlist">
+  <div id="playinglist" v-show="$store.state.openlist">
         <div class="head">
             <h4>当前播放</h4>
+            <button @click="clearList">清空列表</button>
         </div>
         <div class="list">
             <div v-for="song in $store.state.playingSong.songInfo" :key="song.id" class="song">
@@ -27,25 +28,41 @@
 export default {
     name:'playing-list',
     data(){
-        return {
-            // playingSongs:{}
+        return {}
+    },
+    watch:{
+        '$store.state.playingSong.currentSong'(){
+            const currentSong = this.$store.state.playingSong.currentSong
+            if(currentSong===null) return
+
+            let songInfo = this.$store.state.playingSong.songInfo
+            const index  = songInfo.findIndex(song=>song.id===currentSong.id)
+            let playinglist = document.querySelector('#playinglist > .list')
+
+            //异步添加
+            setTimeout(()=>{
+                //删除之前被选中元素的selected类属性
+                Array.from(playinglist.children).forEach(song=>{
+                song.classList.contains('selected') && song.classList.remove('selected')
+                })
+                //为新选中元素添加selected
+                playinglist.children[index].classList.add('selected')
+                playinglist=null
+            })
+
         }
     },
     methods:{
         PlaySong(id){
-            console.log(id)
             this.$store.commit('switchListSong',id)
         },
         deleteSong(id){
             const playingSong = this.$store.state.playingSong
             const index = playingSong.songInfo.findIndex(item=>item.id===id)
-            console.log(index)
             playingSong.songInfo.splice(index,1)
             playingSong.coverUrl.splice(index,1)
-            console.log(playingSong)
             //删除后列表空了
             if(playingSong.songInfo.length===0){
-                console.log('列表清空了')
                  this.$store.commit('clearList')
             }else if(index === playingSong.index){ //当删除的是正在播放的歌曲
                 //该曲在列表末,往前一首
@@ -57,11 +74,12 @@ export default {
             }else{  //不是正在播放的，index得-1
                 playingSong.index--
             }
+        },
+        clearList(){
+            this.$store.commit('clearList')
+            this.$store.state.openlist = false
+            this.$store.state.openlist = true
         }
-    },
-    created(){
-        // this.playingSongs = this.$store.state.playingSong
-        // console.log( this.playingSongs)
     }
 }
 </script>
@@ -77,19 +95,20 @@ export default {
   padding-right:2%;
   background: black;
   color: white;
-  /* background-color:rgb(191, 191, 193); */
+
   opacity:0.6;
-  /* z-index: -1; */
-  /* backdrop-filter: blur(8px); */
-    /* filter: blur(3px); */
+
   display: flex;
   flex-direction: column;
 }
 .head{
     flex:1;
     display: flex;
-    justify-content: center;
+    justify-content: space-between;
     align-items: center;
+}
+button:hover{
+    cursor: pointer;
 }
 .list{
     flex:8;
@@ -131,5 +150,9 @@ align-self: center;
 
 .deleteSong:hover{
     opacity:0.5;
+}
+
+.selected{
+    color:rgb(232, 131, 131);
 }
 </style>

@@ -10,20 +10,23 @@ export default {
 }
 </script>
 
-<style>
+<style scoped>
 #logo{
-    flex:1; 
+   flex:1;
    position: relative;
    height:100%;
    width: 100%;
 }
 .app-title{
     color:black;
-     position: absolute;
-            left: 25%;
-            top: 10%;
-            bottom:0;
-            right:0;
-            margin:auto;
+    position: absolute;
+    left: 25%;
+    top: 10%;
+    bottom:0;
+    right:0;
+    margin:auto;
+}
+button{
+    float:right;
 }
 </style>

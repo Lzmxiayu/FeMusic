@@ -3,9 +3,8 @@
       
           <div  v-for="mv in mvs " :key="mv.id" @click="PushMv(mv.id)" class="sg-con">
                 <div  class="sgmv-cover">
-                    <img :src="mv.imgurl">
+                    <img v-lazy="mv.imgurl">
                 </div>
-                <!-- <img :src="mv.imgurl"> -->
                 <div class="sgmv-name">
                 {{mv.name>15?(mv.name.slice(0,15)+'...'):mv.name}}
                 </div>
@@ -23,6 +22,21 @@ export default {
             sid:'',
             mvs:[],
         }
+    },
+    watch:{
+        '$store.state.singer.length'(){
+            this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+            _getMvOfArtist(this.sid).then(
+                response => {
+                    this.mvs=response.data.mvs
+                },
+                error => {
+                    console.log('Failed')
+                }
+        )
+           
+        }
+
     },
     mounted(){
         this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
@@ -55,9 +69,6 @@ export default {
 <style scoped>
 #singer-mv{
     width:95%;
-    margin-left:5%;
-    margin-bottom:5%;
-    /* flex:10; */
     display: flex;
     flex-wrap: wrap;
 }

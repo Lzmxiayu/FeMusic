@@ -1,9 +1,9 @@
 <template>
   <div id="list">
-      <button class="list-choice" @click="ChangeRoute('NewSongs')"><p>最新音乐</p></button>
-      <button class="list-choice" @click="ChangeRoute('newMvs')">最新MV</button>
+      <button class="list-choice" @click="ChangeRoute('NewMusic')"><p>最新音乐</p></button>
+      <button class="list-choice" @click="ChangeRoute('TopList')">榜单</button>
+      <button class="list-choice" @click="ChangeRoute('MV')">MV</button>
       <button class="list-choice" @click="ChangeRoute('Singers')" >歌手</button>
-      <button class="list-choice" @click="ChangeRoute('NewAlbums')">最新专辑</button>
       <button class="list-choice" @click="ChangeRoute('SongCollect')">收藏歌曲</button>
   </div>
 </template>

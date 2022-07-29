@@ -14,7 +14,7 @@
                        {{song.index}}
                     </p>
                     <div class="demo-image__lazy">
-                        <img :src="song.album.picUrl" lazy>
+                        <img v-lazy="song.album.picUrl" lazy>
                     </div>
                     <p class="nsName" type="text" v-on:click="playMusic(song)">
                                 {{song.name}}
@@ -36,14 +36,13 @@
 </template>
 
 <script>
-import {_getSongUrl,_getTopSong} from '../../../../api/song'
+import {_getSongUrl,_getTopSong} from '../../../api/song'
 export default {
     name:'new-songs',
     data(){
         return {
             songdata:[],
             count:0,
-            lastSelected:null
         }
     },
     methods:{
@@ -63,9 +62,12 @@ export default {
         },
         ChangeArea(e,type){
             //改变选中状态
-            this.lastSelected.classList.remove('selected')
+            Array.from(e.target.parentNode.children).forEach(item=>{
+            if(item.classList.contains('selected')){
+                item.classList.remove('selected')   
+            }
+            })
             e.target.classList.add('selected')
-            this.lastSelected = e.target
 
             this.fetchData(type)
         },
@@ -137,7 +139,12 @@ export default {
     margin-bottom: 0%;
 }
 .demo-image__lazy{
-    flex:2;
+    width:50px;
+    height:50px;
+    border-radius: 10px;
+    background-color: azure ;
+    margin-left: 2%;
+
 }
 .demo-image__lazy img{
     width:50px;

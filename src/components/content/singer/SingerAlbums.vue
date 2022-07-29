@@ -28,16 +28,16 @@
       </div>
       <div v-for="al in this.alSongs" :key="al.id" class="con">
           <div class="al-cover">
-              <img :src="al.blurPicUrl">
+              <img v-lazy="al.blurPicUrl">
           </div>
           <div class="al-content">
               <div v-for="song in al.songs" :key="song.id" class="al-song">
                    <button  class='al-songOrder'>
                        {{song.index[0]=='0'?song.index.slice(1):song.index}}
                     </button>
-                     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
-                <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
-              </svg>
+                <!-- <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-heart" viewBox="0 0 16 16">
+                    <path d="m8 2.748-.717-.737C5.6.281 2.514.878 1.4 3.053c-.523 1.023-.641 2.5.314 4.385.92 1.815 2.834 3.989 6.286 6.357 3.452-2.368 5.365-4.542 6.286-6.357.955-1.886.838-3.362.314-4.385C13.486.878 10.4.28 8.717 2.01L8 2.748zM8 15C-7.333 4.868 3.279-3.04 7.824 1.143c.06.055.119.112.176.171a3.12 3.12 0 0 1 .176-.17C12.72-3.042 23.333 4.867 8 15z"/>
+                </svg> -->
                      <button @click="playMusic(song)" class="al-songName" type="text" >
                     	{{(song.name.length>20)?song.name.slice(0,20)+'...':song.name}}
  			         </button>
@@ -47,7 +47,6 @@
  			  </button>
               </div>
               <div v-if="al.length>10" class="moreSong">
-                   
                 <p>查看更多....</p>
               </div>
           </div>
@@ -72,13 +71,46 @@ export default {
             details:[]
         }
     },
-    mounted(){
-        this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+    watch:{
+        '$store.state.singer.length'(){
+            this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+            this.getSimilar()
+            this.getAlbumOfArtist()
+        }
 
-        var albums=new Array();
-        
-        _getArtists(this.sid).then(            
+    },
+    mounted(){
+        this.sid=this.$store.state.singer[this.$store.state.singer.length-1]     
+        this.getSimilar()
+        this.getAlbumOfArtist()
+    },
+    methods:{
+        //播放音乐
+        playMusic(song){
+            _getSongUrl(song.id).then(
+				response => {
+                    this.$store.dispatch('sendToPlay',{
+                        ...response.data.data[0],
+                        duration:song.dt,
+                        name:song.name,
+                        artist:song.ar[0]
+                    })
+				},
+				error => {
+					alert('请求歌曲失败')
+				}
+			)
+        },
+        //热门音乐展开或收起
+        showMore(){
+            this.showSongs = this.showSongs.length<=10?this.hotSongs:this.hotSongs.slice(0,10)
+            this.tip = this.tip === '显示全部'?'收起':'显示全部'
+        },
+        //获取热门歌曲
+        getSimilar(){
+            _getArtists(this.sid).then(            
                 response => {
+                    console.log(response)
                     return response.data.hotSongs.map((item,index)=>{
                         //设置歌曲索引
                         item.index = index+1
@@ -98,12 +130,14 @@ export default {
                 error => {
                     console.log(error)
                 }
-        ).then(res=>{
-            this.hotSongs = res
-            this.showSongs = this.hotSongs.slice(0,10)
-        })
-
-        _getAlbumOfArtist(this.sid).then(            
+            ).then(res=>{
+                this.hotSongs = res
+                this.showSongs = this.hotSongs.slice(0,10)
+            })
+        },
+        //获取热门专辑
+        getAlbumOfArtist(){
+             _getAlbumOfArtist(this.sid).then(            
                 response => {
                     let hotAlbums=response.data.hotAlbums
                     var songs=[]
@@ -121,7 +155,6 @@ export default {
                                                 const seconds = res.data.songs[0].dt/1000
                                                 const second = parseInt(seconds%60)
                                                 item.dt = parseInt(seconds/60) + ':' + (second<10?'0'+second:second)
-                                                //  console.log(item)
                                             }
                                         )
                                        
@@ -141,31 +174,7 @@ export default {
                 error => {
                     console.log(error)
                 }
-        )
-
-
-    },
-    methods:{
-        playMusic(song){
-            _getSongUrl(song.id).then(
-				response => {
-                    this.$store.dispatch('sendToPlay',{
-                        ...response.data.data[0],
-                        duration:song.dt,
-                        name:song.name,
-                        artist:song.ar[0]
-                    })
-				},
-				error => {
-					alert('请求歌曲失败')
-				}
-			)
-        },
-        showMore(){
-            
-            this.showSongs = this.showSongs.length<=10?this.hotSongs:this.hotSongs.slice(0,10)
-
-            this.tip = this.tip === '显示全部'?'收起':'显示全部'
+            )
         }
     }
 
@@ -175,8 +184,6 @@ export default {
 <style scoped>
 #singer-albums{
     width:100%;
-    margin-bottom:5%;
-    flex:10;
 }
 #singer-albums::-webkit-scrollbar{
     display:none;

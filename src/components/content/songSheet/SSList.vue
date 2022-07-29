@@ -1,5 +1,5 @@
 <template>
-  <div id="song-list">
+  <div id="ss-list">
       <div class="slist">
            <div  class="head" >
               <button class='songOrderT'>
@@ -19,14 +19,13 @@
  			  </button>
             
           </div>
-           
-          <div v-for="song in songs" :key="song.id" class="songs">
+        <div  v-for="song in songs" :key="song.id" class="songs">
               <button class='songOrder' >
                 {{song.index}}
                 
               </button>
                 <div class="songLike">
-                                  <love-music-button :song="song"></love-music-button>
+                        <love-music-button :song="song"></love-music-button>
                 </div>            
               <button class="songName" type="text" v-on:click="playMusic(song)">
                     {{song.name}}
@@ -36,18 +35,19 @@
                type="text" 
                @click="PushRo('SingerInfo',song.artists[0].id)"
                >
-						{{song.artists[0].name}}
+						{{song.ar[0].name}}
  			  </button>
                 <button class="songAlbum" type="text" v-on:click="PushRo">
-						{{song.album.name.length>15?(song.album.name.slice(0,15)+'...'):song.album.name}}
+						{{song.al.name.length>15?(song.al.name.slice(0,15)+'...'):song.al.name}}
  			  </button>
               <button class="songTime">
-                {{song.duration}}
+                {{correctSongTime(song.dt)}}
               </button>
             
           </div>
+      
       </div>
-  </div>
+    </div>
 </template>
 
 <script>
@@ -55,13 +55,14 @@ import { search,searchKeywords } from '../../../api/search'
 import {_getSongUrl,_checkSongRoot} from '../../../api/song'
 import LoveMusicButton from '../../common/button/LoveMusic.vue'
 export default {
-    name:'song-list',
+    name:'ss-list',
     components:{
         LoveMusicButton
     },
+    props:['songs'],
     data(){
         return {
-            songs:[],
+            // songs:[],
             num:'0',
             permitted:true,
 
@@ -90,8 +91,8 @@ export default {
                         this.$store.dispatch('sendToPlay',{
                             ...response.data.data[0],
                             name:song.name,
-                            artist:song.artists[0],
-                            duration:song.duration
+                            artist:song.ar[0],
+                            duration:correctSongTime(song.dt)
                         })
                     },
                     error => {
@@ -102,8 +103,7 @@ export default {
 			},
         // 跳转到歌手页
         PushRo(name,id){
-            // console.log(id)
-             this.$store.state.singer.push(id)
+           this.$store.state.singer.push(id)
            this.$router.push(
                {
                   name:name,
@@ -121,42 +121,19 @@ export default {
               mid:mid
             }
           })
-        },
-        //搜索关键词歌曲
-        searchSongs(keyword){
-              searchKeywords(keyword,50).then(
-                response => {
-                    const collectmusic = JSON.parse(localStorage.getItem('musicCollect'))
-    
-                    const ids = ( collectmusic === null )?[]:collectmusic.map(song=>song.id)
-
-                    this.songs  = response.data.result.songs.map((item,index)=>{
-                        item.index = index+1
-                        item.hasBeenCollected = ids.includes(item.id)
-                        item.duration = this.correctSongTime(item.duration)
-                        return item
-                    })   
-                },
-                error => {
-                    // console.log('Failed')
-                })
-        }    
+        }, 
         
     },  
-    created(){
-        this.searchSongs(this.$store.state.keyword)
-    }
 }
 </script>
 
 <style scoped>
-#song-list{
-    height:92%;
+#ss-list{
     width:100%;
     font-size:20px;
-    overflow: scroll;
+    /* overflow: scroll; */
 }
-#song-list::-webkit-scrollbar{
+#ss-list::-webkit-scrollbar{
     display: none;
 }
 
@@ -201,7 +178,7 @@ export default {
     flex:8;
    text-align: left;
 }
-.songName:hover{
+.songs .songName:hover{
     color:rgb(238, 73, 73);
     /* cursor: pointer; */
 }
@@ -214,7 +191,7 @@ export default {
     padding:0% 2px 0% 2px;
     opacity: 0.7;
 }
-.mv-button:hover{
+.songs .mv-button:hover{
     cursor: pointer;
 }
 
@@ -224,7 +201,7 @@ export default {
      text-align: left;
     /* background: white; */
 }
-.songArtist:hover{
+.songs .songArtist:hover{
     color:rgb(238, 73, 73);
     cursor: pointer;
 }

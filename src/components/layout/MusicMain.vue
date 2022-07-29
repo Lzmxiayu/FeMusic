@@ -6,19 +6,19 @@
 </template>
 
 <script>
-import FindMusic from '../base/main/FindMusic.vue'
+import SearchMusic from '../base/main/SearchMusic.vue'
 import PlayingList from '../content/playinglist/PlayingSongList'
+
 export default {
     name:'music-main',
-    components: { FindMusic,PlayingList },
+    components: { SearchMusic, PlayingList},
 }
 </script>
 
 <style scoped>
 #music-main{
-    grid-area: content;
+  position: relative;
     flex:8;
-    position:relative;
 }
 
 </style>

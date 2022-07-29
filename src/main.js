@@ -6,18 +6,16 @@ import router from './router'
 import store from './store/index'
 import axios from 'axios'
 import VueLazyload from 'vue-lazyload'
-// import ElementUI from 'element-ui'
-// import 'element-ui/lib/theme-chalk/index.css'
-// Vue.use(ElementUI)
-Vue.config.productionTip = false
 
+Vue.config.productionTip = false
 
 Vue.use(VueLazyload, {
   loading: require('./assets/loading1.gif'),//加载中图片，一定要有，不然会一直重复加载占位图
   error: require('./assets/none.jpg')  //加载失败图片
 });
-import 'jquery/dist/jquery.min'
-import 'bootstrap/dist/css/bootstrap.css'
+
+// import 'jquery/dist/jquery.min'
+// import 'bootstrap/dist/css/bootstrap.css'
 
 axios.defaults.baseURL="http://localhost:3000"
 

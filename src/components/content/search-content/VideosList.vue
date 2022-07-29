@@ -24,6 +24,13 @@ export default {
       videos:[],
     }
   },
+  watch:{
+      //监听搜索词，搜索词改变重新搜索
+      '$store.state.keyword'(){
+         this.keyword=this.$store.state.keyword
+         this.fetchData()
+      }
+  },
   methods:{
         PushMvBoard(mid){
           this.$router.push({
@@ -32,18 +39,21 @@ export default {
               mid:mid
             }
           })
+        },
+        fetchData(){
+           //获取视频
+          search(this.keyword,1014,50).then(
+              response => {
+                  this.videos = response.data.result.videos        
+              },
+              error => {
+                  console.log('Failed')
+          })
         }
   },
   mounted(){
-         this.keyword=this.$store.state.keyword
-         //获取歌手
-        search(this.keyword,1014,50).then(
-            response => {
-                this.videos = response.data.result.videos        
-            },
-            error => {
-                console.log('Failed')
-            })
+       this.keyword=this.$store.state.keyword
+       this.fetchData() 
   }
 
 }

@@ -1,24 +1,30 @@
 <template>
   <div id="music-footer">
      <music-player/>
+      <audio
+        class="myvideo"       
+      >
+      </audio>
   </div>
 </template>
 
 <script>
-import MusicPlayer from '../base/footer/MusicPlayer.vue'
+import MusicPlayer from '../content/players/MusicPlayer.vue'
 export default {
   components: { MusicPlayer },
     name:'music-footer',
+    mounted(){
+       const audio = document.querySelector('audio')
+       this.$store.dispatch('sendMusicPlayer',audio)
+    }
  
 }
 </script>
 
 <style scoped>
 #music-footer{
-    grid-area: footer;
-    flex:1;
     height:8vh;
-    padding:0%;
+    /* box-sizing:border-box;
+    border-top:1px solid grey; */
 }
-
 </style>

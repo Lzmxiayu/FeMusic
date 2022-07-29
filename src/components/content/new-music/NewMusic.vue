@@ -10,20 +10,23 @@
                :class="{ swbtnTitle: index === currentIndex }"
               >
                   {{op.name}}
-            <!-- <button class="swbtn" @click="SwitchS('NewSongs')">新歌速递</button>
-            <button class="swbtn" >新碟上架</button> -->
               </button>
           </button>
       </div>
       <div class="nwmc-content">
-          <router-view></router-view>
-      </div>
+         <NewSongs v-show='!currentIndex'/>
+            <NewAl v-show="currentIndex"/>
+        </div>
   </div>
 </template> 
 
 <script>
+import NewSongs from './NewSongs.vue'
+import NewAl from './NewAl.vue'
+
 export default {
     name:'new-music',
+    components:{NewSongs,NewAl},
     data(){
         return {
             options:[
@@ -39,17 +42,9 @@ export default {
             currentIndex:0
         }
     },
-    created(){
-        this.$router.push({
-            name:'NewSongs'
-        })
-    },
     methods:{
         titleclick(index,name){
-            this.currentIndex=index
-            this.$router.push({
-                name:name,
-            })
+            this.currentIndex=index 
         }
     }
 }
@@ -59,7 +54,6 @@ export default {
 #new-music{
     width:100%;
     height:100%;
-    /* padding:10%,10%,10%,10%; */
     text-align: center;
     overflow: scroll;
 }
@@ -70,22 +64,16 @@ export default {
     height:10%;
     width: 90%;
     margin-left: 5%;
-    /* margin:10 */
     text-align: center;
-    /* margin:0%; */
-    /* padding:0%; */
-    /* padding-top:35%; */
 }
 .sw-container{
     width:25%;
     height:60%;
     margin:2% 0% 2% 37.5% ;
     padding:0%;
-    /* border:none; */
     border-radius: 25px;
     border:rgb(204, 199, 193);
     background: white;
-    /* padding:0%; */
     display: flex;
 }
 .swbtn{
@@ -98,16 +86,13 @@ export default {
     margin:0% auto;
 }
 .swbtnTitle{
-     background: rgba(163, 159, 159, 0.836);
+    background: rgba(163, 159, 159, 0.836);
     color:white;
     border:none;
-    /* height:100%; */
-    /* width:100%; */
 }
 
 .nwmc-content{
     width: 90%;
     margin-left: 5%;
-    /* background: white; */
 }
 </style>

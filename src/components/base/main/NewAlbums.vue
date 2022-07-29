@@ -1,18 +1,12 @@
 <template>
   <div id='new-albums'>
       <div class="newalbum-lists">
-        
           <div v-for="newalbum in newalbums" :key="newalbum.id" 
                 @click="PushNewAlbum(newalbum.id)" 
                 class="newalbumLink" >
-                <!-- <div class="newalbum"> -->
-                     <img :src="newalbum.picUrl">
-                     <h5 class="al-name">{{newalbum.name}}</h5>
-                <!-- </div> -->
-             
+                     <img v-lazy="newalbum.picUrl">
+                     <h5 class="al-name">{{newalbum.name}}</h5>             
           </div>
-          
-         
       </div>
   </div>
 </template>
@@ -29,16 +23,12 @@ export default {
     mounted(){
         _getNewestAlbum(40).then(
             response => {
-                // console.log(response.data.albums)
                 this.newalbums=response.data.albums
-                // console.log(this.artists)
             },
             error => {
 
             }
         )
-        // this.artists=this.$route.params.artists
-        // console.log(this.$route.params)
     },
     methods:{
         PushNewAlbum(id){

@@ -3,8 +3,7 @@
       
         <div v-for="sg in simisg" :key="sg.id" @click="PushSg(sg.id)" class="simi-con">
           <div class="sr-cover">
-              <!-- img1v1Url -->
-             <img  :src="sg.img1v1Url">
+             <img  v-lazy="sg.img1v1Url">
           </div>
             <div class="simi-name">
                 {{sg.name}}
@@ -25,11 +24,20 @@ export default {
             simisg:[],
         }
     },
+    watch:{
+        '$store.state.singer.length'(){
+           this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
+            _getSimilarArtists(this.sid).then(
+                response => {
+                    this.simisg =response.data.artists
+                }
+            )
+        }
+    },
     mounted(){
         this.sid=this.$store.state.singer[this.$store.state.singer.length-1]
         _getSimilarArtists(this.sid).then(
             response => {
-                console.log(response.data)
                 this.simisg =response.data.artists
             }
         )
@@ -37,16 +45,6 @@ export default {
     methods:{
         PushSg(id){
             this.$store.state.singer.push(id)
-            // this.$router.push({path:'/'})
-            this.$bus.$emit('senSingerId',id)
-            this.$router.push(
-                {
-                    name:'SingerAlbums',
-                    params:{
-                        sid:id
-                    }
-                }
-            )
         }
     }
 
@@ -55,9 +53,7 @@ export default {
 
 <style scoped>
 #singer-similar{
-    flex:10;
-    margin-bottom: 5%;
-    margin-left:5%;
+    width:100%;
     display:grid;
     grid-template-columns: 20% 20% 20% 20% 20%;
 }
