@@ -214,7 +214,9 @@ export default {
     display:flex;
     align-items: center;
 }
-
+.al-song:nth-child(odd){
+    background:rgb(245, 241, 241);
+}
 .al-songOrder{
     flex:1;
     border:none;

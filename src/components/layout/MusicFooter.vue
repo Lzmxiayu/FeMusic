@@ -23,8 +23,7 @@ export default {
 
 <style scoped>
 #music-footer{
-    height:8vh;
-    /* box-sizing:border-box;
-    border-top:1px solid grey; */
+    height:7%;
+
 }
 </style>

@@ -84,7 +84,7 @@ export default {
 <style scoped>
 #music-player{
     display: flex;
-    height:7vh;    
+    height:100%;    
     width:100%;
 }
 .mpHead{
@@ -98,11 +98,13 @@ export default {
     width:30%;
     height:100%;
     padding-top:2%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 .m-img img{
-    width:50px;
-    height:50px;
-    /* width:100%; */
+    /* width:80%; */
+    height:95%;
     border-radius:10px;
 }
 .m-Name{

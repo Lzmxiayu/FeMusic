@@ -19,6 +19,6 @@ export default {
 <style scoped>
 #music-header{
     display: flex;
-    height:8vh;
+    height:8%;
 }
 </style>

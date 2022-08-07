@@ -22,13 +22,13 @@ export default {
 #content{
     position:relative;
     display: flex;
-    width:100vw;
-    height: 84vh;
+    width:100%;
+    height: 84%;
 }
 .maincontent{
    position:relative;
     display: flex;
-    width:100vw;
+    width:100%;
     height: 84vh;
 }
 
